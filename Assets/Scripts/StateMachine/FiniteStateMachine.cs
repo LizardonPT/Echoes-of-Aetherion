@@ -5,9 +5,9 @@ namespace EchoesOfAetherion.StateMachine
 {
     public class FiniteStateMachine<T> where T : class
     {
-        private T entity;
+        private readonly T entity;
         private IState<T> currentState;
-        private Dictionary<Type, IState<T>> states = new Dictionary<Type, IState<T>>();
+        private readonly Dictionary<Type, IState<T>> states = new();
 
         public FiniteStateMachine(T entity)
         {

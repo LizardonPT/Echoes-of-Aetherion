@@ -23,7 +23,6 @@ namespace EchoesOfAetherion.Player.Components
             Data = new PlayerData();
             Animator = GetComponent<PlayerAnimations>();
             Movement = GetComponent<PlayerMovement>();
-            StateMachine = new FiniteStateMachine<PlayerController>(this);
             inputReader = GetComponent<InputReader>();
             cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
@@ -54,6 +53,8 @@ namespace EchoesOfAetherion.Player.Components
 
         private void SetupStateMachine()
         {
+            StateMachine = new FiniteStateMachine<PlayerController>(this);
+            
             StateMachine.AddState<PlayerIdleState>(new PlayerIdleState());
             StateMachine.AddState<PlayerMovingState>(new PlayerMovingState());
             StateMachine.ChangeState<PlayerIdleState>();

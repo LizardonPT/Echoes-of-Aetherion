@@ -21,7 +21,7 @@ namespace EchoesOfAetherion.Player.Components
             bool isMoving = movementInput.magnitude > 1e-5f;
 
             anim.SetBool(IsMovingHash, isMoving);
-            
+
             if (LookAtPointer)
             {
                 lookDirection.Normalize();
@@ -38,7 +38,7 @@ namespace EchoesOfAetherion.Player.Components
                 anim.SetFloat(YHash, movementInput.y);
             }
         }
-
+        
         private void OnValidate()
         {
             if (anim == null)

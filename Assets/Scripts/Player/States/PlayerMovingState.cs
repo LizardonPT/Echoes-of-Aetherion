@@ -5,23 +5,23 @@ namespace EchoesOfAetherion.Player.States
 {
     public class PlayerMovingState : IState<PlayerController>
     {
-        public void Enter(PlayerController character) { }
+        public void Enter(PlayerController controller) { }
 
-        public void Update(PlayerController character)
+        public void Update(PlayerController controller)
         {
-            character.Animator.UpdateAnimation(character.Data.MovementInput, character.Data.LookDirection);
+            controller.Animator.UpdateAnimation(controller.Data.MovementInput, controller.Data.LookDirection);
 
-            if (!character.Data.IsMoving)
+            if (!controller.Data.IsMoving)
             {
-                character.StateMachine.ChangeState<PlayerIdleState>();
+                controller.StateMachine.ChangeState<PlayerIdleState>();
             }
         }
 
-        public void FixedUpdate(PlayerController character)
+        public void FixedUpdate(PlayerController controller)
         {
-            character.Movement.UpdateMovement(character.Data.MovementInput);
+            controller.Movement.UpdateMovement(controller.Data.MovementInput);
         }
 
-        public void Exit(PlayerController character) { }
+        public void Exit(PlayerController controller) { }
     }
 }

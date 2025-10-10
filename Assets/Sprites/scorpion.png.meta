@@ -1,12 +1,10 @@
 fileFormatVersion: 2
-guid: 264029a846f694743ad007bce083f6a0
-labels:
-- Placeholder
+guid: 138e93a1d9d565a4a9d883847e69b437
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4093480436322176185
-    second: Shadow_0
+      213: -2530001987011866503
+    second: scorpion_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,8 +49,8 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.5208334, y: 0.265625}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -102,23 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shadow_0
+      name: scorpion_0
       rect:
         serializedVersion: 2
-        x: 17
-        y: 17
-        width: 15
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 7
+        y: 3
+        width: 36
+        height: 38
+      alignment: 9
+      pivot: {x: 0.5, y: -0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9e0c49876bfb80c43b9e18d26ed7de68
-      internalID: -1171734590
+      spriteID: ee346c4a491613043b2ec00ac5c13fa1
+      internalID: 1918404553
       vertices: []
       indices: 
       edges: []
@@ -127,8 +125,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    spriteID: dc597cebed9c6354d85c94f2dc7df768
+    internalID: 0
     vertices: []
     indices: 
     edges: []
@@ -139,7 +137,7 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Shadow_0: -1171734590
+      scorpion_0: 1918404553
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

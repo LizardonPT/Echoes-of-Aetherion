@@ -108,7 +108,8 @@ namespace EchoesOfAetherion.CameraUtils
 
         private void SmoothMove(Vector3 targetPosition)
         {
-            cameraPivot.transform.position = Vector3.SmoothDamp(cameraPivot.transform.position, targetPosition, ref velocity, smoothTime);
+            cameraPivot.transform.position =
+                Vector3.SmoothDamp(cameraPivot.transform.position, targetPosition, ref velocity, smoothTime);
         }
 
         public void ChangeCameraSize(float targetSize, float duration)

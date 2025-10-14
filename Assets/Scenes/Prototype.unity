@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 387109737}
   - component: {fileID: 387109736}
   - component: {fileID: 387109735}
-  - component: {fileID: 387109738}
   - component: {fileID: 387109733}
   - component: {fileID: 387109732}
   m_Layer: 3
@@ -264,19 +263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0695d66f3b0e96546ae15465e381095f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Character.CharacterController
---- !u!114 &387109738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387109730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ead598181ec165146938135bad53871f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InputReader
-  moveAction: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  <Animator>k__BackingField: {fileID: 387109736}
+  <Movement>k__BackingField: {fileID: 387109735}
+  <MoveInputAction>k__BackingField: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
 --- !u!1 &406746434
 GameObject:
   m_ObjectHideFlags: 0

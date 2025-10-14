@@ -11,6 +11,8 @@ namespace EchoesOfAetherion.Player.Components
         [SerializeField] private float friction = 8f;
         [SerializeField] private float stopSpeed = 2f;
 
+        public bool IsMoving => rb.linearVelocity.sqrMagnitude > 1e-5f;
+
         private Rigidbody2D rb;
         private Vector2 accumulatedForce;
 
@@ -28,7 +30,7 @@ namespace EchoesOfAetherion.Player.Components
             {
                 Accelerate(movementInput.normalized, movementInput.magnitude * maxSpeed, acceleration);
             }
-            
+
             ApplyFriction();
             ApplyVelocity();
         }
@@ -51,7 +53,7 @@ namespace EchoesOfAetherion.Player.Components
             Vector2 velocity = rb.linearVelocity;
             float speed = velocity.magnitude;
 
-            if (speed < 0.01f) 
+            if (speed < 0.01f)
             {
                 rb.linearVelocity = Vector2.zero;
                 return;
@@ -61,7 +63,7 @@ namespace EchoesOfAetherion.Player.Components
             float control = speed < stopSpeed ? stopSpeed : speed;
             float drop = control * friction * Time.fixedDeltaTime;
             float newSpeed = Mathf.Max(speed - drop, 0);
-            
+
             rb.linearVelocity = velocity * (newSpeed / speed);
         }
 

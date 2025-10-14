@@ -1,5 +1,7 @@
+using UnityEngine;
+using EchoesOfAetherion.Extentions;
 using EchoesOfAetherion.StateMachine;
-using PlayerController = EchoesOfAetherion.Player.Components.PlayerController;
+using EchoesOfAetherion.Player.Components;
 
 namespace EchoesOfAetherion.Player.States
 {
@@ -9,9 +11,12 @@ namespace EchoesOfAetherion.Player.States
 
         public void Update(PlayerController controller)
         {
-            controller.Animator.UpdateAnimation(controller.Data.MovementInput, controller.Data.LookDirection);
+            if (controller.MoveInputAction.action.TryReadValue(out Vector2 movementInput))
+            {
+                controller.Animator.UpdateAnimation(movementInput, controller.LookDirection);
+            }
 
-            if (!controller.Data.IsMoving)
+            if (!controller.Movement.IsMoving)
             {
                 controller.StateMachine.ChangeState<PlayerIdleState>();
             }
@@ -19,7 +24,8 @@ namespace EchoesOfAetherion.Player.States
 
         public void FixedUpdate(PlayerController controller)
         {
-            controller.Movement.UpdateMovement(controller.Data.MovementInput);
+            if (controller.MoveInputAction.action.TryReadValue(out Vector2 movementInput))
+                controller.Movement.UpdateMovement(movementInput);
         }
 
         public void Exit(PlayerController controller) { }

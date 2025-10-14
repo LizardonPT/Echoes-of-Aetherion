@@ -59,7 +59,6 @@ namespace EchoesOfAetherion.Player.Components
                 return;
             }
 
-            // Quake-style friction
             float control = speed < stopSpeed ? stopSpeed : speed;
             float drop = control * friction * Time.fixedDeltaTime;
             float newSpeed = Mathf.Max(speed - drop, 0);

@@ -24,7 +24,7 @@ namespace EchoesOfAetherion.Player.Components
         {
             OnValidate();
 
-            //todo: This gotta be a better way... (Code smell?)
+            //! This gotta be a better way... (Code smell?)
             cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
             SetupStateMachine();

@@ -1,5 +1,6 @@
 using UnityEngine;
 using EchoesOfAetherion.StateMachine;
+using EchoesOfAetherion.Player.Components;
 
 namespace EchoesOfAetherion.Enemies.StoneScorpion.States
 {
@@ -9,17 +10,18 @@ namespace EchoesOfAetherion.Enemies.StoneScorpion.States
 
         public void Update(StoneScorpionController controller)
         {
-            if (controller.Data.Target != null)
+            if (!controller.Target)
+                controller.Target = Physics2D.OverlapCircle(controller.transform.position, controller.DetectionRadius, controller.PlayerMask)
+                    ?.GetComponent<PlayerController>()?.gameObject;
+
+            if (controller.Target)
             {
-                Vector2 dir = (Vector2)(controller.Data.Target.position - controller.transform.position).normalized;
-                controller.Animator.UpdateAnimation(Vector2.zero, dir);
+                controller.CameraFollow?.AddTarget(controller.transform);
+                controller.StateMachine.ChangeState<StoneScorpionChaseState>();
             }
         }
 
-        public void FixedUpdate(StoneScorpionController controller)
-        {
-
-        }
+        public void FixedUpdate(StoneScorpionController controller) { }
 
         public void Exit(StoneScorpionController controller) { }
     }

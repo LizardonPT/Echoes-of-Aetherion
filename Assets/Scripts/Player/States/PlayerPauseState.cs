@@ -1,11 +1,11 @@
-using UnityEngine;
 using EchoesOfAetherion.Extentions;
 using EchoesOfAetherion.StateMachine;
+using UnityEngine;
 using EchoesOfAetherion.Player.Components;
 
 namespace EchoesOfAetherion.Player.States
 {
-    public class PlayerMovingState : IState<PlayerController>
+    public class PlayerPauseMenuState : IState<PlayerController>
     {
         public void Enter(PlayerController controller) { }
 
@@ -13,23 +13,13 @@ namespace EchoesOfAetherion.Player.States
         {
             if (controller.PlayerInput.PauseInputPressed)
             {
-                Time.timeScale = 0f;
+                Time.timeScale = 1f;
                 controller.MenuController?.TogglePause();
-                controller.StateMachine.ChangeState<PlayerPauseMenuState>();
-            }
-
-            controller.Animator.UpdateAnimation(controller.PlayerInput.MovementInput, controller.LookDirection);
-
-            if (!controller.Movement.IsMoving)
-            {
                 controller.StateMachine.ChangeState<PlayerIdleState>();
             }
         }
 
-        public void FixedUpdate(PlayerController controller)
-        {
-            controller.Movement.UpdateMovement(controller.PlayerInput.MovementInput);
-        }
+        public void FixedUpdate(PlayerController controller) { }
 
         public void Exit(PlayerController controller) { }
     }

@@ -6,7 +6,7 @@ namespace EchoesOfAetherion.Enemies.Core
 {
     public class EnemyController<T> : MonoBehaviour where T : EnemyController<T>
     {
-        protected FiniteStateMachine<T> stateMachine;
+        public FiniteStateMachine<T> StateMachine { get; protected set; }
 
         protected virtual void Awake()
         {
@@ -15,17 +15,17 @@ namespace EchoesOfAetherion.Enemies.Core
 
         protected virtual void Update()
         {
-            stateMachine?.Update();
+            StateMachine?.Update();
         }
 
         protected virtual void FixedUpdate()
         {
-            stateMachine?.FixedUpdate();
+            StateMachine?.FixedUpdate();
         }
 
         protected virtual void SetupStateMachine()
         {
-            stateMachine = new FiniteStateMachine<T>((T)this);
+            StateMachine = new FiniteStateMachine<T>((T)this);
         }
     }
 

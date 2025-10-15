@@ -5,20 +5,18 @@ using EchoesOfAetherion.Player.States;
 using EchoesOfAetherion.CameraUtils;
 namespace EchoesOfAetherion.Player.Components
 {
-    [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations))]
+    [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations), typeof(PlayerInput))]
     public class PlayerController : MonoBehaviour
     {
+        [Header("References")]
         [field: SerializeField] public PlayerAnimations Animator { get; private set; }
         [field: SerializeField] public PlayerMovement Movement { get; private set; }
+        [field: SerializeField] public MenuController MenuController { get; private set; }
+        [field: SerializeField] public PlayerInput PlayerInput { get; private set; }
 
         public FiniteStateMachine<PlayerController> StateMachine { get; private set; }
-
-        //? Should the controller have the input actions?
-        //? This vars are for states.
-        [field: SerializeField] public InputActionReference MoveInputAction { get; private set; }
-        public Vector2 LookDirection { get; private set; }
-
         private CameraFollow cameraFollow;
+        public Vector2 LookDirection { get; private set; }
 
         private void Awake()
         {
@@ -57,13 +55,27 @@ namespace EchoesOfAetherion.Player.Components
 
             StateMachine.AddState<PlayerIdleState>(new PlayerIdleState());
             StateMachine.AddState<PlayerMovingState>(new PlayerMovingState());
+            StateMachine.AddState<PlayerPauseMenuState>(new PlayerPauseMenuState());
             StateMachine.ChangeState<PlayerIdleState>();
+        }
+
+        public void PauseGame()
+        {
+            StateMachine.ChangeState<PlayerPauseMenuState>();
         }
 
         private void OnValidate()
         {
             if (Animator == null) Animator = GetComponent<PlayerAnimations>();
             if (Movement == null) Movement = GetComponent<PlayerMovement>();
+            if (PlayerInput == null) PlayerInput = GetComponent<PlayerInput>();
+
+            if (MenuController == null)
+            {
+                MenuController = FindAnyObjectByType<MenuController>();
+                if (MenuController == null)
+                    Debug.LogWarning("No Menu Controller in the scene"); ;
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace EchoesOfAetherion.CameraUtils
@@ -7,158 +8,136 @@ namespace EchoesOfAetherion.CameraUtils
     [RequireComponent(typeof(Camera))]
     public class CameraFollow : MonoBehaviour
     {
-        [SerializeField] private GameObject cameraPivot;
-        [SerializeField] private Transform[] targets;
-        private Vector3 velocity = Vector3.zero;
-
+        [SerializeField] private Transform cameraPivot;
+        [SerializeField] private List<Transform> targets = new();
         [SerializeField, Range(0, .3f)] private float smoothTime = 0.05f;
         [SerializeField] private Vector3 positionOffset;
-
-        [Header("Limitation")]
         [SerializeField] private bool hasLimits;
-        [SerializeField] private Vector2 xLimit;
-        [SerializeField] private Vector2 yLimit;
-
-#if UNITY_EDITOR
-        [SerializeField] private Color limitsDebugColour = Color.blue;
-# endif
+        [SerializeField] private Vector2 xLimit, yLimit;
 
         private Camera cam;
+        private Vector3 velocity;
 
-        private void Start()
+        private Transform MoveTarget => cameraPivot != null ? cameraPivot : transform;
+
+        private void Awake() => cam = GetComponent<Camera>();
+
+        private void FixedUpdate() => UpdateCameraPosition();
+
+        private void UpdateCameraPosition()
         {
-            cam = GetComponent<Camera>();
+            if (targets.Count == 0) return;
+
+            Vector3 targetPos = (targets.Count == 1)
+                ? targets[0].position
+                : GetTargetsMidpoint();
+
+            targetPos += positionOffset;
+
+            SmoothMove(targetPos);
+            
+            if (hasLimits)
+                MoveTarget.position = ClampPosition(targetPos);
         }
 
-        private void FixedUpdate()
+        private Vector3 GetTargetsMidpoint()
         {
-            if (targets.Length > 0)
-            {
-                Vector3 targetPosition;
-                if (targets.Length == 1)
-                {
-                    targetPosition = targets[0].position + positionOffset;
-                }
-                else
-                {
-                    Vector3 midpoint = Vector3.zero;
-                    foreach (var target in targets)
-                    {
-                        midpoint += target.position;
-                    }
-                    midpoint /= targets.Length;
-                    targetPosition = midpoint + positionOffset;
-                }
-
-                if (hasLimits)
-                {
-                    Vector3 clampedPosition = ClampPosition(targetPosition);
-                    SmoothMove(clampedPosition);
-                }
-                else
-                {
-                    SmoothMove(targetPosition);
-                }
-            }
+            Vector3 sum = Vector3.zero;
+            foreach (var t in targets) sum += t.position;
+            return sum / targets.Count;
         }
 
-        public void SetTarget(Transform target)
+        private void SmoothMove(Vector3 targetPos)
         {
-            targets = new Transform[] { target };
-            cameraPivot.transform.position = target.position + positionOffset;
-        }
-
-        public void SetTargets(Transform[] targets)
-        {
-            this.targets = targets;
-        }
-
-        public void AddTarget(Transform target)
-        {
-            List<Transform> targetList = new List<Transform>(targets);
-            if (!targetList.Contains(target))
-            {
-                targetList.Add(target);
-            }
-            targets = targetList.ToArray();
-        }
-
-        public void RemoveTarget(Transform target)
-        {
-            List<Transform> targetList = new List<Transform>(targets);
-            if (targetList.Contains(target))
-            {
-                targetList.Remove(target);
-            }
-            targets = targetList.ToArray();
-        }
-
-        public void SetHasLimits(bool b)
-        {
-            hasLimits = b;
+            MoveTarget.position = Vector3.SmoothDamp(MoveTarget.position, targetPos, ref velocity, smoothTime);
         }
 
         private Vector3 ClampPosition(Vector3 targetPosition)
         {
-            float clampedX = Mathf.Clamp(targetPosition.x, xLimit.x, xLimit.y);
-            float clampedY = Mathf.Clamp(targetPosition.y, yLimit.x, yLimit.y);
+            float camHeight = cam.orthographicSize * 2f;
+            float camWidth = camHeight * cam.aspect;
 
-            return new Vector2(clampedX, clampedY);
+            float minX = xLimit.x + camWidth / 2f;
+            float maxX = xLimit.y - camWidth / 2f;
+            float minY = yLimit.x + camHeight / 2f;
+            float maxY = yLimit.y - camHeight / 2f;
+
+            float clampedX = Mathf.Clamp(targetPosition.x, minX, maxX);
+            float clampedY = Mathf.Clamp(targetPosition.y, minY, maxY);
+
+            return new Vector3(clampedX, clampedY, targetPosition.z);
         }
 
-        private void SmoothMove(Vector3 targetPosition)
+
+        public void SetHasLimits(bool value) => hasLimits = value;
+
+        public void SetTarget(Transform target)
         {
-            cameraPivot.transform.position =
-                Vector3.SmoothDamp(cameraPivot.transform.position, targetPosition, ref velocity, smoothTime);
+            targets.Clear();
+            if (target != null)
+                targets.Add(target);
         }
 
-        public void ChangeCameraSize(float targetSize, float duration)
+        public void AddTarget(Transform target)
         {
-            StartCoroutine(ChangeCameraSizeCoroutine(targetSize, duration));
+            if (target != null && !targets.Contains(target))
+                targets.Add(target);
         }
 
-        private IEnumerator ChangeCameraSizeCoroutine(float targetSize, float duration)
+        public void RemoveTarget(Transform target)
         {
-            float startSize = cam.orthographicSize;
-            float elapsedTime = 0f;
-
-            while (elapsedTime < duration)
-            {
-                cam.orthographicSize = Mathf.Lerp(startSize, targetSize, elapsedTime / duration);
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            cam.orthographicSize = targetSize;
+            if (target != null && targets.Contains(target))
+                targets.Remove(target);
         }
 
 #if UNITY_EDITOR
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             if (!hasLimits) return;
+
+            // Ensure we have a camera reference
             if (cam == null)
-            {
                 cam = GetComponent<Camera>();
-                if (cam == null) return;
-            }
+            if (cam == null || cameraPivot == null)
+                return;
 
-            Gizmos.color = limitsDebugColour;
+            Gizmos.color = Color.blue;
 
-            float camHeight = cam.orthographicSize * 2;
+            // Compute camera visible area
+            float camHeight = cam.orthographicSize * 2f;
             float camWidth = camHeight * cam.aspect;
 
-            Vector3 center = new Vector3((xLimit.x + xLimit.y) / 2, (yLimit.x + yLimit.y) / 2, cameraPivot.transform.position.z);
-            Vector3 size = new Vector3(xLimit.y - xLimit.x + camWidth, yLimit.y - yLimit.x + camHeight, 1);
+            // Compute the visible bounds of the camera (world-space)
+            // These represent the total world area the camera can *move within*
+            float minX = xLimit.x + camWidth / 2f;
+            float maxX = xLimit.y - camWidth / 2f;
+            float minY = yLimit.x + camHeight / 2f;
+            float maxY = yLimit.y - camHeight / 2f;
 
+            // Draw a rectangle showing the camera movement area
+            Vector3 center = new Vector3((minX + maxX) / 2f, (minY + maxY) / 2f, cameraPivot.transform.position.z);
+            Vector3 size = new Vector3(maxX - minX, maxY - minY, 1f);
+
+            // Draw wireframe of visible area the camera can travel through
             Gizmos.DrawWireCube(center, size);
+
+            // Optionally, draw the actual world bounds (where camera cannot see past)
+            Gizmos.color = new Color(0f, 0.3f, 1f, 0.25f);
+
+            Vector3 worldCenter = new Vector3(
+                (xLimit.x + xLimit.y) / 2f,
+                (yLimit.x + yLimit.y) / 2f,
+                cameraPivot.transform.position.z
+            );
+            Vector3 worldSize = new Vector3(
+                xLimit.y - xLimit.x,
+                yLimit.y - yLimit.x,
+                1f
+            );
+            Gizmos.DrawWireCube(worldCenter, worldSize);
         }
 #endif
-        private void OnValidate()
-        {
-            if (cameraPivot == null)
-            {
-                cameraPivot = transform.parent != null ? transform.parent.gameObject : null;
-            }
-        }
+
     }
+
 }

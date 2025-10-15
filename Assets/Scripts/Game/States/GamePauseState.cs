@@ -6,8 +6,7 @@ namespace EchoesOfAetherion.Game.States
     {
         public void Enter(GameMaster master)
         {
-            Time.timeScale = 0f;
-            master.Player?.SetCanTick(false);
+            master.PauseGame();
             master.MenuController?.ShowPauseMenu();
         }
 
@@ -21,8 +20,7 @@ namespace EchoesOfAetherion.Game.States
 
         public void Exit(GameMaster master)
         {
-            Time.timeScale = 1f;
-            master.Player?.SetCanTick(true);
+            master.ResumeGame();
             master.MenuController?.HidePauseMenu();
         }
 

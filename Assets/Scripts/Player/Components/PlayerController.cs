@@ -4,11 +4,12 @@ using EchoesOfAetherion.StateMachine;
 using EchoesOfAetherion.Player.States;
 using EchoesOfAetherion.CameraUtils;
 using EchoesOfAetherion.Inputs;
+using EchoesOfAetherion.Game;
 
 namespace EchoesOfAetherion.Player.Components
 {
     [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations), typeof(InputReader))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, ITickable
     {
         [field: SerializeField] public MenuController MenuController { get; private set; }
 
@@ -32,7 +33,7 @@ namespace EchoesOfAetherion.Player.Components
             }
         }
 
-        private bool canTick = false;
+        private TickController tickController;
 
         private void Awake()
         {
@@ -47,19 +48,20 @@ namespace EchoesOfAetherion.Player.Components
             cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
             cameraFollow?.SetTarget(transform);
+            
+            tickController ??= FindAnyObjectByType<TickController>();
+                if (tickController != null)
+                    Initialize(tickController);
         }
 
-        private void Update()
+        public void Initialize(TickController tickController)
         {
-            if (canTick)
-                StateMachine?.Update();
+            this.tickController = tickController;
+            this.tickController.Register(this);
         }
 
-        private void FixedUpdate()
-        {
-            if (canTick)
-                StateMachine?.FixedUpdate();
-        }
+        public void Tick() => StateMachine?.Update();
+        public void FixedTick() => StateMachine?.FixedUpdate();
 
         private void SetupStateMachine()
         {
@@ -68,11 +70,6 @@ namespace EchoesOfAetherion.Player.Components
             StateMachine.AddState<PlayerIdleState>(new PlayerIdleState());
             StateMachine.AddState<PlayerMovingState>(new PlayerMovingState());
             StateMachine.ChangeState<PlayerIdleState>();
-        }
-
-        public void SetCanTick(bool value)
-        {
-            canTick = value;
         }
 
         private void OnValidate()
@@ -88,5 +85,11 @@ namespace EchoesOfAetherion.Player.Components
                     Debug.LogWarning("No Menu Controller in the scene"); ;
             }
         }
+
+        private void OnDestroy()
+        {
+            tickController?.Unregister(this);
+        }
+
     }
 }

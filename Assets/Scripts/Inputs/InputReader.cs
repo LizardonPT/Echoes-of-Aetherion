@@ -2,10 +2,9 @@ using EchoesOfAetherion.Extentions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace EchoesOfAetherion.Player.Components
+namespace EchoesOfAetherion.Inputs
 {
-    //todo: needs better name
-    public class PlayerInput : MonoBehaviour
+    public class InputReader : MonoBehaviour
     {
         [SerializeField] private InputActionReference moveInputReference;
         [SerializeField] private InputActionReference pauseInputReference;

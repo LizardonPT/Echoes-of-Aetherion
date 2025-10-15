@@ -553,10 +553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0695d66f3b0e96546ae15465e381095f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Character.CharacterController
-  <Animator>k__BackingField: {fileID: 387109736}
-  <Movement>k__BackingField: {fileID: 387109735}
   <MenuController>k__BackingField: {fileID: 103167934}
-  <PlayerInput>k__BackingField: {fileID: 387109738}
 --- !u!114 &387109738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -943,6 +940,67 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &723238263
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 723238266}
+  - component: {fileID: 723238265}
+  - component: {fileID: 723238264}
+  m_Layer: 0
+  m_Name: GameMaster
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &723238264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723238263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed61b841a1a355c4c8381d7b67430895, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Game.GameMaster
+  <MenuController>k__BackingField: {fileID: 103167934}
+  <Player>k__BackingField: {fileID: 387109737}
+--- !u!114 &723238265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723238263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ba9a05a6d608942b94c422e34802e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Inputs.InputReader
+  moveInputReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  pauseInputReference: {fileID: -6105268382535171658, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+--- !u!4 &723238266
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 723238263}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 82.38571, y: 39.21045, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2140,3 +2198,4 @@ SceneRoots:
   - {fileID: 1836058190}
   - {fileID: 103167933}
   - {fileID: 1337098987}
+  - {fileID: 723238266}

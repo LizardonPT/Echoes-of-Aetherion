@@ -11,13 +11,6 @@ namespace EchoesOfAetherion.Player.States
 
         public void Update(PlayerController controller)
         {
-            if (controller.PlayerInput.PauseInputPressed)
-            {
-                Time.timeScale = 0f;
-                controller.MenuController?.TogglePause();
-                controller.StateMachine.ChangeState<PlayerPauseMenuState>();
-            }
-
             controller.Animator.UpdateAnimation(Vector2.zero, controller.LookDirection);
 
             if (controller.PlayerInput.MovementInput.magnitude > 1e-5f)

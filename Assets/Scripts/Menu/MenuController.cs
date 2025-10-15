@@ -5,17 +5,13 @@ public class MenuController : MonoBehaviour
 {
     [SerializeField] private GameObject pausedMenu;
 
-    public void TogglePause()
+    public void ShowPauseMenu()
     {
-        if (pausedMenu.activeSelf)
-        {
-            pausedMenu.SetActive(false);
-            Time.timeScale = 1f;
-        }
-        else
-        {
-            pausedMenu.SetActive(true);
-            Time.timeScale = 0f;
-        }
+        pausedMenu?.SetActive(true);
+    }
+
+    public void HidePauseMenu()
+    {
+        pausedMenu?.SetActive(false);
     }
 }

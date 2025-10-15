@@ -3,50 +3,62 @@ using UnityEngine.InputSystem;
 using EchoesOfAetherion.StateMachine;
 using EchoesOfAetherion.Player.States;
 using EchoesOfAetherion.CameraUtils;
+using EchoesOfAetherion.Inputs;
+
 namespace EchoesOfAetherion.Player.Components
 {
-    [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations), typeof(PlayerInput))]
+    [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations), typeof(InputReader))]
     public class PlayerController : MonoBehaviour
     {
-        [Header("References")]
-        [field: SerializeField] public PlayerAnimations Animator { get; private set; }
-        [field: SerializeField] public PlayerMovement Movement { get; private set; }
         [field: SerializeField] public MenuController MenuController { get; private set; }
-        [field: SerializeField] public PlayerInput PlayerInput { get; private set; }
+
+        public PlayerAnimations Animator { get; private set; }
+        public PlayerMovement Movement { get; private set; }
+        public InputReader PlayerInput { get; private set; }
 
         public FiniteStateMachine<PlayerController> StateMachine { get; private set; }
         private CameraFollow cameraFollow;
-        public Vector2 LookDirection { get; private set; }
+
+        public Vector2 LookDirection
+        {
+            get
+            {
+                Vector2 pointerPos = Pointer.current != null
+                    ? Camera.main.ScreenToWorldPoint(Pointer.current.position.ReadValue())
+                    : Vector2.zero;
+
+                return (pointerPos != Vector2.zero ?
+                    pointerPos - (Vector2)transform.position : Vector2.zero).normalized;
+            }
+        }
+
+        private bool canTick = false;
 
         private void Awake()
         {
             OnValidate();
-
-            //! This gotta be a better way... (Code smell?)
-            cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
             SetupStateMachine();
         }
 
         private void Start()
         {
+            //! This gotta be a better way... (Code smell?)
+            cameraFollow = Camera.main.GetComponent<CameraFollow>();
+
             cameraFollow?.SetTarget(transform);
         }
 
         private void Update()
         {
-            Vector2 pointerPos = Pointer.current != null
-                ? Camera.main.ScreenToWorldPoint(Pointer.current.position.ReadValue())
-                : (Vector2)transform.position;
-
-            LookDirection = (pointerPos - (Vector2)transform.position).normalized;
-
-            StateMachine?.Update();
+            if (canTick)
+                StateMachine?.Update();
         }
 
         private void FixedUpdate()
         {
-            StateMachine?.FixedUpdate();
+            if (canTick)
+                StateMachine?.FixedUpdate();
         }
 
         private void SetupStateMachine()
@@ -55,20 +67,19 @@ namespace EchoesOfAetherion.Player.Components
 
             StateMachine.AddState<PlayerIdleState>(new PlayerIdleState());
             StateMachine.AddState<PlayerMovingState>(new PlayerMovingState());
-            StateMachine.AddState<PlayerPauseMenuState>(new PlayerPauseMenuState());
             StateMachine.ChangeState<PlayerIdleState>();
         }
 
-        public void PauseGame()
+        public void SetCanTick(bool value)
         {
-            StateMachine.ChangeState<PlayerPauseMenuState>();
+            canTick = value;
         }
 
         private void OnValidate()
         {
-            if (Animator == null) Animator = GetComponent<PlayerAnimations>();
-            if (Movement == null) Movement = GetComponent<PlayerMovement>();
-            if (PlayerInput == null) PlayerInput = GetComponent<PlayerInput>();
+            Animator ??= GetComponent<PlayerAnimations>();
+            Movement ??= GetComponent<PlayerMovement>();
+            PlayerInput ??= GetComponent<InputReader>();
 
             if (MenuController == null)
             {

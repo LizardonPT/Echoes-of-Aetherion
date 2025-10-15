@@ -14,7 +14,6 @@ namespace EchoesOfAetherion.Player.Components
         public bool IsMoving => rb.linearVelocity.sqrMagnitude > 1e-5f;
 
         private Rigidbody2D rb;
-        private Vector2 accumulatedForce;
 
         private void Awake()
         {
@@ -24,28 +23,28 @@ namespace EchoesOfAetherion.Player.Components
         public void UpdateMovement(Vector2 movementInput)
         {
             movementInput = Vector2.ClampMagnitude(movementInput, 1f);
-            accumulatedForce = Vector2.zero;
+            Vector2 accumulatedForce = Vector2.zero;
 
             if (movementInput.sqrMagnitude > 0.01f)
             {
-                Accelerate(movementInput.normalized, movementInput.magnitude * maxSpeed, acceleration);
+                accumulatedForce += Accelerate(movementInput.normalized, movementInput.magnitude * maxSpeed, acceleration);
             }
 
             ApplyFriction();
-            ApplyVelocity();
+            ApplyVelocity(accumulatedForce);
         }
 
-        private void Accelerate(Vector2 wishDir, float wishSpeed, float accel)
+        private Vector2 Accelerate(Vector2 wishDir, float wishSpeed, float accel)
         {
             float currentSpeed = rb.linearVelocity.magnitude;
             float addSpeed = wishSpeed - currentSpeed;
 
-            if (addSpeed <= 0) return;
+            if (addSpeed <= 0) return Vector2.zero;
 
             float accelSpeed = accel * Time.fixedDeltaTime * wishSpeed;
             accelSpeed = Mathf.Min(accelSpeed, addSpeed);
 
-            accumulatedForce += wishDir * accelSpeed;
+            return wishDir * accelSpeed;
         }
 
         private void ApplyFriction()
@@ -66,7 +65,7 @@ namespace EchoesOfAetherion.Player.Components
             rb.linearVelocity = velocity * (newSpeed / speed);
         }
 
-        private void ApplyVelocity()
+        private void ApplyVelocity(Vector2 accumulatedForce)
         {
             if (accumulatedForce.sqrMagnitude > 0.01f)
             {

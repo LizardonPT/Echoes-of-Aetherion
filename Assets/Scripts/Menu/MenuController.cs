@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuController : MonoBehaviour
+namespace EchoesOfAetherion.Menu
 {
-    [SerializeField] private GameObject pausedMenu;
-
-    public void ShowPauseMenu()
+    public class MenuController : MonoBehaviour
     {
-        pausedMenu?.SetActive(true);
-    }
+        [SerializeField] private GameObject pausedMenu;
 
-    public void HidePauseMenu()
-    {
-        pausedMenu?.SetActive(false);
+        public void ShowPauseMenu()
+        {
+            pausedMenu?.SetActive(true);
+        }
+
+        public void HidePauseMenu()
+        {
+            pausedMenu?.SetActive(false);
+        }
     }
 }

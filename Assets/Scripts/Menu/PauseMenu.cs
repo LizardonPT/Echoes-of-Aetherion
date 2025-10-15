@@ -2,23 +2,26 @@ using EchoesOfAetherion.Game;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour
+namespace EchoesOfAetherion.Menu
 {
-    [SerializeField] private Button resumeButton;
-
-    private GameMaster gameMaster;
-    private MenuController menuController;
-
-    private void Start()
+    public class PauseMenu : MonoBehaviour
     {
-        resumeButton.onClick.AddListener(OnResumeClicked);
-        gameMaster ??= FindAnyObjectByType<GameMaster>();
-        menuController ??= FindAnyObjectByType<MenuController>();
-    }
+        [SerializeField] private Button resumeButton;
 
-    private void OnResumeClicked()
-    {
-        gameMaster?.ResumeGame();
-        menuController.HidePauseMenu();
+        private GameMaster gameMaster;
+        private MenuController menuController;
+
+        private void Start()
+        {
+            resumeButton.onClick.AddListener(OnResumeClicked);
+            gameMaster ??= FindAnyObjectByType<GameMaster>();
+            menuController ??= FindAnyObjectByType<MenuController>();
+        }
+
+        private void OnResumeClicked()
+        {
+            gameMaster?.ResumeGame();
+            menuController.HidePauseMenu();
+        }
     }
 }

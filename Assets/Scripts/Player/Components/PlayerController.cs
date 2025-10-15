@@ -5,6 +5,7 @@ using EchoesOfAetherion.Player.States;
 using EchoesOfAetherion.CameraUtils;
 using EchoesOfAetherion.Inputs;
 using EchoesOfAetherion.Game;
+using EchoesOfAetherion.Menu;
 
 namespace EchoesOfAetherion.Player.Components
 {

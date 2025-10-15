@@ -1,5 +1,6 @@
 using EchoesOfAetherion.Game.States;
 using EchoesOfAetherion.Inputs;
+using EchoesOfAetherion.Menu;
 using EchoesOfAetherion.Player.Components;
 using EchoesOfAetherion.StateMachine;
 using UnityEngine;

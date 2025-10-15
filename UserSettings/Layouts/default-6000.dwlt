@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 113
+  controlID: 41
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: GameView
+  m_Name: SceneView
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -195,13 +195,13 @@ MonoBehaviour:
     height: 477
   m_MinSize: {x: 202, y: 226}
   m_MaxSize: {x: 4002, y: 4026}
-  m_ActualView: {fileID: 11}
+  m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
   - {fileID: 11}
   - {fileID: 14}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -221,15 +221,15 @@ MonoBehaviour:
     y: 477
     width: 1119
     height: 456
-  m_MinSize: {x: 232, y: 276}
-  m_MaxSize: {x: 10002, y: 10026}
-  m_ActualView: {fileID: 15}
+  m_MinSize: {x: 52, y: 76}
+  m_MaxSize: {x: 4002, y: 4026}
+  m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 15}
   - {fileID: 16}
   - {fileID: 17}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -278,8 +278,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1
-    y: 24
+    x: 367
+    y: 79
     width: 1117
     height: 451
   m_SerializedDataModeController:
@@ -445,8 +445,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 367
-    y: 79
+    x: 1
+    y: 24
     width: 1117
     height: 451
   m_SerializedDataModeController:
@@ -1031,9 +1031,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -58.995407, y: 48.575905, z: -1.0207814}
+    m_Target: {x: -9.274329, y: 27.925209, z: -0.9627228}
     speed: 2
-    m_Value: {x: -58.995407, y: 48.575905, z: -1.0207814}
+    m_Value: {x: -9.274329, y: 27.925209, z: -0.9627228}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1083,9 +1083,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 129.01982
+    m_Target: 123.21393
     speed: 2
-    m_Value: 129.01982
+    m_Value: 123.21393
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1248,8 +1248,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1
-    y: 501
+    x: 367
+    y: 556
     width: 1117
     height: 430
   m_SerializedDataModeController:
@@ -1274,7 +1274,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets
+    - Assets/Scripts/Player
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1284,15 +1284,15 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 85
   m_LastFolders:
-  - Assets
+  - Assets/Scripts/Player
   m_LastFoldersGridSize: 85
   m_LastProjectPath: C:\Users\breno\Documents\UnityProjects\EchoesOfAetherion
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 86}
-    m_SelectedIDs: f2b70000
-    m_LastClickedID: 47090
+    scrollPos: {x: 0, y: 10}
+    m_SelectedIDs: eeb70000
+    m_LastClickedID: 47086
     m_ExpandedIDs: 00000000e8b70000eab70000ecb70000eeb70000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1348,8 +1348,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: da440000
+    m_LastClickedInstanceID: 17626
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000060510100000a010098c00000
     m_RenameOverlay:
@@ -1401,8 +1401,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Console\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 367
-    y: 556
+    x: 1
+    y: 501
     width: 1117
     height: 430
   m_SerializedDataModeController:

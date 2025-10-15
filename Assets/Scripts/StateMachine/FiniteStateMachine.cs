@@ -11,7 +11,7 @@ namespace EchoesOfAetherion.StateMachine
 
         public FiniteStateMachine(T entity)
         {
-            this.entity = entity;
+            this.entity = entity ?? throw new ArgumentNullException(nameof(entity));
         }
 
         public void AddState<U>(IState<T> state) where U : IState<T>

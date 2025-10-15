@@ -28,8 +28,6 @@ namespace EchoesOfAetherion.Player.Components
 
                 anim.SetFloat(XHash, lookDirection.x);
                 anim.SetFloat(YHash, lookDirection.y);
-
-
             }
             else if (isMoving)
             {

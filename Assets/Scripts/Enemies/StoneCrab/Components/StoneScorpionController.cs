@@ -21,7 +21,6 @@ namespace EchoesOfAetherion.Enemies.StoneScorpion
 
         public FiniteStateMachine<StoneScorpionController> StateMachine { get; private set; }
 
-        private bool canTick = false;
         private Rigidbody2D rb;
         private TickController tickController;
 
@@ -56,11 +55,6 @@ namespace EchoesOfAetherion.Enemies.StoneScorpion
             StateMachine.AddState<StoneScorpionIdleState>(new StoneScorpionIdleState());
             StateMachine.AddState<StoneScorpionChaseState>(new StoneScorpionChaseState());
             StateMachine.ChangeState<StoneScorpionIdleState>();
-        }
-
-        public void SetCanTick(bool value)
-        {
-            canTick = value;
         }
 
         private void OnDestroy()

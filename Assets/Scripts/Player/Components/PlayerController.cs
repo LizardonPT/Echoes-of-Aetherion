@@ -10,7 +10,7 @@ using EchoesOfAetherion.Menu;
 namespace EchoesOfAetherion.Player.Components
 {
     [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations), typeof(InputReader))]
-    public class PlayerController : MonoBehaviour, ITickable
+    public class PlayerController : TickRegistor
     {
         [field: SerializeField] public MenuController MenuController { get; private set; }
 
@@ -43,16 +43,14 @@ namespace EchoesOfAetherion.Player.Components
             SetupStateMachine();
         }
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             //! This gotta be a better way... (Code smell?)
             cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
             cameraFollow?.SetTarget(transform);
-            
-            tickController ??= FindAnyObjectByType<TickController>();
-                if (tickController != null)
-                    Initialize(tickController);
         }
 
         public void Initialize(TickController tickController)
@@ -61,8 +59,8 @@ namespace EchoesOfAetherion.Player.Components
             this.tickController.Register(this);
         }
 
-        public void Tick() => StateMachine?.Update();
-        public void FixedTick() => StateMachine?.FixedUpdate();
+        public override void Tick() => StateMachine?.Update();
+        public override void FixedTick() => StateMachine?.FixedUpdate();
 
         private void SetupStateMachine()
         {
@@ -86,11 +84,5 @@ namespace EchoesOfAetherion.Player.Components
                     Debug.LogWarning("No Menu Controller in the scene"); ;
             }
         }
-
-        private void OnDestroy()
-        {
-            tickController?.Unregister(this);
-        }
-
     }
 }

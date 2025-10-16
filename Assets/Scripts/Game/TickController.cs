@@ -3,19 +3,26 @@ using UnityEngine;
 
 namespace EchoesOfAetherion.Game
 {
+    [RequireComponent(typeof(TickRegistration))]
     public class TickController : MonoBehaviour
     {
         private readonly List<ITickable> tickables = new();
 
         public bool Paused { get; private set; } = false;
 
+        private void Awake()
+        {
+            TickRegistration.OnTickableRegistered += Register;
+            TickRegistration.OnTickableUnregistered += UnRegister;
+        }
+        
         public void Register(ITickable tickable)
         {
             if (!tickables.Contains(tickable))
                 tickables.Add(tickable);
         }
 
-        public void Unregister(ITickable tickable)
+        public void UnRegister(ITickable tickable)
         {
             tickables.Remove(tickable);
         }

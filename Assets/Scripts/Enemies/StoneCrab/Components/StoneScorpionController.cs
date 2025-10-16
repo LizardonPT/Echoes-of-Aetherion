@@ -8,7 +8,7 @@ using EchoesOfAetherion.Game;
 namespace EchoesOfAetherion.Enemies.StoneScorpion
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(StoneScorpionAnimations))]
-    public class StoneScorpionController : MonoBehaviour, ITickable
+    public class StoneScorpionController : TickRegistor
     {
         public StoneScorpionAnimations Animator { get; private set; }
         [field: SerializeField] public LayerMask PlayerMask { get; private set; }
@@ -33,21 +33,9 @@ namespace EchoesOfAetherion.Enemies.StoneScorpion
             rb = GetComponent<Rigidbody2D>();
         }
 
-        private void Start()
-        {
-            tickController ??= FindAnyObjectByType<TickController>();
-            if (tickController != null)
-                Initialize(tickController);
-        }
 
-        public void Initialize(TickController tickController)
-        {
-            this.tickController = tickController;
-            this.tickController?.Register(this);
-        }
-
-        public void Tick() => StateMachine?.Update();
-        public void FixedTick() => StateMachine?.FixedUpdate();
+        public override void Tick() => StateMachine?.Update();
+        public override void FixedTick() => StateMachine?.FixedUpdate();
 
         private void SetupStateMachine()
         {
@@ -55,11 +43,6 @@ namespace EchoesOfAetherion.Enemies.StoneScorpion
             StateMachine.AddState<StoneScorpionIdleState>(new StoneScorpionIdleState());
             StateMachine.AddState<StoneScorpionChaseState>(new StoneScorpionChaseState());
             StateMachine.ChangeState<StoneScorpionIdleState>();
-        }
-
-        private void OnDestroy()
-        {
-            tickController?.Unregister(this);
         }
 
 #if UNITY_EDITOR

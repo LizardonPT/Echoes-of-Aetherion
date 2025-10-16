@@ -825,7 +825,7 @@ MonoBehaviour:
       containerId: overlay-container--right
       displayed: 0
       id: Scene View/Sprite Swap
-      index: 12
+      index: 11
       contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
@@ -895,7 +895,7 @@ MonoBehaviour:
       containerId: overlay-container--right
       displayed: 0
       id: APV Overlay
-      index: 13
+      index: 12
       contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
@@ -979,7 +979,7 @@ MonoBehaviour:
       containerId: overlay-container--right
       displayed: 0
       id: Scene View/Path
-      index: 14
+      index: 13
       contents: '{"m_Layout":4,"m_Collapsed":false,"m_Folded":false,"m_Floating":false,"m_FloatingSnapOffset":{"x":0.0,"y":0.0},"m_SnapOffsetDelta":{"x":0.0,"y":0.0},"m_FloatingSnapCorner":0,"m_Size":{"x":0.0,"y":0.0},"m_SizeOverridden":false}'
       floating: 0
       collapsed: 0
@@ -1328,7 +1328,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 86b70000
     m_LastClickedID: 46982
-    m_ExpandedIDs: 00000000f0bc0000
+    m_ExpandedIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1357,7 +1357,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000f0bc0000
+    m_ExpandedIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

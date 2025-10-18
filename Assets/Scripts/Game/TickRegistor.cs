@@ -4,9 +4,12 @@ namespace EchoesOfAetherion.Game
 {
     public class TickRegistor : MonoBehaviour, ITickable
     {
+        [SerializeField]
+        private TickChannel tickChannel;
+
         protected virtual void Start()
         {
-            TickRegistration.Register(this);
+            tickChannel.Register(this);
         }
 
         public virtual void Tick()
@@ -21,7 +24,7 @@ namespace EchoesOfAetherion.Game
 
         protected virtual void OnDestroy()
         {
-            TickRegistration.UnRegister(this);
+            tickChannel.UnRegister(this);
         }
     }
 }

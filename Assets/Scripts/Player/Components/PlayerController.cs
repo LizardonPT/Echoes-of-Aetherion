@@ -53,12 +53,6 @@ namespace EchoesOfAetherion.Player.Components
             cameraFollow?.SetTarget(transform);
         }
 
-        public void Initialize(TickController tickController)
-        {
-            this.tickController = tickController;
-            this.tickController.Register(this);
-        }
-
         public override void Tick() => StateMachine?.Update();
         public override void FixedTick() => StateMachine?.FixedUpdate();
 

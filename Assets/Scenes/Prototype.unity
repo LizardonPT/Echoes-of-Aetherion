@@ -567,6 +567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0695d66f3b0e96546ae15465e381095f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Character.CharacterController
+  tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
   <MenuController>k__BackingField: {fileID: 103167934}
 --- !u!114 &387109738
 MonoBehaviour:
@@ -1033,6 +1034,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2518a782be688441a6236aaee890dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Game.TickController
+  tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
 --- !u!1 &743856422
 GameObject:
   m_ObjectHideFlags: 0
@@ -1638,6 +1640,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2184dd5ed9f85e40a18c78c94739a83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoneCrabController
+  tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
   <PlayerMask>k__BackingField:
     serializedVersion: 2
     m_Bits: 8

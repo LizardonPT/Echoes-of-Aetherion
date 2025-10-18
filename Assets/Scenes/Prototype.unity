@@ -434,7 +434,6 @@ GameObject:
   - component: {fileID: 387109737}
   - component: {fileID: 387109736}
   - component: {fileID: 387109735}
-  - component: {fileID: 387109738}
   - component: {fileID: 387109733}
   - component: {fileID: 387109732}
   m_Layer: 3
@@ -569,20 +568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Character.CharacterController
   tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
   <MenuController>k__BackingField: {fileID: 103167934}
---- !u!114 &387109738
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 387109730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5ba9a05a6d608942b94c422e34802e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Player.Components.PlayerInput
-  moveInputReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  pauseInputReference: {fileID: -6105268382535171658, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  <PlayerInput>k__BackingField: {fileID: 11400000, guid: 42a46087dfdfae545ad8f83655ec8af2, type: 2}
 --- !u!1 &406746434
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +955,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 723238266}
-  - component: {fileID: 723238265}
   - component: {fileID: 723238264}
   - component: {fileID: 723238267}
   m_Layer: 0
@@ -993,20 +978,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Game.GameMaster
   <MenuController>k__BackingField: {fileID: 103167934}
   <Player>k__BackingField: {fileID: 387109737}
---- !u!114 &723238265
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 723238263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5ba9a05a6d608942b94c422e34802e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Inputs.InputReader
-  moveInputReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  pauseInputReference: {fileID: -6105268382535171658, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  <InputReader>k__BackingField: {fileID: 11400000, guid: 42a46087dfdfae545ad8f83655ec8af2, type: 2}
 --- !u!4 &723238266
 Transform:
   m_ObjectHideFlags: 0

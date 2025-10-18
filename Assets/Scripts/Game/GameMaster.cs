@@ -1,19 +1,21 @@
 using EchoesOfAetherion.Game.States;
-using EchoesOfAetherion.Inputs;
 using EchoesOfAetherion.Menu;
 using EchoesOfAetherion.Player.Components;
+using EchoesOfAetherion.ScriptableObjects.Utils;
 using EchoesOfAetherion.StateMachine;
 using UnityEngine;
 
 namespace EchoesOfAetherion.Game
 {
-    [RequireComponent(typeof(InputReader), typeof(TickController))]
+    [RequireComponent(typeof(TickController))]
     public class GameMaster : MonoBehaviour
     {
+        [field: Header("ScriptableObjects")]
+        [field: SerializeField] public InputReader InputReader { get; private set; }
+        [field: Space]
+        [field: Header("References")]
         [field: SerializeField] public MenuController MenuController { get; private set; }
-        [field: SerializeField] public PlayerController Player { get; private set; }
 
-        public InputReader InputReader { get; private set; }
         public FiniteStateMachine<GameMaster> StateMachine { get; private set; }
         private TickController tickController;
 
@@ -28,7 +30,6 @@ namespace EchoesOfAetherion.Game
 
         private void Start()
         {
-            Player ??= FindAnyObjectByType<PlayerController>();
             MenuController ??= FindAnyObjectByType<MenuController>();
         }
 

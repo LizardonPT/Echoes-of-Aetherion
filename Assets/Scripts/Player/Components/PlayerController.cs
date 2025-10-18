@@ -3,20 +3,22 @@ using UnityEngine.InputSystem;
 using EchoesOfAetherion.StateMachine;
 using EchoesOfAetherion.Player.States;
 using EchoesOfAetherion.CameraUtils;
-using EchoesOfAetherion.Inputs;
 using EchoesOfAetherion.Game;
 using EchoesOfAetherion.Menu;
+using EchoesOfAetherion.ScriptableObjects.Utils;
 
 namespace EchoesOfAetherion.Player.Components
 {
-    [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations), typeof(InputReader))]
+    [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations))]
     public class PlayerController : TickRegistor
     {
+        [field: SerializeField]
+        public InputReader PlayerInput { get; private set; }
+        [field: Space]
         [field: SerializeField] public MenuController MenuController { get; private set; }
 
         public PlayerAnimations Animator { get; private set; }
         public PlayerMovement Movement { get; private set; }
-        public InputReader PlayerInput { get; private set; }
 
         public FiniteStateMachine<PlayerController> StateMachine { get; private set; }
         private CameraFollow cameraFollow;

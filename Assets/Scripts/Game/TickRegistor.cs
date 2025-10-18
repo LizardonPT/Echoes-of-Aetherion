@@ -1,3 +1,4 @@
+using EchoesOfAetherion.ScriptableObjects.Channels;
 using UnityEngine;
 
 namespace EchoesOfAetherion.Game

@@ -3,36 +3,43 @@ using System.Collections.Generic;
 using EchoesOfAetherion.Game;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TickChannel", menuName = "Scriptable Objects/Channels/TickChannel")]
-public class TickChannel : ScriptableObject
+namespace EchoesOfAetherion.ScriptableObjects.Channels
 {
-    private IList<ITickable> tickables;
-
-    public void Register(ITickable tickable)
+    [CreateAssetMenu(fileName = "TickChannel", menuName = "Scriptable Objects/Channels/TickChannel")]
+    public class TickChannel : ScriptableObject
     {
-        if (tickables == null) tickables = new List<ITickable>();
+        private IList<ITickable> tickables;
 
-        if (!tickables.Contains(tickable))
-            tickables.Add(tickable);
-    }
+        public void Register(ITickable tickable)
+        {
+            tickables ??= new List<ITickable>();
 
-    public void UnRegister(ITickable tickable)
-    {
-        if (tickables == null) tickables = new List<ITickable>();
+            if (!tickables.Contains(tickable))
+                tickables.Add(tickable);
+        }
 
-        if (tickables.Contains(tickable))
-            tickables.Remove(tickable);
-    }
+        public void UnRegister(ITickable tickable)
+        {
+            tickables ??= new List<ITickable>();
 
-    public void UpdateTickables()
-    {
-        foreach (ITickable tickable in tickables)
-            tickable.Tick();
-    }
+            if (tickables.Contains(tickable))
+                tickables.Remove(tickable);
+        }
 
-    public void FixedUpdateTickables()
-    {
-        foreach (ITickable tickable in tickables)
-            tickable.FixedTick();
+        public void UpdateTickables()
+        {
+            tickables ??= new List<ITickable>();
+
+            foreach (ITickable tickable in tickables)
+                tickable.Tick();
+        }
+
+        public void FixedUpdateTickables()
+        {
+            tickables ??= new List<ITickable>();
+            
+            foreach (ITickable tickable in tickables)
+                tickable.FixedTick();
+        }
     }
 }

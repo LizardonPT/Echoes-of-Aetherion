@@ -6,6 +6,8 @@ using EchoesOfAetherion.CameraUtils;
 using EchoesOfAetherion.Game;
 using EchoesOfAetherion.Menu;
 using EchoesOfAetherion.ScriptableObjects.Utils;
+using EchoesOfAetherion.ScriptableObjects.Channels;
+using System;
 
 namespace EchoesOfAetherion.Player.Components
 {
@@ -14,13 +16,13 @@ namespace EchoesOfAetherion.Player.Components
     {
         [field: SerializeField]
         public InputReader PlayerInput { get; private set; }
+        [SerializeField] private CameraChannel cameraChannel;
         [field: Space]
 
         public PlayerAnimations Animator { get; private set; }
         public PlayerMovement Movement { get; private set; }
 
         public FiniteStateMachine<PlayerController> StateMachine { get; private set; }
-        private CameraFollow cameraFollow;
 
         public Vector2 LookDirection
         {
@@ -45,12 +47,15 @@ namespace EchoesOfAetherion.Player.Components
         protected override void Start()
         {
             base.Start();
-
-            //! This gotta be a better way... (Code smell?)
-            //todo: Make ScriptableObj channel for the camera and it's components.
-            cameraFollow = Camera.main.GetComponent<CameraFollow>();
-
-            cameraFollow?.SetTarget(transform);
+            
+            try
+            {
+                cameraChannel.CameraFollow.SetTarget(transform);
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"[PlayerController] {ex.Message}");
+            }
         }
 
         public override void Tick() => StateMachine?.Update();

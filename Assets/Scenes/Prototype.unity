@@ -264,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Character.CharacterController
   tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: 42a46087dfdfae545ad8f83655ec8af2, type: 2}
+  cameraChannel: {fileID: 11400000, guid: c6c0d94d3ef1a3b48b85452204332d43, type: 2}
 --- !u!1 &406746434
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 519420032}
+  - component: {fileID: 519420035}
   - component: {fileID: 519420033}
   - component: {fileID: 519420034}
   - component: {fileID: 519420031}
@@ -557,6 +559,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.CameraUtils.CameraShaker
   shakeIntensityMultiplier: 1
+--- !u!114 &519420035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99f73c6bbb0c69040948334ccdfa387e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.CameraUtils.CameraController
+  channel: {fileID: 11400000, guid: c6c0d94d3ef1a3b48b85452204332d43, type: 2}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,7 +1107,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   <DetectionRadius>k__BackingField: 120
-  <CameraFollow>k__BackingField: {fileID: 0}
 --- !u!50 &1317929912
 Rigidbody2D:
   serializedVersion: 5

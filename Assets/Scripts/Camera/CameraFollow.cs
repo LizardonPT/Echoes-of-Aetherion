@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace EchoesOfAetherion.CameraUtils
 {
-    [RequireComponent(typeof(Camera))]
     public class CameraFollow : MonoBehaviour
     {
         [SerializeField] private Transform cameraPivot;

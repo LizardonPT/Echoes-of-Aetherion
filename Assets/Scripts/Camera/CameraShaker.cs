@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace EchoesOfAetherion.CameraUtils
 {
-
     public class CameraShaker : MonoBehaviour
     {
         [Range(0f, 1f)] public float shakeIntensityMultiplier = 1f;

@@ -34,7 +34,7 @@ namespace EchoesOfEtherion.CameraUtils
             targetPos += positionOffset;
 
             SmoothMove(targetPos);
-            
+
             if (hasLimits)
                 MoveTarget.position = ClampPosition(targetPos);
         }
@@ -94,35 +94,29 @@ namespace EchoesOfEtherion.CameraUtils
         {
             if (!hasLimits) return;
 
-            // Ensure we have a camera reference
             if (cam == null)
                 cam = GetComponent<Camera>();
             if (cam == null || cameraPivot == null)
                 return;
 
-            Gizmos.color = Color.blue;
+            // Draw camera position limit
+            Gizmos.color = new Color(0f, 0.3f, 1f, 0.25f);
 
-            // Compute camera visible area
             float camHeight = cam.orthographicSize * 2f;
             float camWidth = camHeight * cam.aspect;
 
-            // Compute the visible bounds of the camera (world-space)
-            // These represent the total world area the camera can *move within*
             float minX = xLimit.x + camWidth / 2f;
             float maxX = xLimit.y - camWidth / 2f;
             float minY = yLimit.x + camHeight / 2f;
             float maxY = yLimit.y - camHeight / 2f;
 
-            // Draw a rectangle showing the camera movement area
-            Vector3 center = new Vector3((minX + maxX) / 2f, (minY + maxY) / 2f, cameraPivot.transform.position.z);
-            Vector3 size = new Vector3(maxX - minX, maxY - minY, 1f);
+            Vector3 center = new((minX + maxX) / 2f, (minY + maxY) / 2f, cameraPivot.transform.position.z);
+            Vector3 size = new(maxX - minX, maxY - minY, 1f);
 
-            // Draw wireframe of visible area the camera can travel through
             Gizmos.DrawWireCube(center, size);
 
-            // Optionally, draw the actual world bounds (where camera cannot see past)
-            Gizmos.color = new Color(0f, 0.3f, 1f, 0.25f);
-
+            // Draw camera see limit
+            Gizmos.color = Color.blue;
             Vector3 worldCenter = new Vector3(
                 (xLimit.x + xLimit.y) / 2f,
                 (yLimit.x + yLimit.y) / 2f,

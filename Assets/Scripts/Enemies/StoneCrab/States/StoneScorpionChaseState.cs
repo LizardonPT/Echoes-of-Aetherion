@@ -10,11 +10,12 @@ namespace EchoesOfAetherion.Enemies.StoneScorpion.States
 
         public void Update(StoneScorpionController controller)
         {
-            if (Vector2.Distance(
-                controller.transform.position,
-                controller.Target.transform.position) > controller.DetectionRadius + 16)
+            Vector3 pos = controller.transform.position;
+            Vector3 targetPos = controller.Target.transform.position;
+            float detectionRadius = controller.DetectionRadius + 16;
+
+            if (Vector2.Distance(pos, targetPos) > detectionRadius)
             {
-                controller.CameraFollow?.RemoveTarget(controller.transform);
                 controller.Target = null;
                 controller.StateMachine.ChangeState<StoneScorpionIdleState>();
             }

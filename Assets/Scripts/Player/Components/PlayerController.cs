@@ -15,7 +15,6 @@ namespace EchoesOfAetherion.Player.Components
         [field: SerializeField]
         public InputReader PlayerInput { get; private set; }
         [field: Space]
-        [field: SerializeField] public MenuController MenuController { get; private set; }
 
         public PlayerAnimations Animator { get; private set; }
         public PlayerMovement Movement { get; private set; }
@@ -36,8 +35,6 @@ namespace EchoesOfAetherion.Player.Components
             }
         }
 
-        private TickController tickController;
-
         private void Awake()
         {
             OnValidate();
@@ -50,6 +47,7 @@ namespace EchoesOfAetherion.Player.Components
             base.Start();
 
             //! This gotta be a better way... (Code smell?)
+            //todo: Make ScriptableObj channel for the camera and it's components.
             cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
             cameraFollow?.SetTarget(transform);
@@ -71,14 +69,6 @@ namespace EchoesOfAetherion.Player.Components
         {
             Animator ??= GetComponent<PlayerAnimations>();
             Movement ??= GetComponent<PlayerMovement>();
-            PlayerInput ??= GetComponent<InputReader>();
-
-            if (MenuController == null)
-            {
-                MenuController = FindAnyObjectByType<MenuController>();
-                if (MenuController == null)
-                    Debug.LogWarning("No Menu Controller in the scene"); ;
-            }
         }
     }
 }

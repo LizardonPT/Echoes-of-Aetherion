@@ -17,19 +17,16 @@ namespace EchoesOfAetherion.Enemies.StoneScorpion
         //! tmp while we don't have a class for movement.
         public Vector2 Velocity => rb.linearVelocity;
         public GameObject Target { get; set; }
-        [field: SerializeField] public CameraFollow CameraFollow { get; private set; }
 
         public FiniteStateMachine<StoneScorpionController> StateMachine { get; private set; }
 
         private Rigidbody2D rb;
-        private TickController tickController;
 
         private void Awake()
         {
             SetupStateMachine();
 
             Animator = GetComponent<StoneScorpionAnimations>();
-            CameraFollow = Camera.main.GetComponent<CameraFollow>();
             rb = GetComponent<Rigidbody2D>();
         }
 

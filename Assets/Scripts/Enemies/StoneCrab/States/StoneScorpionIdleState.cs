@@ -10,13 +10,22 @@ namespace EchoesOfAetherion.Enemies.StoneScorpion.States
 
         public void Update(StoneScorpionController controller)
         {
-            if (!controller.Target)
-                controller.Target = Physics2D.OverlapCircle(controller.transform.position, controller.DetectionRadius, controller.PlayerMask)
-                    ?.GetComponent<PlayerController>()?.gameObject;
-
-            if (controller.Target)
+            if (controller.Target == null)
             {
-                controller.CameraFollow?.AddTarget(controller.transform);
+                Vector3 origin = controller.transform.position;
+                float radius = controller.DetectionRadius;
+                LayerMask mask = controller.PlayerMask;
+
+                var hit = Physics2D.OverlapCircle(origin, radius, mask);
+                if (hit != null)
+                {
+                    if (hit.TryGetComponent<PlayerController>(out var player))
+                        controller.Target = player.gameObject;
+                }
+            }
+
+            if (controller.Target != null)
+            {
                 controller.StateMachine.ChangeState<StoneScorpionChaseState>();
             }
         }

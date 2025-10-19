@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace EchoesOfAetherion.Extentions
+namespace EchoesOfEtherion.Extentions
 {
     public static class InputActionExtension
     {

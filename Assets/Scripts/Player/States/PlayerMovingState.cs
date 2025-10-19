@@ -1,9 +1,9 @@
 using UnityEngine;
-using EchoesOfAetherion.Extentions;
-using EchoesOfAetherion.StateMachine;
-using EchoesOfAetherion.Player.Components;
+using EchoesOfEtherion.Extentions;
+using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Player.Components;
 
-namespace EchoesOfAetherion.Player.States
+namespace EchoesOfEtherion.Player.States
 {
     public class PlayerMovingState : IState<PlayerController>
     {

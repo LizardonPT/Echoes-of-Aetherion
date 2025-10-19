@@ -1,11 +1,11 @@
-using EchoesOfAetherion.Game.States;
-using EchoesOfAetherion.Menu;
-using EchoesOfAetherion.Player.Components;
-using EchoesOfAetherion.ScriptableObjects.Utils;
-using EchoesOfAetherion.StateMachine;
+using EchoesOfEtherion.Game.States;
+using EchoesOfEtherion.Menu;
+using EchoesOfEtherion.Player.Components;
+using EchoesOfEtherion.ScriptableObjects.Utils;
+using EchoesOfEtherion.StateMachine;
 using UnityEngine;
 
-namespace EchoesOfAetherion.Game
+namespace EchoesOfEtherion.Game
 {
     [RequireComponent(typeof(TickController))]
     public class GameMaster : MonoBehaviour

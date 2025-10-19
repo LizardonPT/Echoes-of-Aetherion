@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using EchoesOfAetherion.ScriptableObjects.Channels;
+using EchoesOfEtherion.ScriptableObjects.Channels;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace EchoesOfAetherion.CameraUtils
+namespace EchoesOfEtherion.CameraUtils
 {
     [RequireComponent(typeof(Camera), typeof(CameraFollow), typeof(CameraShaker))]
     public class CameraController : MonoBehaviour

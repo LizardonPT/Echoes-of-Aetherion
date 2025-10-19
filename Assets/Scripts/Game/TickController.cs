@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using EchoesOfAetherion.ScriptableObjects.Channels;
+using EchoesOfEtherion.ScriptableObjects.Channels;
 using UnityEngine;
 
-namespace EchoesOfAetherion.Game
+namespace EchoesOfEtherion.Game
 {
     public class TickController : MonoBehaviour
     {

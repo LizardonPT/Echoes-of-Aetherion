@@ -1,8 +1,8 @@
-using EchoesOfAetherion.Game;
+using EchoesOfEtherion.Game;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace EchoesOfAetherion.Menu
+namespace EchoesOfEtherion.Menu
 {
     public class PauseMenu : MonoBehaviour
     {

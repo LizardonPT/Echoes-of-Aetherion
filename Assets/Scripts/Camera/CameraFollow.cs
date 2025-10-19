@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace EchoesOfAetherion.CameraUtils
+namespace EchoesOfEtherion.CameraUtils
 {
     public class CameraFollow : MonoBehaviour
     {

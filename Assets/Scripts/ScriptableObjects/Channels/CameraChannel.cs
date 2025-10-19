@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using EchoesOfAetherion.CameraUtils;
-using EchoesOfAetherion.Game;
+using EchoesOfEtherion.CameraUtils;
+using EchoesOfEtherion.Game;
 using UnityEngine;
 
-namespace EchoesOfAetherion.ScriptableObjects.Channels
+namespace EchoesOfEtherion.ScriptableObjects.Channels
 {
     [CreateAssetMenu(fileName = "CameraChannel", menuName = "Scriptable Objects/Channels/CameraChannel")]
     public class CameraChannel : ScriptableObject

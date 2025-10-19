@@ -1,6 +1,6 @@
-using EchoesOfAetherion.StateMachine;
+using EchoesOfEtherion.StateMachine;
 using UnityEngine;
-namespace EchoesOfAetherion.Game.States
+namespace EchoesOfEtherion.Game.States
 {
     public class GameplayState : IState<GameMaster>
     {

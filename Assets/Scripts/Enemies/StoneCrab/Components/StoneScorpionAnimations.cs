@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EchoesOfAetherion.Enemies.StoneScorpion
+namespace EchoesOfEtherion.Enemies.StoneScorpion
 {
     public class StoneScorpionAnimations : MonoBehaviour
     {

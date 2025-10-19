@@ -1,4 +1,4 @@
-namespace EchoesOfAetherion.ObjectPooling
+namespace EchoesOfEtherion.ObjectPooling
 {
     public interface IPooledObject
     {

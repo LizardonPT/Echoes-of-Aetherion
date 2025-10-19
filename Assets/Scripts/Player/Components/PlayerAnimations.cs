@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EchoesOfAetherion.Player.Components
+namespace EchoesOfEtherion.Player.Components
 {
     public class PlayerAnimations : MonoBehaviour
     {

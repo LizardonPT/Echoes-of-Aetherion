@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EchoesOfAetherion.StateMachine
+namespace EchoesOfEtherion.StateMachine
 {
     public class FiniteStateMachine<T> where T : class
     {

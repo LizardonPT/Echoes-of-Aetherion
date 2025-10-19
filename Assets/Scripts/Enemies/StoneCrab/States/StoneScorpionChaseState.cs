@@ -1,8 +1,8 @@
 using UnityEngine;
-using EchoesOfAetherion.StateMachine;
-using EchoesOfAetherion.Player.Components;
+using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Player.Components;
 
-namespace EchoesOfAetherion.Enemies.StoneScorpion.States
+namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 {
     public class StoneScorpionChaseState : IState<StoneScorpionController>
     {

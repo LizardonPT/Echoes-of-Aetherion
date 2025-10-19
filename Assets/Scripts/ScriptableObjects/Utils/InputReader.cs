@@ -1,9 +1,9 @@
 using System;
-using EchoesOfAetherion.Extentions;
+using EchoesOfEtherion.Extentions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace EchoesOfAetherion.ScriptableObjects.Utils
+namespace EchoesOfEtherion.ScriptableObjects.Utils
 {
     [CreateAssetMenu(fileName = "InputReader", menuName = "Scriptable Objects/Utils/InputReader")]
     public class InputReader : ScriptableObject

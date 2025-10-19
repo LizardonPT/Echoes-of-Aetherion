@@ -1,9 +1,9 @@
-using EchoesOfAetherion.Extentions;
-using EchoesOfAetherion.StateMachine;
+using EchoesOfEtherion.Extentions;
+using EchoesOfEtherion.StateMachine;
 using UnityEngine;
-using EchoesOfAetherion.Player.Components;
+using EchoesOfEtherion.Player.Components;
 
-namespace EchoesOfAetherion.Player.States
+namespace EchoesOfEtherion.Player.States
 {
     public class PlayerIdleState : IState<PlayerController>
     {

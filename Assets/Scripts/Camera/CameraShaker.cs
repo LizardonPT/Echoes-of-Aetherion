@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace EchoesOfAetherion.CameraUtils
+namespace EchoesOfEtherion.CameraUtils
 {
     public class CameraShaker : MonoBehaviour
     {

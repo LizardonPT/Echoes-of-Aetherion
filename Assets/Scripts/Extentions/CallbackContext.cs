@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.InputSystem.InputAction;
 
-namespace EchoesOfAetherion.Extentions
+namespace EchoesOfEtherion.Extentions
 {
     public static class CallbackContextExtension
     {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using EchoesOfAetherion.Game;
+using EchoesOfEtherion.Game;
 using UnityEngine;
 
-namespace EchoesOfAetherion.ScriptableObjects.Channels
+namespace EchoesOfEtherion.ScriptableObjects.Channels
 {
     [CreateAssetMenu(fileName = "TickChannel", menuName = "Scriptable Objects/Channels/TickChannel")]
     public class TickChannel : ScriptableObject

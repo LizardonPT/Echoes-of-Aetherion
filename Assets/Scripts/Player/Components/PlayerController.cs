@@ -1,15 +1,15 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using EchoesOfAetherion.StateMachine;
-using EchoesOfAetherion.Player.States;
-using EchoesOfAetherion.CameraUtils;
-using EchoesOfAetherion.Game;
-using EchoesOfAetherion.Menu;
-using EchoesOfAetherion.ScriptableObjects.Utils;
-using EchoesOfAetherion.ScriptableObjects.Channels;
+using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Player.States;
+using EchoesOfEtherion.CameraUtils;
+using EchoesOfEtherion.Game;
+using EchoesOfEtherion.Menu;
+using EchoesOfEtherion.ScriptableObjects.Utils;
+using EchoesOfEtherion.ScriptableObjects.Channels;
 using System;
 
-namespace EchoesOfAetherion.Player.Components
+namespace EchoesOfEtherion.Player.Components
 {
     [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations))]
     public class PlayerController : TickRegistor

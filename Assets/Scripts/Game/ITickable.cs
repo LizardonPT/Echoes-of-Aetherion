@@ -1,4 +1,4 @@
-namespace EchoesOfAetherion.Game
+namespace EchoesOfEtherion.Game
 {
     public interface ITickable
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EchoesOfAetherion.Player.Components
+namespace EchoesOfEtherion.Player.Components
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class PlayerMovement : MonoBehaviour

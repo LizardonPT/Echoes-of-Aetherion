@@ -1,11 +1,11 @@
 using UnityEngine;
-using EchoesOfAetherion.Player.Components;
-using EchoesOfAetherion.StateMachine;
-using EchoesOfAetherion.Enemies.StoneScorpion.States;
-using EchoesOfAetherion.CameraUtils;
-using EchoesOfAetherion.Game;
+using EchoesOfEtherion.Player.Components;
+using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Enemies.StoneScorpion.States;
+using EchoesOfEtherion.CameraUtils;
+using EchoesOfEtherion.Game;
 
-namespace EchoesOfAetherion.Enemies.StoneScorpion
+namespace EchoesOfEtherion.Enemies.StoneScorpion
 {
     [RequireComponent(typeof(Rigidbody2D), typeof(StoneScorpionAnimations))]
     public class StoneScorpionController : TickRegistor

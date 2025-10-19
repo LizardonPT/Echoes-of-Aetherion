@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EchoesOfAetherion.ObjectPooling
+namespace EchoesOfEtherion.ObjectPooling
 {
     public class ObjectPool : MonoBehaviour
     {

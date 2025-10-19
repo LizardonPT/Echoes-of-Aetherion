@@ -9,8 +9,6 @@ namespace EchoesOfAetherion.Player.Components
         [SerializeField] private float maxSpeed = 80f;
         [SerializeField] private float acceleration = 15f;
         [SerializeField] private float friction = 8f;
-        [SerializeField] private float stopSpeed = 2f;
-
         public bool IsMoving => rb.linearVelocity.sqrMagnitude > 1e-5f;
 
         private Rigidbody2D rb;
@@ -58,8 +56,7 @@ namespace EchoesOfAetherion.Player.Components
                 return;
             }
 
-            float control = speed < stopSpeed ? stopSpeed : speed;
-            float drop = control * friction * Time.fixedDeltaTime;
+            float drop = speed * friction * Time.fixedDeltaTime;
             float newSpeed = Mathf.Max(speed - drop, 0);
 
             rb.linearVelocity = velocity * (newSpeed / speed);

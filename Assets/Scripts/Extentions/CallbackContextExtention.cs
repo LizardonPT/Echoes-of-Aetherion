@@ -5,7 +5,7 @@ using static UnityEngine.InputSystem.InputAction;
 
 namespace EchoesOfEtherion.Extentions
 {
-    public static class CallbackContextExtension
+    public static class CallbackContextExtention
     {
         public static bool TryReadValue<T>(this CallbackContext context, out T value) where T : struct
         {

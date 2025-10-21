@@ -11,7 +11,7 @@ using System;
 
 namespace EchoesOfEtherion.Player.Components
 {
-    [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations))]
+    [RequireComponent(typeof(Movement), typeof(PlayerAnimations))]
     public class PlayerController : TickRegistor
     {
         [field: SerializeField]
@@ -20,7 +20,7 @@ namespace EchoesOfEtherion.Player.Components
         [field: Space]
 
         public PlayerAnimations Animator { get; private set; }
-        public PlayerMovement Movement { get; private set; }
+        public Movement Movement { get; private set; }
 
         public FiniteStateMachine<PlayerController> StateMachine { get; private set; }
 
@@ -73,7 +73,7 @@ namespace EchoesOfEtherion.Player.Components
         private void OnValidate()
         {
             Animator ??= GetComponent<PlayerAnimations>();
-            Movement ??= GetComponent<PlayerMovement>();
+            Movement ??= GetComponent<Movement>();
         }
     }
 }

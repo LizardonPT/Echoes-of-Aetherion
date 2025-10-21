@@ -1,6 +1,5 @@
 using UnityEngine;
 using EchoesOfEtherion.StateMachine;
-using EchoesOfEtherion.Player.Components;
 
 namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 {
@@ -10,24 +9,59 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
         public void Update(StoneScorpionController controller)
         {
-            Vector3 pos = controller.transform.position;
-            Vector3 targetPos = controller.Target.transform.position;
-            float detectionRadius = controller.DetectionRadius + 16;
+            if (!ValidateTarget(controller)) return;
 
-            if (Vector2.Distance(pos, targetPos) > detectionRadius)
-            {
-                controller.Target = null;
-                controller.StateMachine.ChangeState<StoneScorpionIdleState>();
-            }
-            else
-            {
-                Vector2 dir = (Vector2)(controller.Target.transform.position - controller.transform.position).normalized;
-                controller.Animator.UpdateAnimation(dir, dir);
-            }
+            Vector2 dir = (controller.TargetPos - (Vector2)controller.transform.position).normalized;
+            controller.LookDirection = dir;
+
+            controller.Movement.UpdateMovement(dir);
+            controller.Animator.UpdateAnimation(controller.Movement.Velocity, dir);
         }
 
         public void FixedUpdate(StoneScorpionController controller) { }
-
         public void Exit(StoneScorpionController controller) { }
+
+        private bool ValidateTarget(StoneScorpionController controller)
+        {
+            if (controller.Target == null)
+            {
+                controller.StateMachine.ChangeState<StoneScorpionIdleState>();
+                return false;
+            }
+
+            Vector2 origin = controller.transform.position;
+            Vector2 dirToTarget = controller.TargetPos - origin;
+            float distance = dirToTarget.magnitude;
+
+            if (distance > controller.DetectionRadius + 16)
+            {
+                controller.Target = null;
+                controller.StateMachine.ChangeState<StoneScorpionIdleState>();
+                return false;
+            }
+
+            if (distance < controller.AttackDistance)
+            {
+                controller.StateMachine.ChangeState<StoneScorpionRotateState>();
+                return false;
+            }
+
+            if (Vector2.Angle(controller.LookDirection, dirToTarget) > controller.LookAngle)
+            {
+                controller.StateMachine.ChangeState<StoneScorpionIdleState>();
+                return false;
+            }
+
+            LayerMask rayMask = (controller.PlayerMask | controller.EnvironmentMask) & ~controller.EnemyMask;
+            RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, controller.DetectionRadius, rayMask);
+
+            if (rayHit.collider == null || rayHit.collider.gameObject != controller.Target)
+            {
+                controller.StateMachine.ChangeState<StoneScorpionIdleState>();
+                return false;
+            }
+
+            return true;
+        }
     }
 }

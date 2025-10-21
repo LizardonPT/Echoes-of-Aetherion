@@ -1,15 +1,18 @@
 using UnityEngine;
 
-namespace EchoesOfEtherion.Player.Components
+namespace EchoesOfEtherion.Game
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class PlayerMovement : MonoBehaviour
+    public class Movement : MonoBehaviour
     {
         [Header("Movement Settings")]
         [SerializeField] private float maxSpeed = 80f;
         [SerializeField] private float acceleration = 15f;
         [SerializeField] private float friction = 8f;
+
         public bool IsMoving => rb.linearVelocity.sqrMagnitude > 1e-5f;
+        public Vector2 Velocity => rb.linearVelocity;
+        public float Speed => rb.linearVelocity.magnitude;
 
         private Rigidbody2D rb;
 
@@ -20,10 +23,10 @@ namespace EchoesOfEtherion.Player.Components
 
         public void UpdateMovement(Vector2 movementInput)
         {
-            movementInput = Vector2.ClampMagnitude(movementInput, 1f);
+            movementInput = movementInput.normalized;
             Vector2 accumulatedForce = Vector2.zero;
 
-            if (movementInput.sqrMagnitude > 0.01f)
+            if (movementInput.sqrMagnitude > 1e-5)
             {
                 accumulatedForce += Accelerate(movementInput.normalized, movementInput.magnitude * maxSpeed, acceleration);
             }

@@ -1,41 +1,82 @@
-using UnityEngine;
-using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Enemies.Core;
+using EchoesOfEtherion.Enemies.SteeringBehaviours;
 using EchoesOfEtherion.Enemies.StoneScorpion.States;
-using EchoesOfEtherion.Extentions;
-using EchoesOfEtherion.Game;
+using EchoesOfEtherion.StateMachine;
+using UnityEngine;
 
 namespace EchoesOfEtherion.Enemies.StoneScorpion
 {
-    [RequireComponent(typeof(StoneScorpionAnimations), typeof(Movement))]
-    public class StoneScorpionController : TickRegistor
+    [RequireComponent(typeof(StoneScorpionAnimations))]
+    [RequireComponent(typeof(SeekBehaviour))]
+    [RequireComponent(typeof(StopBehaviour))]
+    [RequireComponent(typeof(ObstacleAvoidanceBehaviour))]
+    [RequireComponent(typeof(OrbitBehaviour))]
+    [RequireComponent(typeof(SeparationBehaviour))]
+    public class StoneScorpionController : Agent
     {
         public StoneScorpionAnimations Animator { get; private set; }
-        public Movement Movement { get; private set; }
-
-
-        [field: SerializeField] public LayerMask PlayerMask { get; private set; }
-        [field: SerializeField] public LayerMask EnemyMask { get; private set; }
-        [field: SerializeField] public LayerMask EnvironmentMask { get; private set; }
-
-        [field: SerializeField] public float DetectionRadius { get; private set; } = 120f;
-        [field: SerializeField] public float AttackDistance { get; private set; } = 60f;
-        [field: SerializeField, Range(0, 360)] public int LookAngle { get; private set; } = 45;
-
-        public Vector2 LookDirection = Vector2.right;
-        public GameObject Target { get; set; }
-        public Vector2 TargetPos => new(Target.transform.position.x, Target.transform.position.y + 6);
-
         public FiniteStateMachine<StoneScorpionController> StateMachine { get; private set; }
 
-        private void Awake()
+        public SeekBehaviour SeekBehaviour { get; private set; }
+        public StopBehaviour StopBehaviour { get; private set; }
+        public OrbitBehaviour OrbitBehaviour { get; private set; }
+        public ObstacleAvoidanceBehaviour ObstacleAvoidanceBehaviour { get; private set; }
+        public SeparationBehaviour SeparationBehaviour { get; private set; }
+
+        private GameObject fakeTarget;
+        public GameObject LastSeenTarget { get; private set; }
+
+        protected override void Awake()
         {
+            base.Awake();
+
             Animator = GetComponent<StoneScorpionAnimations>();
-            Movement = GetComponent<Movement>();
+            SeekBehaviour = GetComponent<SeekBehaviour>();
+            StopBehaviour = GetComponent<StopBehaviour>();
+            OrbitBehaviour = GetComponent<OrbitBehaviour>();
+            ObstacleAvoidanceBehaviour = GetComponent<ObstacleAvoidanceBehaviour>();
+            SeparationBehaviour = GetComponent<SeparationBehaviour>();
+
+            CreateFakeTarget();
             SetupStateMachine();
         }
 
-        public override void Tick() => StateMachine?.Update();
-        public override void FixedTick() => StateMachine?.FixedUpdate();
+        public override void Tick()
+        {
+            base.Tick();
+            StateMachine.Update();
+        }
+
+        public override void FixedTick()
+        {
+            base.FixedTick();
+            StateMachine.FixedUpdate();
+        }
+
+        private void CreateFakeTarget()
+        {
+            fakeTarget = new GameObject("LastSeenPosition")
+            {
+                hideFlags = HideFlags.HideInHierarchy
+            };
+            LastSeenTarget = fakeTarget;
+        }
+
+        public void SetLastSeenPosition(Vector2 position)
+        {
+            if (fakeTarget != null)
+            {
+                fakeTarget.transform.position = position;
+            }
+        }
+
+        public void ClearLastSeenPosition()
+        {
+            if (fakeTarget != null)
+            {
+                fakeTarget.transform.position = new Vector3(9999, 9999, 9999);
+            }
+        }
 
         private void SetupStateMachine()
         {
@@ -43,27 +84,17 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             StateMachine.AddState<StoneScorpionIdleState>(new StoneScorpionIdleState());
             StateMachine.AddState<StoneScorpionChaseState>(new StoneScorpionChaseState());
             StateMachine.AddState<StoneScorpionRotateState>(new StoneScorpionRotateState());
+            StateMachine.AddState<StoneScorpionSearchState>(new StoneScorpionSearchState());
             StateMachine.ChangeState<StoneScorpionIdleState>();
         }
 
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        protected override void OnDestroy()
         {
-            Vector2 pos = transform.position;
-
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(pos, DetectionRadius);
-
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(pos, AttackDistance);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos, pos + LookDirection.normalized * DetectionRadius);
-
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(pos, pos + LookDirection.Rotate(LookAngle).normalized * DetectionRadius);
-            Gizmos.DrawLine(pos, pos + LookDirection.Rotate(-LookAngle).normalized * DetectionRadius);
+            base.OnDestroy();
+            if (fakeTarget != null)
+            {
+                Destroy(fakeTarget);
+            }
         }
-#endif
     }
 }

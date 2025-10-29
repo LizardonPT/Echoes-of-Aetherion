@@ -3,7 +3,7 @@ using UnityEngine;
 namespace EchoesOfEtherion.Game
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Movement : MonoBehaviour
+    public class PlayerMovement : MonoBehaviour
     {
         [Header("Movement Settings")]
         [SerializeField] private float maxSpeed = 80f;

@@ -623,7 +623,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 98
+  orthographic size: 146.78
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2534,9 +2534,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1317929909}
-  - component: {fileID: 1317929911}
-  - component: {fileID: 1317929910}
+  - component: {fileID: 1317929915}
   - component: {fileID: 1317929914}
+  - component: {fileID: 1317929920}
+  - component: {fileID: 1317929921}
+  - component: {fileID: 1317929919}
+  - component: {fileID: 1317929922}
+  - component: {fileID: 1317929923}
   - component: {fileID: 1317929912}
   - component: {fileID: 1317929913}
   m_Layer: 7
@@ -2564,46 +2568,6 @@ Transform:
   - {fileID: 1836058190}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1317929910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317929908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 745dc5b0ef2e36948aa9a4f9b3e31624, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StoneCrabAnimations
-  animator: {fileID: 0}
-  spriteRenderer: {fileID: 1698238454}
---- !u!114 &1317929911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317929908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2184dd5ed9f85e40a18c78c94739a83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StoneCrabController
-  tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
-  <PlayerMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 8
-  <EnemyMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 128
-  <EnvironmentMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 64
-  <DetectionRadius>k__BackingField: 120
-  <AttackDistance>k__BackingField: 60
-  <LookAngle>k__BackingField: 45
-  LookDirection: {x: 1, y: 0}
 --- !u!50 &1317929912
 Rigidbody2D:
   serializedVersion: 5
@@ -2676,12 +2640,121 @@ MonoBehaviour:
   m_GameObject: {fileID: 1317929908}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 935e6cd2d32e7a1479ce15893b2fbc8c, type: 3}
+  m_Script: {fileID: 11500000, guid: 745dc5b0ef2e36948aa9a4f9b3e31624, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Game.Movement
-  maxSpeed: 50
-  acceleration: 10
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.StoneScorpion.StoneScorpionAnimations
+  animator: {fileID: 0}
+  spriteRenderer: {fileID: 1698238454}
+--- !u!114 &1317929915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317929908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbc6271398a1c144b4c6ccfc88d9773, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StoneScorpionController
+  tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
+  maxAccel: 15
+  maxSpeed: 65
   friction: 8
+  <PlayerMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 8
+  <EnemyMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 128
+  <EnvironmentMask>k__BackingField:
+    serializedVersion: 2
+    m_Bits: 64
+  <DetectionRadius>k__BackingField: 120
+  <SeekRadius>k__BackingField: 180
+  <LookAngle>k__BackingField: 45
+  LookDirection: {x: 1, y: 0}
+--- !u!114 &1317929919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317929908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4887d5565872a3740aabdf8fd59cc467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectAvoidanceBehaviour
+  weight: 1
+  isActive: 1
+  distanceCheck: 60
+  showDebugGizmos: 0
+--- !u!114 &1317929920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317929908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587b497c6703ccc4bbdf26800685b3ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SeekBehaviour
+  weight: 1
+  isActive: 1
+--- !u!114 &1317929921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317929908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f96a0df521b44f043af9e0aa1c884f4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrbitBehaviour
+  weight: 1
+  isActive: 1
+  <OrbitDistance>k__BackingField: 60
+  offset: 5
+  orbitStrength: 1
+  tolerance: 2
+  minChangeDirectionTime: 2
+  maxChangeDirectionTime: 5
+--- !u!114 &1317929922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317929908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6508d0a384c054a47a706ea52466e505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StopBehaviour
+  weight: 1
+  isActive: 0
+  slowingRadius: 2
+--- !u!114 &1317929923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317929908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76191d8903e08fd4b983448d514a2df2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.SteeringBehaviours.SeparationBehaviour
+  weight: 1
+  isActive: 1
+  separationRadius: 55
+  showDebugCircles: 1
 --- !u!1 &1337098984
 GameObject:
   m_ObjectHideFlags: 0
@@ -2969,7 +3042,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 1918404553, guid: 138e93a1d9d565a4a9d883847e69b437, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 36, y: 38}

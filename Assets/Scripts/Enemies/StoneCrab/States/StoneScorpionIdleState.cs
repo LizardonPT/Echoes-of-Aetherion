@@ -6,18 +6,25 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 {
     public class StoneScorpionIdleState : IState<StoneScorpionController>
     {
-        public void Enter(StoneScorpionController controller) { }
+        public void Enter(StoneScorpionController controller)
+        {
+            controller.SeekBehaviour.IsActive = false;
+            controller.OrbitBehaviour.IsActive = false;
+            controller.StopBehaviour.IsActive = true;
+            controller.ObstacleAvoidanceBehaviour.IsActive = false;
+            controller.SeparationBehaviour.IsActive = false;
+        }
 
         public void Update(StoneScorpionController controller)
         {
             if (DetectPlayer(controller))
                 controller.StateMachine.ChangeState<StoneScorpionChaseState>();
 
-            controller.Movement.UpdateMovement(Vector2.zero);
-            controller.Animator.UpdateAnimation(Vector2.zero, controller.LookDirection);
+            controller.Animator.UpdateAnimation(controller.Velocity, controller.LookDirection);
         }
 
         public void FixedUpdate(StoneScorpionController controller) { }
+
         public void Exit(StoneScorpionController controller) { }
 
         private bool DetectPlayer(StoneScorpionController controller)

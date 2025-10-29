@@ -7,7 +7,7 @@ namespace EchoesOfEtherion.Game.States
         public void Enter(GameMaster master)
         {
             master.PauseGame();
-            master.MenuController?.ShowPauseMenu();
+            master.PauseMenu?.ShowPauseMenu();
         }
 
         public void Update(GameMaster master)
@@ -21,7 +21,7 @@ namespace EchoesOfEtherion.Game.States
         public void Exit(GameMaster master)
         {
             master.ResumeGame();
-            master.MenuController?.HidePauseMenu();
+            master.PauseMenu?.HidePauseMenu();
         }
 
         public void FixedUpdate(GameMaster master) { }

@@ -29,7 +29,7 @@ namespace EchoesOfEtherion.Player.Components
             get
             {
                 Vector2 pointerPos = Pointer.current != null
-                    ? Camera.main.ScreenToWorldPoint(Pointer.current.position.ReadValue())
+                    ? cameraChannel.GameCamera.ScreenToWorldPoint(Pointer.current.position.ReadValue())
                     : Vector2.zero;
 
                 return (pointerPos != Vector2.zero ?

@@ -87,7 +87,6 @@ InitTestScene*.unity*
 /[Aa]ssets/Addressables_Temp*
 # By default, Addressables content builds will generate addressables_content_state.bin
 # files in platform-specific subfolders, for example:
-# /Assets/AddressableAssetsData/OSX/addressables_content_state.bin
 /[Aa]ssets/AddressableAssetsData/*/*.bin*
 
 # Visual Scripting auto-generated files
@@ -99,6 +98,36 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-
 [Aa]ssets/TextMesh Pro
 .editorconfig
+
+
+# ============================ #
+# FMOD Specific Ignore Rules   #
+# ============================ #
+
+# Ignore FMOD build outputs (banks, caches, platform builds)
+/[Ff]mod/[Bb]uild/*
+/[Ff]mod/[Bb]anks/*
+/[Ff]mod/.cache/
+/[Ff]mod/.backup/
+/[Ff]mod/.guidcache/
+/[Ff]mod/.user/
+/[Ff]mod/.lock
+/Ff]mod/.backup*/
+/[Ff]mod/.autosave*/
+
+# Keep FMOD project files, metadata, and scripts
+!/[Ff]mod/*.fspro
+!/[Ff]mod/Metadata/**
+!/[Ff]mod/Assets/**
+!/[Ff]mod/Scripts/**
+!/[Ff]mod/Reimport.txt
+
+# If FMOD banks are exported to StreamingAssets (typical setup)
+# you can safely ignore them too:
+# /[Aa]ssets/StreamingAssets/FMOD*/**
+
+# ============================ #
+# End FMOD Rules               #
+# ============================ #

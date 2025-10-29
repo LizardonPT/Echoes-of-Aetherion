@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace EchoesOfEtherion.CameraUtils
 {
+    [RequireComponent(typeof(Camera))]
     public class CameraFollow : MonoBehaviour
     {
         [SerializeField] private Transform cameraPivot;
@@ -23,6 +24,12 @@ namespace EchoesOfEtherion.CameraUtils
 
         private void FixedUpdate() => UpdateCameraPosition();
 
+        private void LateUpdate()
+        {
+            if (hasLimits)
+                MoveTarget.position = ClampPosition(transform.position);
+        }
+
         private void UpdateCameraPosition()
         {
             if (targets.Count == 0) return;
@@ -34,9 +41,6 @@ namespace EchoesOfEtherion.CameraUtils
             targetPos += positionOffset;
 
             SmoothMove(targetPos);
-
-            if (hasLimits)
-                MoveTarget.position = ClampPosition(targetPos);
         }
 
         private Vector3 GetTargetsMidpoint()
@@ -48,7 +52,8 @@ namespace EchoesOfEtherion.CameraUtils
 
         private void SmoothMove(Vector3 targetPos)
         {
-            MoveTarget.position = Vector3.SmoothDamp(MoveTarget.position, targetPos, ref velocity, smoothTime);
+            Vector3 smooth = Vector3.SmoothDamp(MoveTarget.position, targetPos, ref velocity, smoothTime);
+            MoveTarget.position = new Vector3(smooth.x, smooth.y, 0);
         }
 
         private Vector3 ClampPosition(Vector3 targetPosition)
@@ -64,7 +69,7 @@ namespace EchoesOfEtherion.CameraUtils
             float clampedX = Mathf.Clamp(targetPosition.x, minX, maxX);
             float clampedY = Mathf.Clamp(targetPosition.y, minY, maxY);
 
-            return new Vector3(clampedX, clampedY, targetPosition.z);
+            return new Vector3(clampedX, clampedY, 0);
         }
 
 

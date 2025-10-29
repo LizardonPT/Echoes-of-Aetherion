@@ -14,7 +14,7 @@ namespace EchoesOfEtherion.Game
         [field: SerializeField] public InputReader InputReader { get; private set; }
         [field: Space]
         [field: Header("References")]
-        [field: SerializeField] public MenuController MenuController { get; private set; }
+        [field: SerializeField] public PauseMenu PauseMenu { get; private set; }
 
         public FiniteStateMachine<GameMaster> StateMachine { get; private set; }
         private TickController tickController;
@@ -26,11 +26,6 @@ namespace EchoesOfEtherion.Game
             InputReader ??= GetComponent<InputReader>();
             tickController ??= GetComponent<TickController>();
             SetupStateMachine();
-        }
-
-        private void Start()
-        {
-            MenuController ??= FindAnyObjectByType<MenuController>();
         }
 
         public void PauseGame()

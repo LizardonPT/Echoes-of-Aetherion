@@ -7,7 +7,7 @@ namespace EchoesOfEtherion.Game.States
         public void Enter(GameMaster master)
         {
             master.ResumeGame();
-            master.MenuController?.HidePauseMenu();
+            master.PauseMenu?.HidePauseMenu();
         }
 
         public void Exit(GameMaster master)

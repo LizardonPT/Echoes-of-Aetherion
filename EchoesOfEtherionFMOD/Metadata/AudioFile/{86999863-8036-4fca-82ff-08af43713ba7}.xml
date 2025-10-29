@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{86999863-8036-4fca-82ff-08af43713ba7}">
+		<property name="assetPath">
+			<value>Ambience/Wind/Ambiance_Wind_Calm_Loop_Stereo.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>29.852083333333333</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{056931ab-06d9-4f56-b59f-2e2ac20fa0db}</destination>
+		</relationship>
+	</object>
+</objects>

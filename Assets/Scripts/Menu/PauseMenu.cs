@@ -6,22 +6,30 @@ namespace EchoesOfEtherion.Menu
 {
     public class PauseMenu : MonoBehaviour
     {
+        [SerializeField] private GameObject pausedMenu;
         [SerializeField] private Button resumeButton;
 
         private GameMaster gameMaster;
-        private MenuController menuController;
-
         private void Start()
         {
             resumeButton.onClick.AddListener(OnResumeClicked);
             gameMaster ??= FindAnyObjectByType<GameMaster>();
-            menuController ??= FindAnyObjectByType<MenuController>();
         }
 
         private void OnResumeClicked()
         {
             gameMaster?.ResumeGame();
-            menuController.HidePauseMenu();
+            HidePauseMenu();
+        }
+
+        public void ShowPauseMenu()
+        {
+            pausedMenu?.SetActive(true);
+        }
+
+        public void HidePauseMenu()
+        {
+            pausedMenu?.SetActive(false);
         }
     }
 }

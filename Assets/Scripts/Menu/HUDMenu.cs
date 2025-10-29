@@ -9,14 +9,14 @@ namespace EchoesOfEtherion.Menu
         [SerializeField] private Button pauseButton;
 
         private GameMaster gameMaster;
-        private MenuController menuController;
+        private PauseMenu menuController;
 
         private void Start()
         {
             pauseButton.onClick.AddListener(OnPauseClicked);
             gameMaster ??= FindAnyObjectByType<GameMaster>();
 
-            menuController ??= FindAnyObjectByType<MenuController>();
+            menuController ??= FindAnyObjectByType<PauseMenu>();
         }
 
         private void OnPauseClicked()

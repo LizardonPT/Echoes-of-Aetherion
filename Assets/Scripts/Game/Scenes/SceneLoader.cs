@@ -20,7 +20,6 @@ namespace EchoesOfEtherion.Game.Scenes
         [SerializeField] private Camera managersCamera;
 
         private Camera gameCamera;
-        private readonly WaitForSeconds wfs = new(0.5f);
 
         private string currentSceneName;
         private readonly List<string> loadedAdditiveScenes = new();
@@ -199,6 +198,7 @@ namespace EchoesOfEtherion.Game.Scenes
             loadOp.allowSceneActivation = false;
 
             float progress = 0f;
+
             while (progress < 0.9f)
             {
                 progress = Mathf.MoveTowards(progress, loadOp.progress, Time.unscaledDeltaTime);
@@ -207,9 +207,8 @@ namespace EchoesOfEtherion.Game.Scenes
                 yield return null;
             }
 
-            yield return wfs;
-
             loadOp.allowSceneActivation = true;
+            
             while (!loadOp.isDone)
             {
                 progress = Mathf.MoveTowards(progress, 1f, Time.unscaledDeltaTime);

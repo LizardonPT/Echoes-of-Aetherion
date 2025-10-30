@@ -62,7 +62,7 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638974273068223704
+  lastModified: 638974362389357127
   FileSizes:
   - Name: Desktop
     Value: 3324
@@ -204,7 +204,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 6402755660037353043}
   cacheVersion: 131849
-  cacheTime: 638974273068257728
+  cacheTime: 638974362389813304
   SerializableEventsDict:
   - key: event:/Wind
     index: 0
@@ -318,7 +318,7 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638974273068257728
+  lastModified: 638974362389372182
   FileSizes:
   - Name: Desktop
     Value: 1148
@@ -385,8 +385,8 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638974266503188307
+  lastModified: 638974362389813304
   FileSizes:
   - Name: Desktop
-    Value: 80832
+    Value: 80864
   Exists: 1

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using EchoesOfEtherion.ScriptableObjects.Channels;
+using EchoesOfEtherion.Game;
 
 namespace EchoesOfEtherion.Menu
 {
@@ -14,6 +15,9 @@ namespace EchoesOfEtherion.Menu
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button mainMenuButton;
         [SerializeField] private Button quitButton;
+
+        [Header("Components References")]
+        [SerializeField] private GameMaster gameMaster;
 
         private void Awake()
         {
@@ -46,8 +50,7 @@ namespace EchoesOfEtherion.Menu
 
         private void OnResumeButtonClicked()
         {
-            // This will be handled by the GameMaster state machine
-            // Typically, you'd have an event channel for pause/resume
+            gameMaster?.ResumeGame();
             HidePauseMenu();
         }
 

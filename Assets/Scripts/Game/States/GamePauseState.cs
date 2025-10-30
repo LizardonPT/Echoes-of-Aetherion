@@ -1,5 +1,6 @@
 using EchoesOfEtherion.StateMachine;
 using UnityEngine;
+
 namespace EchoesOfEtherion.Game.States
 {
     public class GamePauseState : IState<GameMaster>

@@ -1,5 +1,6 @@
 using EchoesOfEtherion.StateMachine;
 using UnityEngine;
+
 namespace EchoesOfEtherion.Game.States
 {
     public class GameplayState : IState<GameMaster>
@@ -24,7 +25,7 @@ namespace EchoesOfEtherion.Game.States
 
         public void FixedUpdate(GameMaster master)
         {
-            
+
         }
     }
 }

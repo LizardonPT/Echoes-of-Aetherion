@@ -15,7 +15,7 @@ namespace EchoesOfEtherion.Game.Audio
         private FMOD.Studio.EventInstance musicInstance;
 
         [Header("Settings")]
-        public bool playOnStart = true;
+        public bool playOnStart = true;        
 
         private void Start()
         {

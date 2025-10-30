@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace EchoesOfEtherion.CameraUtils
 {
@@ -18,7 +19,7 @@ namespace EchoesOfEtherion.CameraUtils
         private Camera cam;
         private Vector3 velocity;
 
-        private Transform MoveTarget => cameraPivot != null ? cameraPivot : transform;
+        private Transform MoveTransform => cameraPivot != null ? cameraPivot : transform;
 
         private void Awake() => cam = GetComponent<Camera>();
 
@@ -27,7 +28,7 @@ namespace EchoesOfEtherion.CameraUtils
         private void LateUpdate()
         {
             if (hasLimits)
-                MoveTarget.position = ClampPosition(transform.position);
+                MoveTransform.position = ClampPosition(transform.position);
         }
 
         private void UpdateCameraPosition()
@@ -52,8 +53,8 @@ namespace EchoesOfEtherion.CameraUtils
 
         private void SmoothMove(Vector3 targetPos)
         {
-            Vector3 smooth = Vector3.SmoothDamp(MoveTarget.position, targetPos, ref velocity, smoothTime);
-            MoveTarget.position = new Vector3(smooth.x, smooth.y, 0);
+            Vector3 smooth = Vector3.SmoothDamp(MoveTransform.position, targetPos, ref velocity, smoothTime);
+            MoveTransform.position = new Vector3(smooth.x, smooth.y, 0);
         }
 
         private Vector3 ClampPosition(Vector3 targetPosition)
@@ -80,6 +81,10 @@ namespace EchoesOfEtherion.CameraUtils
             targets.Clear();
             if (target != null)
                 targets.Add(target);
+
+            Vector3 targetPos = new(target.position.x, target.position.y, 0);
+
+            MoveTransform.position = targetPos + positionOffset;
         }
 
         public void AddTarget(Transform target)

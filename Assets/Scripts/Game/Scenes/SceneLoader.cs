@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
-using FMODUnity;
+using System.Collections.Generic;
 using EchoesOfEtherion.ScriptableObjects.Channels;
 
 namespace EchoesOfEtherion.Game.Scenes
@@ -18,10 +18,14 @@ namespace EchoesOfEtherion.Game.Scenes
 
         [Header("Camera References")]
         [SerializeField] private Camera managersCamera;
-        [SerializeField] private StudioListener studioListener;
 
         private Camera gameCamera;
-        private readonly WaitForSeconds wfs = new WaitForSeconds(0.5f);
+        private readonly WaitForSeconds wfs = new(0.5f);
+
+        private string currentSceneName;
+        private readonly List<string> loadedAdditiveScenes = new();
+
+        public string CurrentSceneName => currentSceneName;
 
         private void OnEnable()
         {
@@ -37,42 +41,88 @@ namespace EchoesOfEtherion.Game.Scenes
 
         private void Start()
         {
+            InitializeSceneSystem();
+        }
+
+        private void InitializeSceneSystem()
+        {
 #if UNITY_EDITOR
-            // If more than one scene is loaded (e.g. Managers + Gameplay Scene)
+            // Handle editor play mode with existing scenes
             if (SceneManager.sceneCount > 1)
             {
-                Scene activeGameplayScene = FindNonManagerScene();
+                List<Scene> gameplayScenes = FindAllGameplayScenes();
 
-                if (activeGameplayScene.IsValid())
+                if (gameplayScenes.Count == 1)
                 {
-                    SetupForExistingGameplayScene(activeGameplayScene);
-                    sceneLoaderChannel.NotifySceneLoaded(activeGameplayScene.name);
+                    // Single gameplay scene found, use it as current
+                    Scene gameplayScene = gameplayScenes[0];
+                    currentSceneName = gameplayScene.name;
+                    SetupForExistingGameplayScene(gameplayScene);
+                    sceneLoaderChannel.NotifySceneLoaded(currentSceneName);
+                    return;
+                }
+                else if (gameplayScenes.Count > 1)
+                {
+                    // Multiple scenes loaded - clean up and start fresh
+                    Debug.LogWarning($"[SceneLoader] Multiple gameplay scenes found in editor. Cleaning up and loading MainMenu.");
+                    StartCoroutine(CleanupAndLoadMainMenu());
                     return;
                 }
             }
 #endif
-            // Normal boot path (only Managers loaded)
-            sceneLoaderChannel.RequestLoadSceneAdditive("MainMenu");
+            // Normal boot path - only Managers scene is loaded
+            LoadInitialScene();
         }
 
-        /// <summary>
-        /// Finds any loaded scene that isn't the Managers scene.
-        /// </summary>
-        private Scene FindNonManagerScene()
+        private IEnumerator CleanupAndLoadMainMenu()
         {
+            loadingScreen?.SetActive(true);
+
+            // Unload all non-manager scenes
+            List<AsyncOperation> unloadOperations = new List<AsyncOperation>();
             for (int i = 0; i < SceneManager.sceneCount; i++)
             {
                 Scene scene = SceneManager.GetSceneAt(i);
                 if (scene.name != "Managers" && scene.isLoaded)
-                    return scene;
+                {
+                    unloadOperations.Add(SceneManager.UnloadSceneAsync(scene));
+                }
             }
 
-            return default;
+            // Wait for all unloads to complete
+            foreach (var op in unloadOperations)
+            {
+                while (!op.isDone)
+                    yield return null;
+            }
+
+            loadingScreen?.SetActive(false);
+
+            // Load main menu
+            LoadInitialScene();
+        }
+
+        private void LoadInitialScene()
+        {
+            currentSceneName = "MainMenu";
+            sceneLoaderChannel.RequestLoadSceneAdditive(currentSceneName);
         }
 
         /// <summary>
-        /// Sets up camera, listener, and state for direct scene play (Editor only).
+        /// Finds all loaded scenes that aren't the Managers scene.
         /// </summary>
+        private List<Scene> FindAllGameplayScenes()
+        {
+            List<Scene> gameplayScenes = new();
+            for (int i = 0; i < SceneManager.sceneCount; i++)
+            {
+                Scene scene = SceneManager.GetSceneAt(i);
+                if (scene.name != "Managers" && scene.isLoaded)
+                    gameplayScenes.Add(scene);
+            }
+            return gameplayScenes;
+        }
+
         private void SetupForExistingGameplayScene(Scene scene)
         {
             foreach (GameObject root in scene.GetRootGameObjects())
@@ -89,9 +139,6 @@ namespace EchoesOfEtherion.Game.Scenes
             {
                 managersCamera.enabled = false;
                 gameCamera.enabled = true;
-
-                if (studioListener != null)
-                    studioListener.AttenuationObject = gameCamera.gameObject;
             }
             else
             {
@@ -106,6 +153,9 @@ namespace EchoesOfEtherion.Game.Scenes
 
         private IEnumerator LoadSceneAdditiveAsync(string sceneName)
         {
+            // Ensure time scale is normal for loading
+            Time.timeScale = 1f;
+
             loadingScreen?.SetActive(true);
             AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             op.allowSceneActivation = true;
@@ -117,27 +167,43 @@ namespace EchoesOfEtherion.Game.Scenes
                 yield return null;
             }
 
+            // Update scene tracking
+            if (!loadedAdditiveScenes.Contains(sceneName))
+            {
+                loadedAdditiveScenes.Add(sceneName);
+            }
+
+            if (string.IsNullOrEmpty(currentSceneName))
+            {
+                currentSceneName = sceneName;
+            }
+
             loadingScreen?.SetActive(false);
             sceneLoaderChannel.NotifySceneLoaded(sceneName);
         }
 
-        private void SwitchToScene(string newScene, string oldScene)
+        private void SwitchToScene(string newScene)
         {
-            StartCoroutine(SwitchSceneAsync(newScene, oldScene));
+            StartCoroutine(SwitchSceneAsync(newScene, currentSceneName ?? ""));
         }
 
         private IEnumerator SwitchSceneAsync(string newScene, string oldScene)
         {
+            // Ensure time scale is normal for loading
+            Time.timeScale = 1f;
+
             loadingScreen?.SetActive(true);
             managersCamera.enabled = true;
 
             AsyncOperation loadOp = SceneManager.LoadSceneAsync(newScene, LoadSceneMode.Additive);
             loadOp.allowSceneActivation = false;
 
-            while (loadOp.progress < 0.9f)
+            float progress = 0f;
+            while (progress < 0.9f)
             {
+                progress = Mathf.MoveTowards(progress, loadOp.progress, Time.unscaledDeltaTime);
                 if (progressBar != null)
-                    progressBar.value = loadOp.progress;
+                    progressBar.value = progress;
                 yield return null;
             }
 
@@ -145,19 +211,44 @@ namespace EchoesOfEtherion.Game.Scenes
 
             loadOp.allowSceneActivation = true;
             while (!loadOp.isDone)
+            {
+                progress = Mathf.MoveTowards(progress, 1f, Time.unscaledDeltaTime);
+                if (progressBar != null)
+                    progressBar.value = progress;
                 yield return null;
+            }
 
             Scene loadedScene = SceneManager.GetSceneByName(newScene);
             SetupForExistingGameplayScene(loadedScene);
 
-            if (!string.IsNullOrEmpty(oldScene))
+            // Update scene tracking
+            currentSceneName = newScene;
+            
+            if (!loadedAdditiveScenes.Contains(newScene))
+            {
+                loadedAdditiveScenes.Add(newScene);
+            }
+
+            // Unload old scene if specified
+            if (!string.IsNullOrEmpty(oldScene) && oldScene != "Managers")
             {
                 yield return SceneManager.UnloadSceneAsync(oldScene);
+                loadedAdditiveScenes.Remove(oldScene);
                 sceneLoaderChannel.NotifySceneUnloaded(oldScene);
             }
 
             loadingScreen?.SetActive(false);
             sceneLoaderChannel.NotifySceneLoaded(newScene);
+        }
+
+        public string GetCurrentSceneName()
+        {
+            return currentSceneName;
+        }
+
+        public void RestartCurrentScene()
+        {
+            sceneLoaderChannel.RequestSwitchScene(currentSceneName);
         }
     }
 }

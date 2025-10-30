@@ -56,7 +56,7 @@
 			<destination>{97421c18-e219-4be0-aac1-ca9344458a33}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{590c22cc-715f-44cc-afd2-39c9087a4c86}</destination>
+			<destination>{c51ae0ee-2215-439c-90a0-14c908cc89a6}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{ff1c27de-bc7e-4d9b-bc38-412f4a175789}" />
@@ -73,7 +73,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{6cd8ec7e-664b-40ef-ac28-3b8483ac5347}">
 		<property name="volume">
-			<value>-8</value>
+			<value>-11</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{f0f13fea-dc16-4a00-85d8-19eb76841167}</destination>
@@ -103,6 +103,13 @@
 	</object>
 	<object class="MixerBusPanner" id="{13019ee6-dc6e-4435-975c-d460a1af1b20}" />
 	<object class="MultiSound" id="{2bc21f02-e330-4187-b55c-98ac4292a9ef}">
+		<property name="volume">
+			<value>5.5</value>
+		</property>
+		<relationship name="modulators">
+			<destination>{53cd522d-a28d-4f1f-8296-ae1979bda6f8}</destination>
+			<destination>{6eb3e832-cc43-4b16-9066-0a163e9ee120}</destination>
+		</relationship>
 		<relationship name="sounds">
 			<destination>{0695f73a-44c9-4aa3-8f6e-30203ec870a5}</destination>
 			<destination>{bb13175c-f84f-4e0e-b50d-89823f4b06bb}</destination>
@@ -114,6 +121,22 @@
 	</object>
 	<object class="MixerBusFader" id="{7b334e72-88a0-4eb4-8609-2065e57843dd}" />
 	<object class="MixerBusFader" id="{27d3d2f8-5836-45b9-aa31-34f485c1e8f4}" />
+	<object class="RandomizerModulator" id="{53cd522d-a28d-4f1f-8296-ae1979bda6f8}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>30.5</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{6eb3e832-cc43-4b16-9066-0a163e9ee120}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="amount">
+			<value>9.59999943</value>
+		</property>
+	</object>
 	<object class="SingleSound" id="{0695f73a-44c9-4aa3-8f6e-30203ec870a5}">
 		<relationship name="audioFile">
 			<destination>{526fd500-f235-4883-9191-9c6152913c78}</destination>

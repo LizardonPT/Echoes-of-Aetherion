@@ -22,7 +22,7 @@ namespace EchoesOfEtherion.Menu
 
         private void StartGame()
         {
-            sceneLoaderChannel.RequestSwitchScene("Prototype", "MainMenu");
+            sceneLoaderChannel.RequestSwitchScene("Prototype");
         }
 
         private void Quit()

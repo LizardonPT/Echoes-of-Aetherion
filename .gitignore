@@ -107,26 +107,20 @@ InitTestScene*.unity*
 # ============================ #
 
 # Ignore FMOD build outputs (banks, caches, platform builds)
-/[Ff]mod/[Bb]uild/*
-/[Ff]mod/[Bb]anks/*
-/[Ff]mod/.cache/
-/[Ff]mod/.backup/
-/[Ff]mod/.guidcache/
-/[Ff]mod/.user/
-/[Ff]mod/.lock
-/Ff]mod/.backup*/
-/[Ff]mod/.autosave*/
+/EchosOfEtherionFMOD/.cache/
+/EchosOfEtherionFMOD/.backup/
+/EchosOfEtherionFMOD/.guidcache/
+/EchosOfEtherionFMOD/.user/
+/EchosOfEtherionFMOD/.lock
+/EchosOfEtherionFMOD/.backup*/
+/EchosOfEtherionFMOD/.autosave*/
 
 # Keep FMOD project files, metadata, and scripts
-!/[Ff]mod/*.fspro
-!/[Ff]mod/Metadata/**
-!/[Ff]mod/Assets/**
-!/[Ff]mod/Scripts/**
-!/[Ff]mod/Reimport.txt
-
-# If FMOD banks are exported to StreamingAssets (typical setup)
-# you can safely ignore them too:
-# /[Aa]ssets/StreamingAssets/FMOD*/**
+!/EchosOfEtherionFMOD/*.fspro
+!/EchosOfEtherionFMOD/Metadata/**
+!/EchosOfEtherionFMOD/Assets/**
+!/EchosOfEtherionFMOD/Scripts/**
+!/EchosOfEtherionFMOD/Reimport.txt
 
 # ============================ #
 # End FMOD Rules               #

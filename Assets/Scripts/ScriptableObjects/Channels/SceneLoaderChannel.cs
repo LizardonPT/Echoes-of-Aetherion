@@ -7,19 +7,30 @@ namespace EchoesOfEtherion.ScriptableObjects.Channels
     public class SceneLoaderChannel : ScriptableObject
     {
         public Action<string> OnLoadSceneAdditiveRequested;
-        public Action<string, string> OnSwitchSceneRequested;
-        
+        public Action<string> OnSwitchSceneRequested;
+
         public Action<string> OnSceneLoaded;
         public Action<string> OnSceneUnloaded;
+
+        public Action<string, string> OnCurrentSceneChanged;
 
         public void RequestLoadSceneAdditive(string sceneName)
         {
             OnLoadSceneAdditiveRequested?.Invoke(sceneName);
         }
 
-        public void RequestSwitchScene(string newScene, string oldScene)
+        public void RequestSwitchScene(string newScene)
         {
-            OnSwitchSceneRequested?.Invoke(newScene, oldScene);
+            OnSwitchSceneRequested?.Invoke(newScene);
+        }
+
+        public void QuitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
 
         internal void NotifySceneLoaded(string sceneName)
@@ -30,6 +41,11 @@ namespace EchoesOfEtherion.ScriptableObjects.Channels
         internal void NotifySceneUnloaded(string sceneName)
         {
             OnSceneUnloaded?.Invoke(sceneName);
+        }
+
+        internal void NotifyCurrentSceneChanged(string newScene, string oldScene)
+        {
+            OnCurrentSceneChanged?.Invoke(newScene, oldScene);
         }
     }
 }

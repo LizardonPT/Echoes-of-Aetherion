@@ -62,10 +62,10 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638973795440406467
+  lastModified: 638974273068223704
   FileSizes:
   - Name: Desktop
-    Value: 1036
+    Value: 3324
   Exists: 1
 --- !u!114 &-5200636765044336654
 MonoBehaviour:
@@ -115,11 +115,38 @@ MonoBehaviour:
   Banks:
   - {fileID: 8999479865531794286}
   IsStream: 0
-  Is3D: 0
+  Is3D: 1
   IsOneShot: 1
   Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
+  MinDistance: 0
+  MaxDistance: 450
+  Length: 0
+--- !u!114 &-3727519315141635289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/Outside
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/Outside
+  Guid:
+    Data1: 1995773354
+    Data2: 1085375820
+    Data3: 1540936631
+    Data4: 401479883
+  Banks:
+  - {fileID: -6730727362255780359}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
   Length: 0
 --- !u!114 &-2001211438870494781
 MonoBehaviour:
@@ -169,13 +196,15 @@ MonoBehaviour:
   - {fileID: -2001211438870494781}
   - {fileID: -4742789488904385399}
   - {fileID: -5200636765044336654}
+  - {fileID: 5849629826474313075}
+  - {fileID: -3727519315141635289}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6730727362255780359}
   StringsBanks:
   - {fileID: 6402755660037353043}
   cacheVersion: 131849
-  cacheTime: 638973800920563368
+  cacheTime: 638974273068257728
   SerializableEventsDict:
   - key: event:/Wind
     index: 0
@@ -183,6 +212,10 @@ MonoBehaviour:
     index: 1
   - key: event:/LeavesSteps
     index: 2
+  - key: snapshot:/Cave
+    index: 3
+  - key: snapshot:/Outside
+    index: 4
 --- !u!114 &220679683910380441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,6 +256,33 @@ MonoBehaviour:
   - Name: Desktop
     Value: 892
   Exists: 1
+--- !u!114 &5849629826474313075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/Cave
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/Cave
+  Guid:
+    Data1: -859006333
+    Data2: 1276532321
+    Data3: 2074742950
+    Data4: 1025611161
+  Banks:
+  - {fileID: -6730727362255780359}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
 --- !u!114 &6386034997805131245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,10 +318,10 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638973795440436557
+  lastModified: 638974273068257728
   FileSizes:
   - Name: Desktop
-    Value: 930
+    Value: 1148
   Exists: 1
 --- !u!114 &7025492273821606250
 MonoBehaviour:
@@ -278,7 +338,7 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/Ambience.bank
   Name: Ambience
   StudioPath: bank:/Ambience
-  lastModified: 638973800674603798
+  lastModified: 638974253641691181
   FileSizes:
   - Name: Desktop
     Value: 371584
@@ -325,8 +385,8 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638973800920563368
+  lastModified: 638974266503188307
   FileSizes:
   - Name: Desktop
-    Value: 78720
+    Value: 80832
   Exists: 1

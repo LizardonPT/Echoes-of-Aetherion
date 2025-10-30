@@ -1,35 +1,76 @@
-using EchoesOfEtherion.Game;
 using UnityEngine;
 using UnityEngine.UI;
+using EchoesOfEtherion.ScriptableObjects.Channels;
 
 namespace EchoesOfEtherion.Menu
 {
     public class PauseMenu : MonoBehaviour
     {
-        [SerializeField] private GameObject pausedMenu;
-        [SerializeField] private Button resumeButton;
+        [Header("Channel References")]
+        [SerializeField] private SceneLoaderChannel sceneLoaderChannel;
 
-        private GameMaster gameMaster;
-        private void Start()
+        [Header("UI References")]
+        [SerializeField] private GameObject pauseMenuPanel;
+        [SerializeField] private Button resumeButton;
+        [SerializeField] private Button mainMenuButton;
+        [SerializeField] private Button quitButton;
+
+        private void Awake()
         {
-            resumeButton.onClick.AddListener(OnResumeClicked);
-            gameMaster ??= FindAnyObjectByType<GameMaster>();
+            // Setup button listeners
+            resumeButton?.onClick.AddListener(OnResumeButtonClicked);
+            mainMenuButton?.onClick.AddListener(OnMainMenuButtonClicked);
+            quitButton?.onClick.AddListener(OnQuitButtonClicked);
+
+            // Hide pause menu initially
+            HidePauseMenu();
         }
 
-        private void OnResumeClicked()
+        private void OnDestroy()
         {
-            gameMaster?.ResumeGame();
-            HidePauseMenu();
+            // Clean up listeners
+            resumeButton?.onClick.RemoveListener(OnResumeButtonClicked);
+            mainMenuButton?.onClick.RemoveListener(OnMainMenuButtonClicked);
+            quitButton?.onClick.RemoveListener(OnQuitButtonClicked);
         }
 
         public void ShowPauseMenu()
         {
-            pausedMenu?.SetActive(true);
+            pauseMenuPanel?.SetActive(true);
         }
 
         public void HidePauseMenu()
         {
-            pausedMenu?.SetActive(false);
+            pauseMenuPanel?.SetActive(false);
+        }
+
+        private void OnResumeButtonClicked()
+        {
+            // This will be handled by the GameMaster state machine
+            // Typically, you'd have an event channel for pause/resume
+            HidePauseMenu();
+        }
+
+        private void OnMainMenuButtonClicked()
+        {
+            // Use the SceneLoader to return to main menu from current scene
+            if (sceneLoaderChannel != null)
+            {
+                sceneLoaderChannel.RequestSwitchScene("MainMenu");
+            }
+            else
+            {
+                Debug.LogError("[PauseMenu] SceneLoaderChannel reference is null!");
+            }
+        }
+
+        private void OnQuitButtonClicked()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }

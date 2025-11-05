@@ -1,34 +1,16 @@
 using UnityEngine;
-public abstract class SpellPage : MonoBehaviour
+
+[CreateAssetMenu(fileName = "SpellPage", menuName = "Scriptable Objects/Spell")]
+public class SpellPage : ScriptableObject
 {
+    [Header("Prefab")]
+    [field: SerializeField] public GameObject SpellPrefab { get; private set; }
     [Header("Spell Information")]
-    [SerializeField] private string spellName;
-    [SerializeField] private Sprite icon;
-    [TextArea][SerializeField] private string description;
+    [field: SerializeField] public string SpellName { get; private set; }
+    [field: SerializeField] public Sprite Icon { get; private set; }
+    [field: TextArea][field: SerializeField] public string Description { get; private set; }
 
     [Header("Spell Attributes")]
-    [SerializeField] private int manaCost;
-    [SerializeField] private float cooldown;
-
-    private float lastCastTime;
-
-    public bool CanCast()
-    {
-        return Time.time >= lastCastTime + cooldown;
-    }
-
-    public void Cast(GameObject caster)
-    {
-        if (CanCast())
-        {
-            lastCastTime = Time.time;
-            ExecuteSpell(caster);
-        }
-        else
-        {
-            Debug.Log($"{spellName} is on cooldown.");
-        }
-    }
-    
-    protected abstract void ExecuteSpell(GameObject caster);
+    [field: SerializeField] public int ManaCost { get; private set; }
+    [field: SerializeField] public float Cooldown { get; private set; }
 }

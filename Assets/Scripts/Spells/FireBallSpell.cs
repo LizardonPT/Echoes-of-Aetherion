@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Spells/Fireball")]
 public class FireBallSpell : SpellPage
 {
     [SerializeField] private GameObject fireballPrefab;

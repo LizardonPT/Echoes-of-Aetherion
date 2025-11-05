@@ -1,16 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GrimoireUIController : MonoBehaviour
 {
     [SerializeField] private Grimoire grimoireUI;
 
+    [SerializeField] private InputActionReference toggleGrimoireAction;
+
+    private bool isGrimoireOpen = false;
+
+    public void Start()
+    {
+        isGrimoireOpen = false;
+        grimoireUI.Hide();
+    }
+    
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (toggleGrimoireAction.action.triggered)
         {
-            if (grimoireUI.isActiveAndEnabled == false)
+            if (!isGrimoireOpen)
             {
                 grimoireUI.Show();
             }
@@ -18,6 +29,7 @@ public class GrimoireUIController : MonoBehaviour
             {
                 grimoireUI.Hide();
             }
+            isGrimoireOpen = !isGrimoireOpen;
         }
     }
 }

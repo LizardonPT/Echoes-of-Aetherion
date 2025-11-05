@@ -1,7 +1,5 @@
 using UnityEngine;
-
-[CreateAssetMenu(fileName = "SpellPage", menuName = "Scriptable Objects/SpellPage")]
-public abstract class SpellPage : ScriptableObject
+public abstract class SpellPage : MonoBehaviour
 {
     [Header("Spell Information")]
     [SerializeField] private string spellName;

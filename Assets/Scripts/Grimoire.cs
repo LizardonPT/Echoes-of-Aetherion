@@ -10,6 +10,18 @@ public class Grimoire : MonoBehaviour
     public List<SpellPage> activeSpells = new List<SpellPage>();
     public int maxActiveSlots = 4;
 
+    [SerializeField] private GameObject grimoirePanel;
+
+    public void Show()
+    {
+        grimoirePanel.SetActive(true);
+    }
+
+    public void Hide()
+    {
+        grimoirePanel.SetActive(false);
+    }
+    
     // --- Gestão de Páginas ---
     public void AddPage(SpellPage newPage)
     {

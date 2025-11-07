@@ -17,6 +17,11 @@ namespace EchoesOfEtherion.Player.States
             {
                 controller.StateMachine.ChangeState<PlayerIdleState>();
             }
+
+            if (controller.PlayerInput.InteractInputPressed)
+            {
+                controller.Interactor.InteractInput();
+            }
         }
 
         public void FixedUpdate(PlayerController controller)

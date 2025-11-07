@@ -13,6 +13,9 @@ namespace EchoesOfEtherion.ScriptableObjects.Utils
         [SerializeField]
         private InputActionReference pauseActionReference;
 
+        [SerializeField]
+        private InputActionReference interactActionReference;
+
         public Vector2 MovementInput
         {
             get
@@ -31,6 +34,14 @@ namespace EchoesOfEtherion.ScriptableObjects.Utils
             get
             {
                 return pauseActionReference?.action?.WasPressedThisFrame() ?? false;
+            }
+        }
+
+        public bool InteractInputPressed
+        {
+            get
+            {
+                return interactActionReference?.action?.WasPressedThisFrame() ?? false;
             }
         }
     }

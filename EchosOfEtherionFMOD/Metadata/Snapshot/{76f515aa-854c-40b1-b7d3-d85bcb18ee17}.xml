@@ -47,7 +47,7 @@
 			<value>decayTime</value>
 		</property>
 		<property name="value">
-			<value>2400</value>
+			<value>900</value>
 		</property>
 		<relationship name="automatableObject">
 			<destination>{1662a105-8a52-4b78-8a77-4b21b0fa27fc}</destination>

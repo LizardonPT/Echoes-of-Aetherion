@@ -1,83 +1,71 @@
 using System.Collections.Generic;
+using FMOD.Studio;
 using FMODUnity;
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace EchoesOfEtherion.Game.Audio
 {
-    public class SceneAudioPlayer : MonoBehaviour
+    public class WindAudioPlayer : MonoBehaviour
     {
-        [Header("Ambient Sounds")]
-        public List<EventReference> ambientSounds;
-        private readonly List<FMOD.Studio.EventInstance> ambientInstances = new();
-
-        [Header("Scene Music")]
-        public EventReference music;
-        private FMOD.Studio.EventInstance musicInstance;
+        [Header("Events")]
+        [SerializeField] private EventReference windEvent;
+        [SerializeField] private string panningParameterName = "Pan";
 
         [Header("Settings")]
-        public bool playOnStart = true;        
+        [SerializeField] private bool playOnStart = true;
+        [SerializeField] private float panningFrequency = 1;
+        [SerializeField] private float panningAmplitude = 1;
+
+        private bool isPlaying = false;
+        private EventInstance windInstance;
 
         private void Start()
         {
             if (playOnStart)
             {
-                PlayAmbientSounds();
-                PlayMusic();
+                PlayWindSound();
             }
         }
 
+        private void FixedUpdate()
+        {
+            if (isPlaying)
+            {
+                float noise = Mathf.PerlinNoise(Time.time * panningFrequency, 1.0f);
+                float panningValue = ((noise * 2f) - 1f) * panningAmplitude;
+                windInstance.setParameterByName(panningParameterName, panningValue);
+            }
+        }
+
+        [Button("Play Wind Sound")]
+        public void PlayWindSound()
+        {
+            if (!isPlaying)
+            {
+                windInstance = RuntimeManager.CreateInstance(windEvent);
+                windInstance.start();
+                isPlaying = true;
+            }
+        }
+
+        [Button("Stop Wind Sound")]
+        public void StopWindSound()
+        {
+            if (isPlaying)
+            {
+                windInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                windInstance.release();
+
+                isPlaying = false;
+            }
+        }
+
+        //! Unsure the sound stops and is cleaned.
         private void OnDestroy()
         {
-            StopAllSounds();
-        }
-
-        public void PlayAmbientSounds()
-        {
-            StopAmbientSounds();
-
-            foreach (var sound in ambientSounds)
-            {
-                var instance = RuntimeManager.CreateInstance(sound);
-                instance.set3DAttributes(RuntimeUtils.To3DAttributes(transform.position));
-                instance.start();
-                ambientInstances.Add(instance);
-            }
-        }
-
-        public void PlayMusic()
-        {
-            StopMusic();
-
-            if (music.IsNull) return;
-
-            musicInstance = RuntimeManager.CreateInstance(music);
-            musicInstance.start();
-        }
-
-        public void StopAmbientSounds()
-        {
-            foreach (var instance in ambientInstances)
-            {
-                instance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                instance.release();
-            }
-            ambientInstances.Clear();
-        }
-
-        public void StopMusic()
-        {
-            if (musicInstance.isValid())
-            {
-                musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-                musicInstance.release();
-                musicInstance.clearHandle();
-            }
-        }
-
-        public void StopAllSounds()
-        {
-            StopAmbientSounds();
-            StopMusic();
+            StopWindSound();
         }
     }
 }

@@ -62,12 +62,12 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638979359758313840
+  lastModified: 638981263507551170
   FileSizes:
   - Name: Desktop
-    Value: 3324
+    Value: 3470
   Exists: 1
---- !u!114 &-5200636765044336654
+--- !u!114 &-6349887957686735784
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,14 +77,66 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/LeavesSteps
+  m_Name: event:/Ambience/Wind
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/LeavesSteps
+  Path: event:/Ambience/Wind
   Guid:
-    Data1: 1306838597
-    Data2: 1156505473
-    Data3: -145484915
-    Data4: 1318002924
+    Data1: -214686912
+    Data2: 1216706342
+    Data3: 123154596
+    Data4: -1510956577
+  Banks:
+  - {fileID: 7025492273821606250}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -5501219372411461611}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 29852
+--- !u!114 &-5501219372411461611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Wind/Pan
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Pan
+  StudioPath: 
+  Min: -1
+  Max: 1
+  Default: -1
+  ID:
+    data1: 4006640771
+    data2: 3376942122
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
+--- !u!114 &-5424567189204108812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Steps/DirtSteps
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Steps/DirtSteps
+  Guid:
+    Data1: -68617277
+    Data2: 1183800578
+    Data3: 734069384
+    Data4: -699791428
   Banks:
   - {fileID: 8999479865531794286}
   IsStream: 0
@@ -93,33 +145,6 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
---- !u!114 &-4742789488904385399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Foliage
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Foliage
-  Guid:
-    Data1: -1196654433
-    Data2: 1138122729
-    Data3: -200271739
-    Data4: -966533810
-  Banks:
-  - {fileID: 8999479865531794286}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 0
-  MaxDistance: 450
   Length: 0
 --- !u!114 &-3727519315141635289
 MonoBehaviour:
@@ -148,7 +173,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
---- !u!114 &-2001211438870494781
+--- !u!114 &-2018164342053260584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,23 +183,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Wind
+  m_Name: event:/SFX/Foliage
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Wind
+  Path: event:/SFX/Foliage
   Guid:
-    Data1: -214686912
-    Data2: 1216706342
-    Data3: 123154596
-    Data4: -1510956577
+    Data1: -1196654433
+    Data2: 1138122729
+    Data3: -200271739
+    Data4: -966533810
   Banks:
-  - {fileID: 7025492273821606250}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
+  - {fileID: 8999479865531794286}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
   Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 29852
+  MinDistance: 0
+  MaxDistance: 450
+  Length: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,29 +218,38 @@ MonoBehaviour:
   - {fileID: -6730727362255780359}
   - {fileID: 8999479865531794286}
   EditorEvents:
-  - {fileID: -2001211438870494781}
-  - {fileID: -4742789488904385399}
-  - {fileID: -5200636765044336654}
   - {fileID: 5849629826474313075}
   - {fileID: -3727519315141635289}
+  - {fileID: -6349887957686735784}
+  - {fileID: 5313495364393926553}
+  - {fileID: 348550825299578028}
+  - {fileID: 7621656043774929165}
+  - {fileID: -2018164342053260584}
+  - {fileID: -5424567189204108812}
   EditorParameters: []
   MasterBanks:
   - {fileID: -6730727362255780359}
   StringsBanks:
   - {fileID: 6402755660037353043}
   cacheVersion: 131849
-  cacheTime: 638979359758323813
+  cacheTime: 638981263508443038
   SerializableEventsDict:
-  - key: event:/Wind
-    index: 0
-  - key: event:/Foliage
-    index: 1
-  - key: event:/LeavesSteps
-    index: 2
   - key: snapshot:/Cave
-    index: 3
+    index: 0
   - key: snapshot:/Outside
+    index: 1
+  - key: event:/Ambience/Wind
+    index: 2
+  - key: event:/Ambience/CaveDeep
+    index: 3
+  - key: event:/Ambience/CaveDark
     index: 4
+  - key: event:/SFX/Steps/GrassSteps
+    index: 5
+  - key: event:/SFX/Foliage
+    index: 6
+  - key: event:/SFX/Steps/DirtSteps
+    index: 7
 --- !u!114 &220679683910380441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +270,33 @@ MonoBehaviour:
   - Name: Desktop
     Value: 371584
   Exists: 1
+--- !u!114 &348550825299578028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/CaveDark
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Ambience/CaveDark
+  Guid:
+    Data1: -791085591
+    Data2: 1173659083
+    Data3: -1124896069
+    Data4: -1818576722
+  Banks:
+  - {fileID: 7025492273821606250}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 30000
 --- !u!114 &1743347266434887621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +317,33 @@ MonoBehaviour:
   - Name: Desktop
     Value: 892
   Exists: 1
+--- !u!114 &5313495364393926553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/CaveDeep
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Ambience/CaveDeep
+  Guid:
+    Data1: 107620244
+    Data2: 1259339496
+    Data3: 1563783357
+    Data4: -209843315
+  Banks:
+  - {fileID: 7025492273821606250}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 30002
 --- !u!114 &5849629826474313075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,10 +406,10 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638979359758323813
+  lastModified: 638981263507577979
   FileSizes:
   - Name: Desktop
-    Value: 1148
+    Value: 1420
   Exists: 1
 --- !u!114 &7025492273821606250
 MonoBehaviour:
@@ -338,10 +426,10 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/Ambience.bank
   Name: Ambience
   StudioPath: bank:/Ambience
-  lastModified: 638979359758313840
+  lastModified: 638981263507840813
   FileSizes:
   - Name: Desktop
-    Value: 371584
+    Value: 1003808
   Exists: 1
 --- !u!114 &7601554292592878967
 MonoBehaviour:
@@ -370,6 +458,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &7621656043774929165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Steps/GrassSteps
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Steps/GrassSteps
+  Guid:
+    Data1: 1306838597
+    Data2: 1156505473
+    Data3: -145484915
+    Data4: 1318002924
+  Banks:
+  - {fileID: 8999479865531794286}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &8999479865531794286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,8 +500,8 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638979359758323813
+  lastModified: 638981263508443038
   FileSizes:
   - Name: Desktop
-    Value: 80864
+    Value: 101632
   Exists: 1

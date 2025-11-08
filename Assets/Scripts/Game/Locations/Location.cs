@@ -64,19 +64,13 @@ namespace EchoesOfEtherion.Game.Locations
         [ContextMenu("Enter Location Manually")]
         public void EnterManually()
         {
-            if (activationMethod == LocationActivationMethod.Manual)
-            {
-                Enter();
-            }
+            Enter();
         }
 
         [ContextMenu("Leave Location Manually")]
         public void LeaveManually()
         {
-            if (activationMethod == LocationActivationMethod.Manual)
-            {
-                Leave();
-            }
+            Leave();
         }
     }
 }

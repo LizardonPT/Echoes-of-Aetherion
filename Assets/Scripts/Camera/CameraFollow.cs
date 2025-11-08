@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,12 +10,15 @@ namespace EchoesOfEtherion.CameraUtils
     [RequireComponent(typeof(Camera))]
     public class CameraFollow : MonoBehaviour
     {
+        [Header("Camera Setup")]
         [SerializeField] private Transform cameraPivot;
-        [SerializeField] private List<Transform> targets = new();
-        [SerializeField, Range(0, .3f)] private float smoothTime = 0.05f;
         [SerializeField] private Vector3 positionOffset;
+        [SerializeField, Range(0, .3f)] private float smoothTime = 0.05f;
+        [Header("Targets")]
+        [SerializeField] private List<Transform> targets = new();
+        [Header("Limits")]
         [SerializeField] private bool hasLimits;
-        [SerializeField] private Vector2 xLimit, yLimit;
+        [SerializeField, ShowIf(nameof(hasLimits))] private Vector2 xLimit, yLimit;
 
         private Camera cam;
         private Vector3 velocity;

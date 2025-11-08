@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c38fc632b30b545b4927f4f0f5831d, type: 3}
+  m_Name: InvestigateCave
+  m_EditorClassIdentifier: Assembly-CSharp::QuestInfoSO
+  <DisplayName>k__BackingField: Investigate cave.
+  <Description>k__BackingField: Which asked you go to investigate that cave.
+  <RequiredLevel>k__BackingField: 1
+  questPrerequisites: []
+  <QuestStepPrefabs>k__BackingField:
+  - {fileID: 7490663586218121289, guid: b97f984a1b270cf4cb1e8a42417be1f6, type: 3}
+  <ExperienceReward>k__BackingField: 0
+  <GoldReward>k__BackingField: 0

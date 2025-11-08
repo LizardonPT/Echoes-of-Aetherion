@@ -20,7 +20,8 @@ namespace EchoesOfEtherion.ScriptableObjects.Channels
 
         public void UnRegister(ITickable tickable)
         {
-            tickables ??= new List<ITickable>();
+            if (tickables == null)
+                return;
 
             if (tickables.Contains(tickable))
                 tickables.Remove(tickable);
@@ -28,7 +29,8 @@ namespace EchoesOfEtherion.ScriptableObjects.Channels
 
         public void UpdateTickables()
         {
-            tickables ??= new List<ITickable>();
+            if (tickables == null)
+                return;
 
             foreach (ITickable tickable in tickables)
                 tickable.Tick();
@@ -36,8 +38,9 @@ namespace EchoesOfEtherion.ScriptableObjects.Channels
 
         public void FixedUpdateTickables()
         {
-            tickables ??= new List<ITickable>();
-            
+            if (tickables == null)
+                return;
+
             foreach (ITickable tickable in tickables)
                 tickable.FixedTick();
         }

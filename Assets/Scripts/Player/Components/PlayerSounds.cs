@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using FMODUnity;
-using EchoesOfEtherion.ScriptableObjects.Channels;
 
 namespace EchoesOfEtherion.Player.Components
 {
@@ -9,7 +8,6 @@ namespace EchoesOfEtherion.Player.Components
     {
         [SerializeField] private Tilemap grassTilemap;
         [SerializeField] private Tilemap earthTilemap;
-        [SerializeField] private AudioChannel audioChannel;
         [SerializeField] private EventReference grassFootstepSound;
         [SerializeField] private EventReference earthFootstepSound;
 
@@ -24,15 +22,15 @@ namespace EchoesOfEtherion.Player.Components
 
             if (onGrass)
             {
-                audioChannel.PlayOneShot(grassFootstepSound, transform.position);
+                RuntimeManager.PlayOneShot(grassFootstepSound, transform.position);
             }
             else if (onEarth)
             {
-                audioChannel.PlayOneShot(earthFootstepSound, transform.position);
+                RuntimeManager.PlayOneShot(earthFootstepSound, transform.position);
             }
             else
             {
-                audioChannel.PlayOneShot(earthFootstepSound, transform.position);
+                RuntimeManager.PlayOneShot(earthFootstepSound, transform.position);
             }
 
         }

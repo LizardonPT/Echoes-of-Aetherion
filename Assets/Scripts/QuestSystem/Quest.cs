@@ -28,7 +28,7 @@ namespace EchoesOfEtherion.QuestSystem
             return CurrentQuestStepIndex < QuestInfo.QuestStepPrefabs.Length;
 
         }
-        public void InstantiateCurrentQuestStepPrefab(Transform parent)
+        public QuestStep InstantiateCurrentQuestStepPrefab(Transform parent)
         {
             GameObject questStepPrefab = GetCurrentQuestStepPrefab();
             if (questStepPrefab != null)
@@ -37,8 +37,9 @@ namespace EchoesOfEtherion.QuestSystem
                     .GetComponent<QuestStep>();
 
                 questStep.InitializeQuestStep(QuestInfo.ID);
-
+                return questStep;
             }
+            return null;
         }
         public GameObject GetCurrentQuestStepPrefab()
         {

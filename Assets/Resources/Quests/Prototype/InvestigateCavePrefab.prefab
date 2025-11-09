@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.QuestSystem.QuestSteps.GoToLocationQuestStep
   targetLocationName: Cave
   targetLocationType: 1
+  <StepDescription>k__BackingField: Go to the cave.

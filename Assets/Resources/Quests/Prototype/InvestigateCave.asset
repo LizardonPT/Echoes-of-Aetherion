@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: InvestigateCave
   m_EditorClassIdentifier: Assembly-CSharp::QuestInfoSO
   <DisplayName>k__BackingField: Investigate cave.
-  <Description>k__BackingField: Which asked you go to investigate that cave.
+  <Description>k__BackingField: Witch asked you to go investigate that cave.
   <RequiredLevel>k__BackingField: 1
   questPrerequisites: []
   <QuestStepPrefabs>k__BackingField:

@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using EchoesOfEtherion.QuestSystem.QuestSteps;
+using EchoesOfEtherion.QuestSystem.UI;
 using UnityEngine;
 
 namespace EchoesOfEtherion.QuestSystem
 {
+    [RequireComponent(typeof(QuestTrackerUI))]
     public class QuestManager : Singleton<QuestManager>
     {
         [Header("Debug")]
@@ -12,10 +15,12 @@ namespace EchoesOfEtherion.QuestSystem
 
         //todo: Real level up system. For now, just a placeholder.
         private int playerLevel = 500;
+        private QuestTrackerUI questTrackerUI;
 
         protected override void Initialize()
         {
             questMap = CreateQuestMap();
+            questTrackerUI = GetComponent<QuestTrackerUI>();
         }
 
         private void OnEnable()
@@ -84,7 +89,8 @@ namespace EchoesOfEtherion.QuestSystem
         {
             Log($"Starting quest with ID: {id}");
             Quest quest = GetQuestById(id);
-            quest.InstantiateCurrentQuestStepPrefab(transform);
+            QuestStep questStep = quest.InstantiateCurrentQuestStepPrefab(transform);
+            questTrackerUI.StartTrackingQuest(quest.QuestInfo, questStep, quest.CurrentQuestStepIndex);
             ChangeQuestState(id, QuestState.InProgress);
         }
 
@@ -93,6 +99,7 @@ namespace EchoesOfEtherion.QuestSystem
             Log($"Finishing quest with ID: {id}");
             Quest quest = GetQuestById(id);
             ClaimRewards(quest);
+            questTrackerUI.StopTrackingQuest();
             ChangeQuestState(id, QuestState.Finished);
         }
 
@@ -103,12 +110,14 @@ namespace EchoesOfEtherion.QuestSystem
 
             if (quest.CurrentStepExists())
             {
-                quest.InstantiateCurrentQuestStepPrefab(transform);
+                QuestStep step = quest.InstantiateCurrentQuestStepPrefab(transform);
+                questTrackerUI.StartTrackingQuest(quest.QuestInfo, step, quest.CurrentQuestStepIndex);
             }
             else
             {
                 ChangeQuestState(id, QuestState.CanFinish);
             }
+
 
             Log($"Advancing quest step for quest with ID: {id}");
         }

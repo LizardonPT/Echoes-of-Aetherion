@@ -9,20 +9,15 @@ namespace EchoesOfEtherion.Game.Locations
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
 
-        public event Action<LocationData> OnLocationEntered;
-        public event Action<LocationData> OnLocationLeft;
-        public event Action<string> OnRegionChanged; // When entering a new region
-        public event Action<string> OnAreaEntered;   // When entering an area within region
+        public event Action<LocationData> LocationEntered;
+        public event Action<LocationData> LocationLeft;
+        public event Action<string> RegionChanged; // When entering a new region
+        public event Action<string> AreaEntered;   // When entering an area within region
 
         private LocationData currentLocation;
         private string currentRegion;
         private readonly Stack<LocationData> locationHistory = new();
         
-        protected override void Initialize()
-        {
-            Log("Initialized successfully");
-        }
-
         public void EnterLocation(Location location)
         {
             var locationData = location.GetLocationData();
@@ -41,24 +36,24 @@ namespace EchoesOfEtherion.Game.Locations
             {
                 string previousRegion = currentRegion;
                 currentRegion = locationData.Name;
-                OnRegionChanged?.Invoke(currentRegion);
+                RegionChanged?.Invoke(currentRegion);
             }
 
             // Handle area within region
             if (locationData.Type == LocationType.Area)
             {
-                OnAreaEntered?.Invoke(locationData.Name);
+                AreaEntered?.Invoke(locationData.Name);
             }
 
             // Notify listeners
-            OnLocationEntered?.Invoke(locationData);
+            LocationEntered?.Invoke(locationData);
         }
 
         public void LeaveLocation(Location location)
         {
             Log($"Leaving location: {location.LocationName} of type {location.Type}");
             var locationData = location.GetLocationData();
-            OnLocationLeft?.Invoke(locationData);
+            LocationLeft?.Invoke(locationData);
         }
 
         public LocationData GetCurrentLocation()
@@ -76,7 +71,7 @@ namespace EchoesOfEtherion.Game.Locations
             if (locationHistory.Count > 0)
             {
                 currentLocation = locationHistory.Pop();
-                OnLocationEntered?.Invoke(currentLocation);
+                LocationEntered?.Invoke(currentLocation);
                 Log($"Reverted to previous location: {currentLocation.Name} of type {currentLocation.Type}");
                 return true;
             }

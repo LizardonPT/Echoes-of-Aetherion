@@ -6,7 +6,6 @@ using EchoesOfEtherion.CameraUtils;
 using EchoesOfEtherion.Game;
 using EchoesOfEtherion.Menu;
 using EchoesOfEtherion.ScriptableObjects.Utils;
-using EchoesOfEtherion.ScriptableObjects.Channels;
 using System;
 
 namespace EchoesOfEtherion.Player.Components
@@ -17,7 +16,6 @@ namespace EchoesOfEtherion.Player.Components
     {
         [field: SerializeField]
         public InputReader PlayerInput { get; private set; }
-        [SerializeField] private CameraChannel cameraChannel;
         [field: Space]
 
         public PlayerAnimations Animator { get; private set; }
@@ -30,8 +28,8 @@ namespace EchoesOfEtherion.Player.Components
         {
             get
             {
-                Vector2 pointerPos = Pointer.current != null
-                    ? cameraChannel.GameCamera.ScreenToWorldPoint(Pointer.current.position.ReadValue())
+                Vector2 pointerPos = Pointer.current != null ?
+                    CameraController.Instance?.GameCamera.ScreenToWorldPoint(Pointer.current.position.ReadValue()) ?? Vector2.zero
                     : Vector2.zero;
 
                 return (pointerPos != Vector2.zero ?
@@ -49,10 +47,10 @@ namespace EchoesOfEtherion.Player.Components
         protected override void Start()
         {
             base.Start();
-            
+
             try
             {
-                cameraChannel.CameraFollow.SetTarget(transform);
+                CameraController.Instance?.CameraFollow.SetTarget(transform);
             }
             catch (Exception ex)
             {

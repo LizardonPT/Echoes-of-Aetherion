@@ -1,16 +1,13 @@
-using EchoesOfEtherion.ScriptableObjects.Channels;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Game
 {
     public class TickRegistor : MonoBehaviour, ITickable
     {
-        [SerializeField]
-        private TickChannel tickChannel;
 
         protected virtual void Start()
         {
-            tickChannel.Register(this);
+            TickController.Instance.Register(this);
         }
 
         public virtual void Tick()
@@ -25,7 +22,7 @@ namespace EchoesOfEtherion.Game
 
         protected virtual void OnDestroy()
         {
-            tickChannel.UnRegister(this);
+            TickController.Instance.UnRegister(this);
         }
     }
 }

@@ -3981,7 +3981,7 @@ Transform:
   m_GameObject: {fileID: 387109730}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -403.6, y: -169.70001, z: 0}
+  m_LocalPosition: {x: -382.59998, y: -161.70001, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4094,9 +4094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0695d66f3b0e96546ae15465e381095f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Character.CharacterController
-  tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
   <PlayerInput>k__BackingField: {fileID: 11400000, guid: 42a46087dfdfae545ad8f83655ec8af2, type: 2}
-  cameraChannel: {fileID: 11400000, guid: c6c0d94d3ef1a3b48b85452204332d43, type: 2}
 --- !u!95 &387109738
 Animator:
   serializedVersion: 7
@@ -4172,13 +4170,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f809ace3ad919043967873326392c5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Player.Components.PlayerInteractor
-  <InteractRange>k__BackingField: 120
+  <InteractRange>k__BackingField: 50
   interactLayers:
     serializedVersion: 2
     m_Bits: 512
   maxResults: 5
-  enableLogging: 1
-  showInteractionRange: 0
+  enableLogging: 0
+  showInteractionRange: 1
 --- !u!1 &389685261
 GameObject:
   m_ObjectHideFlags: 0
@@ -4541,7 +4539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d93205f34adde3b4fbb277a3131aaa21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Game.NPCs.NPC
-  enableLogging: 1
+  enableLogging: 0
 --- !u!58 &423175988
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4593,7 +4591,7 @@ MonoBehaviour:
   questInfo: {fileID: 11400000, guid: eebefb5f2d87e94468028980314bfae7, type: 2}
   startPoint: 1
   finishPoint: 1
-  enableLogging: 1
+  enableLogging: 0
 --- !u!114 &423175990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31367,7 +31365,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99f73c6bbb0c69040948334ccdfa387e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.CameraUtils.CameraController
-  channel: {fileID: 11400000, guid: c6c0d94d3ef1a3b48b85452204332d43, type: 2}
+  GameCamera: {fileID: 715546168}
+  CameraFollow: {fileID: 715546170}
+  CameraShaker: {fileID: 715546169}
 --- !u!114 &715546172
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40064,7 +40064,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbc6271398a1c144b4c6ccfc88d9773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StoneScorpionController
-  tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
   maxAccel: 15
   maxSpeed: 65
   friction: 8

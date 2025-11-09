@@ -3,15 +3,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using EchoesOfEtherion.ScriptableObjects.Channels;
+using System;
 
 namespace EchoesOfEtherion.Game.Scenes
 {
-    public class SceneLoader : MonoBehaviour
+    public class SceneLoader : Singleton<SceneLoader>
     {
-        [Header("Channel Reference")]
-        [SerializeField] private SceneLoaderChannel sceneLoaderChannel;
-
         [Header("UI References")]
         [SerializeField] private GameObject loadingScreen;
         [SerializeField] private Slider progressBar;
@@ -26,18 +23,9 @@ namespace EchoesOfEtherion.Game.Scenes
 
         public string CurrentSceneName => currentSceneName;
 
-        private void OnEnable()
-        {
-            sceneLoaderChannel.OnLoadSceneAdditiveRequested += LoadSceneAdditive;
-            sceneLoaderChannel.OnSwitchSceneRequested += SwitchToScene;
-        }
-
-        private void OnDisable()
-        {
-            sceneLoaderChannel.OnLoadSceneAdditiveRequested -= LoadSceneAdditive;
-            sceneLoaderChannel.OnSwitchSceneRequested -= SwitchToScene;
-        }
-
+        public Action<string> SceneLoaded;
+        public Action<string> SceneUnloaded;
+        public Action<string> LoadingScene;
         private void Start()
         {
             InitializeSceneSystem();
@@ -57,7 +45,7 @@ namespace EchoesOfEtherion.Game.Scenes
                     Scene gameplayScene = gameplayScenes[0];
                     currentSceneName = gameplayScene.name;
                     SetupForExistingGameplayScene(gameplayScene);
-                    sceneLoaderChannel.NotifySceneLoaded(currentSceneName);
+                    SceneLoaded?.Invoke(currentSceneName);
                     return;
                 }
                 else if (gameplayScenes.Count > 1)
@@ -104,7 +92,7 @@ namespace EchoesOfEtherion.Game.Scenes
         private void LoadInitialScene()
         {
             currentSceneName = "MainMenu";
-            sceneLoaderChannel.RequestLoadSceneAdditive(currentSceneName);
+            LoadSceneAdditive(currentSceneName);
         }
 
         /// <summary>
@@ -145,19 +133,23 @@ namespace EchoesOfEtherion.Game.Scenes
             }
         }
 
-        private void LoadSceneAdditive(string sceneName)
+        public void LoadSceneAdditive(string sceneName)
         {
+            if (string.IsNullOrEmpty(sceneName) || string.IsNullOrWhiteSpace(sceneName))
+            {
+                Debug.LogWarning("[SceneLoader] Invalid scene load request.");
+                return;
+            }
+            LoadingScene?.Invoke(sceneName);
             StartCoroutine(LoadSceneAdditiveAsync(sceneName));
         }
 
         private IEnumerator LoadSceneAdditiveAsync(string sceneName)
         {
-            // Ensure time scale is normal for loading
-            Time.timeScale = 1f;
-
             loadingScreen?.SetActive(true);
             AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
             op.allowSceneActivation = true;
+            managersCamera.enabled = true;
 
             while (!op.isDone)
             {
@@ -177,20 +169,24 @@ namespace EchoesOfEtherion.Game.Scenes
                 currentSceneName = sceneName;
             }
 
+            managersCamera.enabled = false;
             loadingScreen?.SetActive(false);
-            sceneLoaderChannel.NotifySceneLoaded(sceneName);
+            SceneLoaded?.Invoke(sceneName);
         }
 
-        private void SwitchToScene(string newScene)
+        public void SwitchToScene(string newScene)
         {
+            if (string.IsNullOrEmpty(newScene) || string.IsNullOrWhiteSpace(newScene))
+            {
+                Debug.LogWarning("[SceneLoader] Invalid scene switch request.");
+                return;
+            }
+            LoadingScene?.Invoke(newScene);
             StartCoroutine(SwitchSceneAsync(newScene, currentSceneName ?? ""));
         }
 
         private IEnumerator SwitchSceneAsync(string newScene, string oldScene)
         {
-            // Ensure time scale is normal for loading
-            Time.timeScale = 1f;
-
             loadingScreen?.SetActive(true);
             managersCamera.enabled = true;
 
@@ -208,7 +204,7 @@ namespace EchoesOfEtherion.Game.Scenes
             }
 
             loadOp.allowSceneActivation = true;
-            
+
             while (!loadOp.isDone)
             {
                 progress = Mathf.MoveTowards(progress, 1f, Time.unscaledDeltaTime);
@@ -222,7 +218,7 @@ namespace EchoesOfEtherion.Game.Scenes
 
             // Update scene tracking
             currentSceneName = newScene;
-            
+
             if (!loadedAdditiveScenes.Contains(newScene))
             {
                 loadedAdditiveScenes.Add(newScene);
@@ -233,11 +229,12 @@ namespace EchoesOfEtherion.Game.Scenes
             {
                 yield return SceneManager.UnloadSceneAsync(oldScene);
                 loadedAdditiveScenes.Remove(oldScene);
-                sceneLoaderChannel.NotifySceneUnloaded(oldScene);
+                SceneUnloaded?.Invoke(oldScene);
             }
 
+            managersCamera.enabled = false;
             loadingScreen?.SetActive(false);
-            sceneLoaderChannel.NotifySceneLoaded(newScene);
+            SceneLoaded?.Invoke(newScene);
         }
 
         public string GetCurrentSceneName()
@@ -247,7 +244,16 @@ namespace EchoesOfEtherion.Game.Scenes
 
         public void RestartCurrentScene()
         {
-            sceneLoaderChannel.RequestSwitchScene(currentSceneName);
+            SwitchToScene(currentSceneName);
+        }
+
+        public void QuitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }

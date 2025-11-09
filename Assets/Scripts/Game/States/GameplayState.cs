@@ -5,21 +5,15 @@ namespace EchoesOfEtherion.Game.States
 {
     public class GameplayState : IState<GameMaster>
     {
-        public void Enter(GameMaster master)
-        {
-            master.ResumeGame();
-            master.PauseMenu?.HidePauseMenu();
-        }
+        public void Enter(GameMaster master) { }
 
-        public void Exit(GameMaster master)
-        {
-        }
+        public void Exit(GameMaster master) { }
 
         public void Update(GameMaster master)
         {
             if (master.InputReader.PauseInputPressed)
             {
-                master.StateMachine.ChangeState<GamePauseState>();
+                master.PauseGame();
             }
         }
 

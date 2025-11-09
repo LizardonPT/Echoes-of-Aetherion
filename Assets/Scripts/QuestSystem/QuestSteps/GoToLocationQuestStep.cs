@@ -12,7 +12,7 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
         public override event Action<int, int> ProgressChanged;
         private void Start()
         {
-            LocationController.Instance.OnLocationEntered += LocationEntered;
+            LocationController.Instance.LocationEntered += LocationEntered;
             ProgressChanged?.Invoke(0, 1);
         }
 

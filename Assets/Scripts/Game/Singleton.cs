@@ -63,8 +63,6 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
         {
             // Set this as the singleton instance
             instance = this as T;
-            // Initialize the singleton
-            Initialize();
         }
         else
         {
@@ -100,11 +98,4 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
             instance = null;
         }
     }
-
-    /// <summary>
-    /// Initialization method that runs after the singleton instance is set.
-    /// Override this in derived classes for custom initialization logic.
-    /// This method is automatically called in Awake after the instance is assigned.
-    /// </summary>
-    protected virtual void Initialize() { }
 }

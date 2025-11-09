@@ -1,6 +1,5 @@
 using EchoesOfEtherion.Game;
 using EchoesOfEtherion.Game.Scenes;
-using EchoesOfEtherion.ScriptableObjects.Channels;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +8,8 @@ namespace EchoesOfEtherion.Menu
 {
     public class MainMenu : MonoBehaviour
     {
-        [SerializeField] private SceneLoaderChannel sceneLoaderChannel;
         [SerializeField] private Button startButton;
         [SerializeField] private Button quitButton;
-
 
         private void Start()
         {
@@ -22,12 +19,12 @@ namespace EchoesOfEtherion.Menu
 
         private void StartGame()
         {
-            sceneLoaderChannel.RequestSwitchScene("Prototype");
+            SceneLoader.Instance.SwitchToScene("Prototype");
         }
 
         private void Quit()
         {
-            Application.Quit();
+            SceneLoader.Instance.QuitGame();
         }
     }
 }

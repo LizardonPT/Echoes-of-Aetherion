@@ -1,26 +1,57 @@
 using System.Collections.Generic;
-using EchoesOfEtherion.ScriptableObjects.Channels;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Game
 {
-    public class TickController : MonoBehaviour
+    public class TickController : Singleton<TickController>
     {
-        [SerializeField]
-        private TickChannel tickChannel;
-
         public bool Paused { get; private set; } = false;
+        private IList<ITickable> tickables;
 
+        public void Register(ITickable tickable)
+        {
+            tickables ??= new List<ITickable>();
+
+            if (!tickables.Contains(tickable))
+                tickables.Add(tickable);
+        }
+
+        public void UnRegister(ITickable tickable)
+        {
+            if (tickables == null)
+                return;
+
+            if (tickables.Contains(tickable))
+                tickables.Remove(tickable);
+        }
         private void Update()
         {
             if (Paused) return;
-            tickChannel.UpdateTickables();
+            UpdateTickables();
         }
 
         private void FixedUpdate()
         {
             if (Paused) return;
-            tickChannel.FixedUpdateTickables();
+            FixedUpdateTickables();
+        }
+
+        public void UpdateTickables()
+        {
+            if (tickables == null)
+                return;
+
+            foreach (ITickable tickable in tickables)
+                tickable.Tick();
+        }
+
+        public void FixedUpdateTickables()
+        {
+            if (tickables == null)
+                return;
+
+            foreach (ITickable tickable in tickables)
+                tickable.FixedTick();
         }
 
         public void SetPaused(bool value)

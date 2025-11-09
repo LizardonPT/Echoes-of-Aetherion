@@ -14,11 +14,12 @@ namespace EchoesOfEtherion.QuestSystem
         private Dictionary<int, Quest> questMap = new();
 
         //todo: Real level up system. For now, just a placeholder.
-        private int playerLevel = 500;
+        private readonly int playerLevel = 500;
         private QuestTrackerUI questTrackerUI;
 
-        protected override void Initialize()
+        protected override void Awake()
         {
+            base.Awake();
             questMap = CreateQuestMap();
             questTrackerUI = GetComponent<QuestTrackerUI>();
         }
@@ -161,6 +162,12 @@ namespace EchoesOfEtherion.QuestSystem
             }
 
             return quest;
+        }
+
+        public QuestState GetQuestState(int questId)
+        {
+            Quest quest = GetQuestById(questId);
+            return quest != null ? quest.state : QuestState.RequirementsNotMet;
         }
 
         private void ClaimRewards(Quest quest)

@@ -1,27 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
-using EchoesOfEtherion.ScriptableObjects.Channels;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace EchoesOfEtherion.CameraUtils
 {
     [RequireComponent(typeof(Camera), typeof(CameraFollow), typeof(CameraShaker))]
-    public class CameraController : MonoBehaviour
+    public class CameraController : Singleton<CameraController>
     {
-        [SerializeField] private CameraChannel channel;
+        public Camera GameCamera;
+        public CameraFollow CameraFollow;
+        public CameraShaker CameraShaker;
 
-        private Camera mainCamera;
-        private CameraFollow cameraFollow;
-        private CameraShaker cameraShaker;
-
-        private void Awake()
+        protected override void Awake()
         {
-            mainCamera ??= GetComponent<Camera>();
-            cameraFollow ??= GetComponent<CameraFollow>();
-            cameraShaker ??= GetComponent<CameraShaker>();
-
-            channel.RegisterCamera(mainCamera, cameraFollow, cameraShaker);
+            base.Awake();
+            GameCamera ??= GetComponent<Camera>();
+            CameraFollow ??= GetComponent<CameraFollow>();
+            CameraShaker ??= GetComponent<CameraShaker>();
         }
     }
 }

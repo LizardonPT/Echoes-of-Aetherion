@@ -11,13 +11,11 @@ namespace EchoesOfEtherion.Game.States
             // but we don't want normal gameplay to run
             Time.timeScale = 1f;
             master.SetPausedWithoutTimeScale(true);
-            master.PauseMenu?.HidePauseMenu();
         }
 
         public void Exit(GameMaster master)
         {
-            // Return to appropriate time scale based on target state
-            // This will be handled by the state we're transitioning to
+            master.SetPausedWithoutTimeScale(false);
         }
 
         public void Update(GameMaster master) { }

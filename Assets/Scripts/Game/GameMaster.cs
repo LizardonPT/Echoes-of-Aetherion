@@ -1,63 +1,62 @@
+using System;
+using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.Game.States;
 using EchoesOfEtherion.Menu;
 using EchoesOfEtherion.Player.Components;
-using EchoesOfEtherion.ScriptableObjects.Channels;
 using EchoesOfEtherion.ScriptableObjects.Utils;
 using EchoesOfEtherion.StateMachine;
+using UnityEditor;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Game
 {
     [RequireComponent(typeof(TickController))]
     [RequireComponent(typeof(GamePauser))]
-    public class GameMaster : MonoBehaviour
+    public class GameMaster : Singleton<GameMaster>
     {
         [field: Header("ScriptableObjects")]
         [field: SerializeField] public InputReader InputReader { get; private set; }
-        [field: SerializeField] public SceneLoaderChannel SceneLoaderChannel { get; private set; }
 
         [field: Space]
         [field: Header("References")]
         [field: SerializeField] public PauseMenu PauseMenu { get; private set; }
 
         public FiniteStateMachine<GameMaster> StateMachine { get; private set; }
-        private TickController tickController;
         private GamePauser gamePauser;
+
+        public Action GamePaused;
+        public Action GameResumed;
 
         private bool gamePaused = false;
         private bool isLoading = false;
 
-        private void Awake()
+        protected override void Awake()
         {
-            tickController ??= GetComponent<TickController>();
+            base.Awake();
+
             gamePauser ??= GetComponent<GamePauser>();
             SetupStateMachine();
             SetupEventListeners();
         }
 
-        private void OnDestroy()
+        protected override void OnDestroy()
         {
+            base.OnDestroy();
             RemoveEventListeners();
         }
 
         private void SetupEventListeners()
         {
-            if (SceneLoaderChannel != null)
-            {
-                SceneLoaderChannel.OnLoadSceneAdditiveRequested += OnSceneLoadStarted;
-                SceneLoaderChannel.OnSwitchSceneRequested += OnSceneLoadStarted;
-                SceneLoaderChannel.OnSceneLoaded += OnSceneLoadCompleted;
-            }
+            SceneLoader.Instance.LoadingScene += OnSceneLoadStarted;
+            SceneLoader.Instance.SceneLoaded += OnSceneLoadCompleted;
+            SceneLoader.Instance.SceneUnloaded += OnSceneLoadCompleted;
         }
 
         private void RemoveEventListeners()
         {
-            if (SceneLoaderChannel != null)
-            {
-                SceneLoaderChannel.OnLoadSceneAdditiveRequested -= OnSceneLoadStarted;
-                SceneLoaderChannel.OnSwitchSceneRequested -= OnSceneLoadStarted;
-                SceneLoaderChannel.OnSceneLoaded -= OnSceneLoadCompleted;
-            }
+            SceneLoader.Instance.LoadingScene -= OnSceneLoadStarted;
+            SceneLoader.Instance.SceneLoaded -= OnSceneLoadCompleted;
+            SceneLoader.Instance.SceneUnloaded -= OnSceneLoadCompleted;
         }
 
         private void OnSceneLoadStarted(string sceneName)
@@ -79,7 +78,6 @@ namespace EchoesOfEtherion.Game
             if (isLoading)
             {
                 isLoading = false;
-                // Return to gameplay state after loading completes
                 StateMachine.ChangeState<GameplayState>();
             }
         }
@@ -88,10 +86,11 @@ namespace EchoesOfEtherion.Game
         {
             if (!gamePaused && !isLoading)
             {
-                tickController.SetPaused(true);
-                gamePauser.PauseGame();
-                Time.timeScale = 0f;
                 gamePaused = true;
+                TickController.Instance.SetPaused(true);
+                gamePauser?.PauseGame();
+                GamePaused?.Invoke();
+                StateMachine.ChangeState<GamePauseState>();
             }
         }
 
@@ -99,28 +98,33 @@ namespace EchoesOfEtherion.Game
         {
             if (gamePaused && !isLoading)
             {
-                tickController.SetPaused(false);
-                gamePauser.ResumeGame();
-                Time.timeScale = 1f;
                 gamePaused = false;
+                TickController.Instance.SetPaused(false);
+                gamePauser?.ResumeGame();
+                GameResumed?.Invoke();
+                StateMachine.ChangeState<GameplayState>();
+            }
+        }
+
+        public void TogglePauseGame()
+        {
+            if (gamePaused)
+            {
+                ResumeGame();
+            }
+            else
+            {
+                PauseGame();
             }
         }
 
         public void SetPausedWithoutTimeScale(bool paused)
         {
-            if (gamePaused != paused && !isLoading)
-            {
-                tickController.SetPaused(paused);
-                if (paused)
-                {
-                    gamePauser.PauseGame();
-                }
-                else
-                {
-                    gamePauser.ResumeGame();
-                }
-                gamePaused = paused;
-            }
+            TickController.Instance.SetPaused(paused);
+            if (paused)
+                gamePauser?.PauseGame();
+            else
+                gamePauser?.ResumeGame();
         }
 
         private void Update()

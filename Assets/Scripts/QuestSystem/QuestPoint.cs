@@ -22,6 +22,12 @@ namespace EchoesOfEtherion.QuestSystem
             questIcon = GetComponentInChildren<QuestIcon>();
         }
 
+        private void Start()
+        {
+            currentState = QuestManager.Instance.GetQuestState(questInfo.ID);
+            questIcon.UpdateState(currentState, startPoint, finishPoint);
+        }
+
         public void UpdateQuest()
         {
             Log($"IsStartPoint: {startPoint}, IsFinishPoint: {finishPoint}, CurrentState: {currentState}");

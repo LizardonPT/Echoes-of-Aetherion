@@ -11,7 +11,7 @@ namespace EchoesOfEtherion.QuestSystem
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
         public QuestEvents QuestEvents { get; private set; } = new();
-        private Dictionary<int, Quest> questMap = new();
+        private Dictionary<string, Quest> questMap = new();
 
         //todo: Real level up system. For now, just a placeholder.
         private readonly int playerLevel = 500;
@@ -76,7 +76,7 @@ namespace EchoesOfEtherion.QuestSystem
 
             return meetsRequirements;
         }
-        private void ChangeQuestState(int id, QuestState newState)
+        private void ChangeQuestState(string id, QuestState newState)
         {
             Quest quest = GetQuestById(id);
             if (quest != null)
@@ -86,7 +86,7 @@ namespace EchoesOfEtherion.QuestSystem
             }
         }
 
-        private void StartQuest(int id)
+        private void StartQuest(string id)
         {
             Log($"Starting quest with ID: {id}");
             Quest quest = GetQuestById(id);
@@ -95,7 +95,7 @@ namespace EchoesOfEtherion.QuestSystem
             ChangeQuestState(id, QuestState.InProgress);
         }
 
-        private void FinishQuest(int id)
+        private void FinishQuest(string id)
         {
             Log($"Finishing quest with ID: {id}");
             Quest quest = GetQuestById(id);
@@ -104,7 +104,7 @@ namespace EchoesOfEtherion.QuestSystem
             ChangeQuestState(id, QuestState.Finished);
         }
 
-        private void AdvanceQuestStep(int id)
+        private void AdvanceQuestStep(string id)
         {
             Quest quest = GetQuestById(id);
             quest.MoveToNextStep();
@@ -123,17 +123,17 @@ namespace EchoesOfEtherion.QuestSystem
             Log($"Advancing quest step for quest with ID: {id}");
         }
 
-        private Dictionary<int, Quest> CreateQuestMap()
+        private Dictionary<string, Quest> CreateQuestMap()
         {
             Log("Creating quest map...");
             QuestInfoSO[] allQuestInfos = Resources.LoadAll<QuestInfoSO>("Quests");
             Log($"Found {allQuestInfos.Length} quests in Resources.");
 
-            Dictionary<int, Quest> idToQuestMap = new();
+            Dictionary<string, Quest> idToQuestMap = new();
 
             foreach (QuestInfoSO questInfo in allQuestInfos)
             {
-                int questId = questInfo.ID;
+                string questId = questInfo.ID;
                 Log($"Processing quest: {questInfo.DisplayName} (ID: {questId})");
 
                 if (!idToQuestMap.ContainsKey(questId))
@@ -152,7 +152,7 @@ namespace EchoesOfEtherion.QuestSystem
             return idToQuestMap;
         }
 
-        public Quest GetQuestById(int questId)
+        public Quest GetQuestById(string questId)
         {
             questMap.TryGetValue(questId, out Quest quest);
 
@@ -164,7 +164,7 @@ namespace EchoesOfEtherion.QuestSystem
             return quest;
         }
 
-        public QuestState GetQuestState(int questId)
+        public QuestState GetQuestState(string questId)
         {
             Quest quest = GetQuestById(questId);
             return quest != null ? quest.state : QuestState.RequirementsNotMet;

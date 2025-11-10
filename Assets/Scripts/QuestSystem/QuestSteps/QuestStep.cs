@@ -6,13 +6,13 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
     public abstract class QuestStep : MonoBehaviour
     {
         protected bool isFinished = false;
-        protected int id;
+        protected string id;
 
         public abstract string StepDescription { get; protected set; }
 
         public abstract event Action<int, int> ProgressChanged;
 
-        public void InitializeQuestStep(int id)
+        public void InitializeQuestStep(string id)
         {
             this.id = id;
         }

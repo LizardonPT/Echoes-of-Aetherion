@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c38fc632b30b545b4927f4f0f5831d, type: 3}
   m_Name: InvestigateCave
   m_EditorClassIdentifier: Assembly-CSharp::QuestInfoSO
-  <DisplayName>k__BackingField: Investigate cave.
+  <ID>k__BackingField: 
+  <DisplayName>k__BackingField: Investigate cave
   <Description>k__BackingField: Witch asked you to go investigate that cave.
   <CompleteText>k__BackingField: Return to the Witch.
   <RequiredLevel>k__BackingField: 1

@@ -1,5 +1,6 @@
 using EchoesOfEtherion.Player.Components;
 using FMODUnity;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Game.Locations
@@ -61,13 +62,13 @@ namespace EchoesOfEtherion.Game.Locations
             }
         }
 
-        [ContextMenu("Enter Location Manually")]
+        [Button("Enter Location Manually")]
         public void EnterManually()
         {
             Enter();
         }
 
-        [ContextMenu("Leave Location Manually")]
+        [Button("Leave Location Manually")]
         public void LeaveManually()
         {
             Leave();

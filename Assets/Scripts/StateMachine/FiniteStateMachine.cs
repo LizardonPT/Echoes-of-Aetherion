@@ -6,7 +6,7 @@ namespace EchoesOfEtherion.StateMachine
     public class FiniteStateMachine<T> where T : class
     {
         private readonly T entity;
-        private IState<T> currentState;
+        public IState<T> CurrentState { get; private set; }
         private readonly Dictionary<Type, IState<T>> states = new();
 
         public FiniteStateMachine(T entity)
@@ -21,25 +21,25 @@ namespace EchoesOfEtherion.StateMachine
 
         public void ChangeState<U>() where U : IState<T>
         {
-            currentState?.Exit(entity);
+            CurrentState?.Exit(entity);
 
             if (states.TryGetValue(typeof(U), out IState<T> newState))
             {
-                currentState = newState;
-                currentState.Enter(entity);
+                CurrentState = newState;
+                CurrentState.Enter(entity);
             }
         }
 
         public void Update()
         {
-            currentState?.Update(entity);
+            CurrentState?.Update(entity);
         }
 
         public void FixedUpdate()
         {
-            currentState?.FixedUpdate(entity);
+            CurrentState?.FixedUpdate(entity);
         }
 
-        public Type GetCurrentStateType() => currentState?.GetType();
+        public Type GetCurrentStateType() => CurrentState?.GetType();
     }
 }

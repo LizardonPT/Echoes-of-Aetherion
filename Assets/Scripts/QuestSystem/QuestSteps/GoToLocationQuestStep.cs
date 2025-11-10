@@ -24,6 +24,7 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
             if (rightName && rightType)
             {
                 ProgressChanged?.Invoke(1, 1);
+                LocationController.Instance.LocationEntered -= LocationEntered;
                 FinishQuestStep();
             }
         }

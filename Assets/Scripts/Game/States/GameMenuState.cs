@@ -3,23 +3,21 @@ using UnityEngine;
 
 namespace EchoesOfEtherion.Game.States
 {
-    public class GameLoadingState : IState<GameMaster>
+    public class GameMenuState : IState<GameMaster>
     {
         public void Enter(GameMaster master)
         {
-            master.Log("Entering Loading State");
+            master.Log("Entering Menu State");
 
-            // Keep time running for async operations but pause game logic
-            master.SetTimeScale(1f);
-            master.SetTickPaused(true);
+            // Menu-specific setup
+            master.SetTimeScale(1f); // Keep time running for animations
+            master.SetTickPaused(true); // But pause game logic
             master.SetGamePaused(true);
-
-            master.InvokeLoadingStarted();
         }
 
         public void Exit(GameMaster master)
         {
-            master.Log("Exiting Loading State");
+            master.Log("Exiting Menu State");
         }
 
         public void Update(GameMaster master) { }

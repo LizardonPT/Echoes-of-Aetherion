@@ -22,7 +22,10 @@ namespace EchoesOfEtherion.QuestSystem.UI
         [SerializeField]
         private TextMeshProUGUI questProgreessPercentageText;
         [SerializeField]
+        private TextMeshProUGUI completedText;
+        [SerializeField]
         private Slider questProgressSlider;
+
         private QuestInfoSO trackedQuest;
         private QuestStep currentQuestStep;
 
@@ -42,6 +45,8 @@ namespace EchoesOfEtherion.QuestSystem.UI
             questDescriptionText.text = description;
             questStepText.text = questStepUI;
             stepDescriptionText.text = stepDescription;
+            
+            completedText.gameObject.SetActive(false);
 
             (int, int) progress = currentQuestStep.GetProgress();
             UpdateProgressPercentage(progress.Item1, progress.Item2);
@@ -59,7 +64,8 @@ namespace EchoesOfEtherion.QuestSystem.UI
 
             if (currentProgress >= totalProgress)
             {
-                stepDescriptionText.text = "<i>Completed.</i>";
+                stepDescriptionText.text = trackedQuest.CompleteText;
+                completedText.gameObject.SetActive(true);
             }
         }
 
@@ -72,6 +78,7 @@ namespace EchoesOfEtherion.QuestSystem.UI
 
             currentQuestStep = null;
             questTrackerPanel.SetActive(false);
+            completedText.gameObject.SetActive(false);
         }
     }
 }

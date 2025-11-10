@@ -32,6 +32,7 @@ namespace EchoesOfEtherion.Menu
 
         private void OnDisable()
         {
+            if (GameMaster.Instance == null) return;
             GameMaster.Instance.GamePaused -= ShowPauseMenu;
             GameMaster.Instance.GameResumed -= HidePauseMenu;
         }
@@ -56,7 +57,7 @@ namespace EchoesOfEtherion.Menu
 
         private void OnResumeButtonClicked()
         {
-            GameMaster.Instance?.ResumeGame();
+            GameMaster.Instance?.RequestResume();
             HidePauseMenu();
         }
 

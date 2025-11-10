@@ -15,6 +15,8 @@ namespace EchoesOfEtherion.QuestSystem
 
         [field: SerializeField, TextArea]
         public string Description { get; private set; } = string.Empty;
+        [field: SerializeField]
+        public string CompleteText { get; private set; } = string.Empty;
 
         [field: Header("Requirements")]
         [field: SerializeField, Min(1)]

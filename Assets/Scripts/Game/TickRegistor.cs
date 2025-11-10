@@ -22,7 +22,7 @@ namespace EchoesOfEtherion.Game
 
         protected virtual void OnDestroy()
         {
-            TickController.Instance.UnRegister(this);
+            TickController.Instance?.UnRegister(this);
         }
     }
 }

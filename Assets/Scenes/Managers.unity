@@ -888,7 +888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e661a3fb30a6b446be0eec5cbd37ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Game.Scenes.SceneLoader
-  sceneLoaderChannel: {fileID: 11400000, guid: e64ddd2ea4747b946a4e7425e2f360a4, type: 2}
   loadingScreen: {fileID: 747737118}
   progressBar: {fileID: 476860705}
   managersCamera: {fileID: 549886061}
@@ -1396,8 +1395,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUDMenu
   pauseButton: {fileID: 1222378734}
-  gameMaster: {fileID: 2016117791}
-  pauseMenu: {fileID: 1661082707}
 --- !u!1 &549886058
 GameObject:
   m_ObjectHideFlags: 0
@@ -1798,6 +1795,142 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 580760677}
   m_CullTransparentMesh: 1
+--- !u!1 &611044296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 611044297}
+  - component: {fileID: 611044299}
+  - component: {fileID: 611044298}
+  m_Layer: 0
+  m_Name: Completed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &611044297
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611044296}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2015831957}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -27.07954, y: -16.317993}
+  m_SizeDelta: {x: 47.8724, y: 5.2739}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &611044298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611044296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Completed.
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 4.7
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 1
+  m_fontSizeMax: 72
+  m_fontStyle: 2
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &611044299
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611044296}
+  m_CullTransparentMesh: 1
 --- !u!1 &719383032
 GameObject:
   m_ObjectHideFlags: 0
@@ -2093,6 +2226,7 @@ MonoBehaviour:
   questStepText: {fileID: 521807453}
   stepDescriptionText: {fileID: 1583609354}
   questProgreessPercentageText: {fileID: 129305270}
+  completedText: {fileID: 611044298}
   questProgressSlider: {fileID: 719383034}
 --- !u!1 &937444842
 GameObject:
@@ -3737,12 +3871,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7395227587d7c048967887c860d399b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Menu.PauseMenu
-  sceneLoaderChannel: {fileID: 11400000, guid: e64ddd2ea4747b946a4e7425e2f360a4, type: 2}
   pauseMenuPanel: {fileID: 345829555}
   resumeButton: {fileID: 1429647004}
   mainMenuButton: {fileID: 1111690987}
   quitButton: {fileID: 1011116969}
-  gameMaster: {fileID: 2016117791}
 --- !u!1 &1729072876
 GameObject:
   m_ObjectHideFlags: 0
@@ -4139,6 +4271,7 @@ RectTransform:
   - {fileID: 1583609353}
   - {fileID: 719383033}
   - {fileID: 129305269}
+  - {fileID: 611044297}
   m_Father: {fileID: 55310690}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
@@ -4178,7 +4311,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Game.GameMaster
   <InputReader>k__BackingField: {fileID: 11400000, guid: 42a46087dfdfae545ad8f83655ec8af2, type: 2}
-  <SceneLoaderChannel>k__BackingField: {fileID: 11400000, guid: e64ddd2ea4747b946a4e7425e2f360a4, type: 2}
   <PauseMenu>k__BackingField: {fileID: 1661082707}
 --- !u!114 &2016117792
 MonoBehaviour:
@@ -4192,7 +4324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2518a782be688441a6236aaee890dc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfAetherion.Game.TickController
-  tickChannel: {fileID: 11400000, guid: 26fe6bec6e51be1439bd2a14a2da4d89, type: 2}
 --- !u!4 &2016117793
 Transform:
   m_ObjectHideFlags: 0

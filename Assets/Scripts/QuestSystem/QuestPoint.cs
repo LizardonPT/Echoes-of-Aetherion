@@ -47,6 +47,7 @@ namespace EchoesOfEtherion.QuestSystem
         }
         private void OnDisable()
         {
+            if (QuestManager.Instance == null) return;
             QuestManager.Instance.QuestEvents.QuestStateChanged -= OnQuestStateChanged;
         }
 

@@ -31,10 +31,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
         {
             // Check if application is quitting
             if (isApplicationQuitting)
-            {
-                Debug.LogWarning($"[Singleton] Instance '{typeof(T)}' already destroyed. Returning null.");
                 return null;
-            }
+
 
             // Check if instance already exists
             if (instance == null)

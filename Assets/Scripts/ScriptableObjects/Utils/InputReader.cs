@@ -16,6 +16,9 @@ namespace EchoesOfEtherion.ScriptableObjects.Utils
         [SerializeField]
         private InputActionReference interactActionReference;
 
+        [SerializeField]
+        private InputActionReference spellSlotActionReference;
+
         public Vector2 MovementInput
         {
             get
@@ -42,6 +45,14 @@ namespace EchoesOfEtherion.ScriptableObjects.Utils
             get
             {
                 return interactActionReference?.action?.WasPressedThisFrame() ?? false;
+            }
+        }
+
+        public bool SpellSlotInputPressed
+        {
+            get
+            {
+                return spellSlotActionReference?.action?.WasPressedThisFrame() ?? false;
             }
         }
     }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpellPage
   <SpellPrefab>k__BackingField: {fileID: 0}
   <SpellName>k__BackingField: Light Ball
-  <Icon>k__BackingField: {fileID: 0}
+  <Icon>k__BackingField: {fileID: -2084250299, guid: 780fed32ab044404a9053f02966940e1, type: 3}
   <Description>k__BackingField: Shoot a light ball that deals damage when it hit
     enemies
   <ManaCost>k__BackingField: 10

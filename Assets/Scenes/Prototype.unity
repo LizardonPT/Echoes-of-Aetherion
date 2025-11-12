@@ -246,6 +246,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!1 &27091445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 27091446}
+  m_Layer: 0
+  m_Name: CasterPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &27091446
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27091445}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 387109731}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &83164947
 GameObject:
   m_ObjectHideFlags: 0
@@ -3962,6 +3993,8 @@ GameObject:
   - component: {fileID: 387109739}
   - component: {fileID: 387109740}
   - component: {fileID: 387109741}
+  - component: {fileID: 387109743}
+  - component: {fileID: 387109742}
   - component: {fileID: 387109733}
   - component: {fileID: 387109732}
   - component: {fileID: 387109738}
@@ -3988,6 +4021,7 @@ Transform:
   - {fileID: 873817194}
   - {fileID: 1712005972}
   - {fileID: 1208175823}
+  - {fileID: 27091446}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &387109732
@@ -4138,14 +4172,21 @@ MonoBehaviour:
       Data2: 1156505473
       Data3: -145484915
       Data4: 1318002924
-    Path: event:/SFX/Steps/GrassSteps
+    Path: event:/SFX/Player/Steps/GrassSteps
   earthFootstepSound:
     Guid:
       Data1: -68617277
       Data2: 1183800578
       Data3: 734069384
       Data4: -699791428
-    Path: event:/SFX/Steps/DirtSteps
+    Path: event:/SFX/Player/Steps/DirtSteps
+  hitSound:
+    Guid:
+      Data1: 748838389
+      Data2: 1105729360
+      Data3: -1904679026
+      Data4: -1607484751
+    Path: event:/SFX/Hit
 --- !u!114 &387109740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4159,6 +4200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Player.Components.PlayerInventory
   enableLogging: 0
+  slot1: {fileID: 0}
 --- !u!114 &387109741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4177,7 +4219,33 @@ MonoBehaviour:
     m_Bits: 512
   maxResults: 5
   enableLogging: 0
-  showInteractionRange: 1
+  showInteractionRange: 0
+--- !u!114 &387109742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387109730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3eb0adf57fb484dba8d6a9fb0d3463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  <MaxHealth>k__BackingField: 100
+--- !u!114 &387109743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387109730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dce734cb1815174186fa9a13ed2f4af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Player.Components.PlayerSpellCaster
+  casterPos: {fileID: 27091446}
 --- !u!1 &389685261
 GameObject:
   m_ObjectHideFlags: 0
@@ -38161,7 +38229,7 @@ SpriteRenderer:
   m_Size: {x: 34, y: 34}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &1239038034
@@ -40033,6 +40101,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1317929909}
   - component: {fileID: 1317929915}
+  - component: {fileID: 1317929924}
   - component: {fileID: 1317929914}
   - component: {fileID: 1317929920}
   - component: {fileID: 1317929921}
@@ -40042,7 +40111,7 @@ GameObject:
   - component: {fileID: 1317929912}
   - component: {fileID: 1317929913}
   m_Layer: 7
-  m_Name: StoneCrab
+  m_Name: StoneScorpion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40171,6 +40240,45 @@ MonoBehaviour:
   <SeekRadius>k__BackingField: 180
   <LookAngle>k__BackingField: 45
   LookDirection: {x: 1, y: 0}
+  <CoolDownTime>k__BackingField: 0.25
+  projectilePrefab: {fileID: 2887405655751014425, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
+  projectileSpawnPoint: {fileID: 1317929909}
+  projectileDamage: 20
+  stingAttackRange: 64
+  stingAttackRadius: 64
+  stingDamage: 25
+  attackCooldown: 3
+  playerDamageMask:
+    serializedVersion: 2
+    m_Bits: 8
+  <RockThrow>k__BackingField:
+    Guid:
+      Data1: -2052295168
+      Data2: 1101659198
+      Data3: 106831012
+      Data4: 238667438
+    Path: event:/SFX/StoneScorpion/RockThrow
+  <GatherRock>k__BackingField:
+    Guid:
+      Data1: 1964275713
+      Data2: 1129916938
+      Data3: 110812808
+      Data4: 1593658661
+    Path: event:/SFX/StoneScorpion/RockGather
+  <Sting>k__BackingField:
+    Guid:
+      Data1: -398309523
+      Data2: 1331307521
+      Data3: -1651927879
+      Data4: -2141196110
+    Path: event:/SFX/StoneScorpion/Sting
+  <Hit>k__BackingField:
+    Guid:
+      Data1: 748838389
+      Data2: 1105729360
+      Data3: -1904679026
+      Data4: -1607484751
+    Path: event:/SFX/Hit
 --- !u!114 &1317929919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40252,6 +40360,19 @@ MonoBehaviour:
   isActive: 1
   separationRadius: 55
   showDebugCircles: 1
+--- !u!114 &1317929924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317929908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3eb0adf57fb484dba8d6a9fb0d3463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
+  <MaxHealth>k__BackingField: 100
 --- !u!1 &1351673450
 GameObject:
   m_ObjectHideFlags: 0

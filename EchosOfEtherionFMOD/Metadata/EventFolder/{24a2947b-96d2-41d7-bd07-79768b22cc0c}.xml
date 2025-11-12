@@ -5,7 +5,7 @@
 			<value>Steps</value>
 		</property>
 		<relationship name="folder">
-			<destination>{b9449f08-f2fd-4948-b5e7-057095a7a250}</destination>
+			<destination>{68d93749-caee-4124-84d7-ea0f72fcaf5b}</destination>
 		</relationship>
 	</object>
 </objects>

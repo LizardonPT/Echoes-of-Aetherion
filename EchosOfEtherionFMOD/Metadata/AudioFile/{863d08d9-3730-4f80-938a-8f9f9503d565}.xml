@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{863d08d9-3730-4f80-938a-8f9f9503d565}">
 		<property name="assetPath">
-			<value>Footsteps/Grass/S_Leaves_Mono_Without_Hitting_Boot_3.wav</value>
+			<value>SFX/Player/Footsteps/Grass/S_Leaves_Mono_Without_Hitting_Boot_3.wav</value>
 		</property>
 		<property name="frequencyInKHz">
 			<value>44.0999985</value>

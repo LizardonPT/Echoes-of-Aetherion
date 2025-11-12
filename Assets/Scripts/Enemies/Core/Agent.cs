@@ -22,18 +22,18 @@ namespace EchoesOfEtherion.Enemies.Core
         [field: SerializeField, Range(0, 360)] public int LookAngle { get; private set; } = 45;
 
         private ISteeringBehaviour[] steeringBehaviours;
-        private Rigidbody2D rb;
+        public Rigidbody2D RB { get; private set; }
 
         public float MaxAccel => maxAccel;
         public float MaxSpeed => maxSpeed;
-        public Vector2 Velocity => rb.linearVelocity;
+        public Vector2 Velocity => RB.linearVelocity;
         public Vector2 LookDirection = Vector2.right;
         public GameObject Target { get; set; }
         public Vector2 TargetPos => Target != null ? new Vector2(Target.transform.position.x, Target.transform.position.y + 6) : Vector2.zero;
 
         protected virtual void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            RB = GetComponent<Rigidbody2D>();
             steeringBehaviours = GetComponents<ISteeringBehaviour>();
         }
 
@@ -59,29 +59,29 @@ namespace EchoesOfEtherion.Enemies.Core
             }
 
             steerWeighted = Vector2.ClampMagnitude(steerWeighted, maxAccel);
-            rb.AddForce(steerWeighted, ForceMode2D.Impulse);
+            RB.AddForce(steerWeighted, ForceMode2D.Impulse);
 
-            if (rb.linearVelocity.magnitude > maxSpeed)
+            if (RB.linearVelocity.magnitude > maxSpeed)
             {
-                rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+                RB.linearVelocity = RB.linearVelocity.normalized * maxSpeed;
             }
         }
 
         private void ApplyFriction()
         {
-            Vector2 velocity = rb.linearVelocity;
+            Vector2 velocity = RB.linearVelocity;
             float speed = velocity.magnitude;
 
             if (speed < 0.01f)
             {
-                rb.linearVelocity = Vector2.zero;
+                RB.linearVelocity = Vector2.zero;
                 return;
             }
 
             float drop = speed * friction * Time.fixedDeltaTime;
             float newSpeed = Mathf.Max(speed - drop, 0);
 
-            rb.linearVelocity = velocity * (newSpeed / speed);
+            RB.linearVelocity = velocity * (newSpeed / speed);
         }
 
 

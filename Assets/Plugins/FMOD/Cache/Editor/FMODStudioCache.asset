@@ -1,326 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9000902065011072212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: EchoesOfEtherionFMOD/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638973632235116028
-  FileSizes:
-  - Name: Desktop
-    Value: 1036
-  Exists: 1
---- !u!114 &-7989771399373417904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Foliage
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Foliage
-  Guid:
-    Data1: -1196654433
-    Data2: 1138122729
-    Data3: -200271739
-    Data4: -966533810
-  Banks:
-  - {fileID: 8999479865531794286}
-  IsStream: 0
-  Is3D: 1
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 60
-  MaxDistance: 450
-  Length: 0
---- !u!114 &-7648288303163234903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Wind
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Wind
-  Guid:
-    Data1: -231502085
-    Data2: 1316057520
-    Data3: -1037021565
-    Data4: 1737016020
-  Banks:
-  - {fileID: 220679683910380441}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 29852
---- !u!114 &-6730727362255780359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: EchosOfEtherionFMOD/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638985615646164966
-  FileSizes:
-  - Name: Desktop
-    Value: 3470
-  Exists: 1
---- !u!114 &-3858673084505559812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Steps/DirtSteps
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Steps/DirtSteps
-  Guid:
-    Data1: -68617277
-    Data2: 1183800578
-    Data3: 734069384
-    Data4: -699791428
-  Banks:
-  - {fileID: 8999479865531794286}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &-3727519315141635289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: snapshot:/Outside
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: snapshot:/Outside
-  Guid:
-    Data1: 1995773354
-    Data2: 1085375820
-    Data3: 1540936631
-    Data4: 401479883
-  Banks:
-  - {fileID: -6730727362255780359}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 0
-  MaxDistance: 0
-  Length: 0
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
-  m_Name: FMODStudioCache
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
-  EditorBanks:
-  - {fileID: 6402755660037353043}
-  - {fileID: 7025492273821606250}
-  - {fileID: -6730727362255780359}
-  - {fileID: 8999479865531794286}
-  EditorEvents:
-  - {fileID: 5849629826474313075}
-  - {fileID: -3727519315141635289}
-  - {fileID: 5382206071862744273}
-  - {fileID: 811788533515149138}
-  - {fileID: 6904627204108513677}
-  - {fileID: 3210451525115024891}
-  - {fileID: -7989771399373417904}
-  - {fileID: -3858673084505559812}
-  EditorParameters: []
-  MasterBanks:
-  - {fileID: -6730727362255780359}
-  StringsBanks:
-  - {fileID: 6402755660037353043}
-  cacheVersion: 131849
-  cacheTime: 638985630135301623
-  SerializableEventsDict:
-  - key: snapshot:/Cave
-    index: 0
-  - key: snapshot:/Outside
-    index: 1
-  - key: event:/Ambience/Wind
-    index: 2
-  - key: event:/Ambience/CaveDeep
-    index: 3
-  - key: event:/Ambience/CaveDark
-    index: 4
-  - key: event:/SFX/Steps/GrassSteps
-    index: 5
-  - key: event:/SFX/Foliage
-    index: 6
-  - key: event:/SFX/Steps/DirtSteps
-    index: 7
---- !u!114 &220679683910380441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Ambience.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: EchoesOfEtherionFMOD/Build/Desktop/Ambience.bank
-  Name: Ambience
-  StudioPath: bank:/Ambience
-  lastModified: 638973632240367964
-  FileSizes:
-  - Name: Desktop
-    Value: 371584
-  Exists: 1
---- !u!114 &811788533515149138
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Ambience/CaveDeep
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Ambience/CaveDeep
-  Guid:
-    Data1: 107620244
-    Data2: 1259339496
-    Data3: 1563783357
-    Data4: -209843315
-  Banks:
-  - {fileID: 7025492273821606250}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 30002
---- !u!114 &1743347266434887621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: EchoesOfEtherionFMOD/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638973632235126027
-  FileSizes:
-  - Name: Desktop
-    Value: 892
-  Exists: 1
---- !u!114 &3210451525115024891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/SFX/Steps/GrassSteps
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/SFX/Steps/GrassSteps
-  Guid:
-    Data1: 1306838597
-    Data2: 1156505473
-    Data3: -145484915
-    Data4: 1318002924
-  Banks:
-  - {fileID: 8999479865531794286}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 0
---- !u!114 &5382206071862744273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Ambience/Wind
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Ambience/Wind
-  Guid:
-    Data1: -214686912
-    Data2: 1216706342
-    Data3: 123154596
-    Data4: -1510956577
-  Banks:
-  - {fileID: 7025492273821606250}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: 7683126471326984083}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 29852
---- !u!114 &5849629826474313075
+--- !u!114 &-9170605364683971182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -339,7 +19,7 @@ MonoBehaviour:
     Data3: 2074742950
     Data4: 1025611161
   Banks:
-  - {fileID: -6730727362255780359}
+  - {fileID: 8571306066500721711}
   IsStream: 0
   Is3D: 0
   IsOneShot: 0
@@ -347,47 +27,7 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 0
---- !u!114 &6386034997805131245
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/SFX.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: EchoesOfEtherionFMOD/Build/Desktop/SFX.bank
-  Name: SFX
-  StudioPath: bank:/SFX
-  lastModified: 638973614823094339
-  FileSizes:
-  - Name: Desktop
-    Value: 37152
-  Exists: 1
---- !u!114 &6402755660037353043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: EchosOfEtherionFMOD/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638985615646180018
-  FileSizes:
-  - Name: Desktop
-    Value: 1420
-  Exists: 1
---- !u!114 &6904627204108513677
+--- !u!114 &-6035409489645451365
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -397,44 +37,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Ambience/CaveDark
+  m_Name: event:/Ambience/CaveDeep
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/Ambience/CaveDark
+  Path: event:/Ambience/CaveDeep
   Guid:
-    Data1: -791085591
-    Data2: 1173659083
-    Data3: -1124896069
-    Data4: -1818576722
+    Data1: 107620244
+    Data2: 1259339496
+    Data3: 1563783357
+    Data4: -209843315
   Banks:
-  - {fileID: 7025492273821606250}
+  - {fileID: 3111814452486977621}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 30000
---- !u!114 &7025492273821606250
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Ambience.bank
-  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
-  Path: EchosOfEtherionFMOD/Build/Desktop/Ambience.bank
-  Name: Ambience
-  StudioPath: bank:/Ambience
-  lastModified: 638981263507840813
-  FileSizes:
-  - Name: Desktop
-    Value: 1003808
-  Exists: 1
---- !u!114 &7601554292592878967
+  Length: 30002
+--- !u!114 &-6001356557381740728
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -444,16 +64,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/LeavesSteps
+  m_Name: event:/SFX/Player/Steps/GrassSteps
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
-  Path: event:/LeavesSteps
+  Path: event:/SFX/Player/Steps/GrassSteps
   Guid:
-    Data1: 1024651653
-    Data2: 1238571982
-    Data3: -1914680177
-    Data4: -1011846482
+    Data1: 1306838597
+    Data2: 1156505473
+    Data3: -145484915
+    Data4: 1318002924
   Banks:
-  - {fileID: 6386034997805131245}
+  - {fileID: 5204582117807696516}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -461,7 +81,89 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &7683126471326984083
+--- !u!114 &-5886485227796586663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/Wind
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Ambience/Wind
+  Guid:
+    Data1: -214686912
+    Data2: 1216706342
+    Data3: 123154596
+    Data4: -1510956577
+  Banks:
+  - {fileID: 3111814452486977621}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -3308866013253429714}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 29852
+--- !u!114 &-5879573198162297502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/StoneScorpion/Sting
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/StoneScorpion/Sting
+  Guid:
+    Data1: -398309523
+    Data2: 1331307521
+    Data3: -1651927879
+    Data4: -2141196110
+  Banks:
+  - {fileID: 5204582117807696516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 40
+  MaxDistance: 500
+  Length: 0
+--- !u!114 &-5458875661310528696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Foliage
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Foliage
+  Guid:
+    Data1: -1196654433
+    Data2: 1138122729
+    Data3: -200271739
+    Data4: -966533810
+  Banks:
+  - {fileID: 5204582117807696516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 60
+  MaxDistance: 450
+  Length: 0
+--- !u!114 &-3308866013253429714
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -485,7 +187,274 @@ MonoBehaviour:
   IsGlobal: 0
   Labels: []
   Exists: 1
---- !u!114 &8999479865531794286
+--- !u!114 &-3088633689076709811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/StoneScorpion/RockThrow
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/StoneScorpion/RockThrow
+  Guid:
+    Data1: -2052295168
+    Data2: 1101659198
+    Data3: 106831012
+    Data4: 238667438
+  Banks:
+  - {fileID: 5204582117807696516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 40
+  MaxDistance: 500
+  Length: 0
+--- !u!114 &-2876058202137055516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Ambience/CaveDark
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Ambience/CaveDark
+  Guid:
+    Data1: -791085591
+    Data2: 1173659083
+    Data3: -1124896069
+    Data4: -1818576722
+  Banks:
+  - {fileID: 3111814452486977621}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 30000
+--- !u!114 &-2757222894661951130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/StoneScorpion/RockGather
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/StoneScorpion/RockGather
+  Guid:
+    Data1: 1964275713
+    Data2: 1129916938
+    Data3: 110812808
+    Data4: 1593658661
+  Banks:
+  - {fileID: 5204582117807696516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 35
+  MaxDistance: 450
+  Length: 0
+--- !u!114 &-2164117126282963776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/StoneScorpion/RockHit
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/StoneScorpion/RockHit
+  Guid:
+    Data1: 854713036
+    Data2: 1247890154
+    Data3: 1995290518
+    Data4: 1950352750
+  Banks:
+  - {fileID: 5204582117807696516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 35
+  MaxDistance: 450
+  Length: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32cf7c32a3ed8347bac48ef5ed56d82, type: 3}
+  m_Name: FMODStudioCache
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
+  EditorBanks:
+  - {fileID: 3189839358095803976}
+  - {fileID: 3111814452486977621}
+  - {fileID: 8571306066500721711}
+  - {fileID: 5204582117807696516}
+  EditorEvents:
+  - {fileID: -5886485227796586663}
+  - {fileID: -6035409489645451365}
+  - {fileID: -2876058202137055516}
+  - {fileID: -9170605364683971182}
+  - {fileID: 1285760150955698359}
+  - {fileID: -5458875661310528696}
+  - {fileID: -3088633689076709811}
+  - {fileID: -2757222894661951130}
+  - {fileID: -6001356557381740728}
+  - {fileID: -5879573198162297502}
+  - {fileID: 5700682342465566880}
+  - {fileID: -2164117126282963776}
+  - {fileID: 4699616229156513521}
+  EditorParameters: []
+  MasterBanks:
+  - {fileID: 8571306066500721711}
+  StringsBanks:
+  - {fileID: 3189839358095803976}
+  cacheVersion: 131856
+  cacheTime: 638985815275690896
+  SerializableEventsDict:
+  - key: event:/Ambience/Wind
+    index: 0
+  - key: event:/Ambience/CaveDeep
+    index: 1
+  - key: event:/Ambience/CaveDark
+    index: 2
+  - key: snapshot:/Cave
+    index: 3
+  - key: snapshot:/Outside
+    index: 4
+  - key: event:/SFX/Foliage
+    index: 5
+  - key: event:/SFX/StoneScorpion/RockThrow
+    index: 6
+  - key: event:/SFX/StoneScorpion/RockGather
+    index: 7
+  - key: event:/SFX/Player/Steps/GrassSteps
+    index: 8
+  - key: event:/SFX/StoneScorpion/Sting
+    index: 9
+  - key: event:/SFX/Player/Steps/DirtSteps
+    index: 10
+  - key: event:/SFX/StoneScorpion/RockHit
+    index: 11
+  - key: event:/SFX/Hit
+    index: 12
+--- !u!114 &1285760150955698359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: snapshot:/Outside
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: snapshot:/Outside
+  Guid:
+    Data1: 1995773354
+    Data2: 1085375820
+    Data3: 1540936631
+    Data4: 401479883
+  Banks:
+  - {fileID: 8571306066500721711}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 0
+--- !u!114 &3111814452486977621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Ambience.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: EchosOfEtherionFMOD/Build/Desktop/Ambience.bank
+  Name: Ambience
+  StudioPath: bank:/Ambience
+  lastModified: 638981263507840813
+  FileSizes:
+  - Name: Desktop
+    Value: 1003808
+  Exists: 1
+--- !u!114 &3189839358095803976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: EchosOfEtherionFMOD/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638985814688628753
+  FileSizes:
+  - Name: Desktop
+    Value: 1700
+  Exists: 1
+--- !u!114 &4699616229156513521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Hit
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Hit
+  Guid:
+    Data1: 748838389
+    Data2: 1105729360
+    Data3: -1904679026
+    Data4: -1607484751
+  Banks:
+  - {fileID: 5204582117807696516}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 30
+  MaxDistance: 450
+  Length: 0
+--- !u!114 &5204582117807696516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -500,8 +469,55 @@ MonoBehaviour:
   Path: EchosOfEtherionFMOD/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638985630135301623
+  lastModified: 638985815275690896
   FileSizes:
   - Name: Desktop
-    Value: 100736
+    Value: 167104
+  Exists: 1
+--- !u!114 &5700682342465566880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/Steps/DirtSteps
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/SFX/Player/Steps/DirtSteps
+  Guid:
+    Data1: -68617277
+    Data2: 1183800578
+    Data3: 734069384
+    Data4: -699791428
+  Banks:
+  - {fileID: 5204582117807696516}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &8571306066500721711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: EchosOfEtherionFMOD/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638985814688613728
+  FileSizes:
+  - Name: Desktop
+    Value: 3616
   Exists: 1

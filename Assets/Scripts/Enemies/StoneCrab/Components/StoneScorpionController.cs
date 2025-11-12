@@ -1,8 +1,11 @@
 using EchoesOfEtherion.Enemies.Core;
 using EchoesOfEtherion.Enemies.SteeringBehaviours;
 using EchoesOfEtherion.Enemies.StoneScorpion.States;
+using EchoesOfEtherion.Player.Components;
 using EchoesOfEtherion.StateMachine;
+using FMODUnity;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace EchoesOfEtherion.Enemies.StoneScorpion
 {
@@ -12,11 +15,28 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
     [RequireComponent(typeof(ObstacleAvoidanceBehaviour))]
     [RequireComponent(typeof(OrbitBehaviour))]
     [RequireComponent(typeof(SeparationBehaviour))]
+    [RequireComponent(typeof(HealthSystem))]
     public class StoneScorpionController : Agent
     {
+        [field: SerializeField] public float CoolDownTime { get; private set; } = 2;
+        [Header("Attacks")]
+        [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private Transform projectileSpawnPoint;
+        [SerializeField] private float projectileDamage = 20f;
+
+        public GameObject ProjectilePrefab => projectilePrefab;
+        public float ProjectileDamage => projectileDamage;
+        [SerializeField] private float stingAttackRange = 64f;
+        [SerializeField] private float stingAttackRadius = 16f;
+        [SerializeField] private float stingDamage = 25f;
+        [SerializeField] private float attackCooldown = 3f;
+        [SerializeField] private LayerMask playerDamageMask;
+        [field: SerializeField] public EventReference RockThrow { get; private set; }
+        [field: SerializeField] public EventReference GatherRock { get; private set; }
+        [field: SerializeField] public EventReference Sting { get; private set; }
+        [field: SerializeField] public EventReference Hit { get; private set; }
         public StoneScorpionAnimations Animator { get; private set; }
         public FiniteStateMachine<StoneScorpionController> StateMachine { get; private set; }
-
         public SeekBehaviour SeekBehaviour { get; private set; }
         public StopBehaviour StopBehaviour { get; private set; }
         public OrbitBehaviour OrbitBehaviour { get; private set; }
@@ -25,7 +45,13 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
 
         private GameObject fakeTarget;
         public GameObject LastSeenTarget { get; private set; }
-
+        private float lastAttackTime = 0;
+        public bool CanAttack => Time.time >= lastAttackTime + attackCooldown;
+        public float StingAttackRange => stingAttackRange;
+        public float StingAttackRadius => stingAttackRadius;
+        public float StingDamage => stingDamage;
+        public LayerMask PlayerDamageMask => playerDamageMask;
+        public Transform ProjectileSpawnPoint => projectileSpawnPoint;
         private HealthSystem healthSystem;
 
         protected override void Awake()
@@ -52,13 +78,15 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         private void OnEnable()
         {
             healthSystem.Died += OnDied;
+            healthSystem.Damaged += OnDamaged;
         }
 
         private void OnDisable()
         {
             healthSystem.Died -= OnDied;
+            healthSystem.Damaged -= OnDamaged;
         }
-        
+
         public override void Tick()
         {
             base.Tick();
@@ -96,6 +124,11 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             }
         }
 
+        private void OnDamaged(float damage)
+        {
+            StateMachine.ChangeState<StoneScorpionDamagedState>();
+        }
+
         private void SetupStateMachine()
         {
             StateMachine = new FiniteStateMachine<StoneScorpionController>(this);
@@ -103,9 +136,35 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             StateMachine.AddState<StoneScorpionChaseState>(new StoneScorpionChaseState());
             StateMachine.AddState<StoneScorpionRotateState>(new StoneScorpionRotateState());
             StateMachine.AddState<StoneScorpionSearchState>(new StoneScorpionSearchState());
+            StateMachine.AddState<StoneScorpionDamagedState>(new StoneScorpionDamagedState());
+            StateMachine.AddState<StoneScorpionProjectileAttackState>(new StoneScorpionProjectileAttackState());
+            StateMachine.AddState<StoneScorpionStingAttackState>(new StoneScorpionStingAttackState());
             StateMachine.ChangeState<StoneScorpionIdleState>();
         }
 
+        public void PerformStingAttack()
+        {
+            // Circle cast to detect players in sting range
+            Collider2D[] hitPlayers = Physics2D.OverlapCircleAll(
+                transform.position + (Vector3)LookDirection * stingAttackRange,
+                stingAttackRadius,
+                playerDamageMask
+            );
+
+            foreach (Collider2D playerCollider in hitPlayers)
+            {
+                HealthSystem playerHealth = playerCollider.GetComponent<HealthSystem>();
+                if (playerHealth != null)
+                {
+                    playerHealth.Damage(stingDamage);
+                }
+            }
+        }
+
+        public void ResetAttackCooldown()
+        {
+            lastAttackTime = Time.time;
+        }
         protected override void OnDestroy()
         {
             base.OnDestroy();

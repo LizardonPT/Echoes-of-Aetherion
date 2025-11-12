@@ -20,10 +20,7 @@ namespace EchoesOfEtherion.Player.Components
         {
             SpellPage page = inventory.GetSpellInSlot(slot);
             if (page == null)
-            {
-                Debug.Log($"[PlayerSpellCaster] No spells in slot {slot}");
                 return;
-            }
 
             LightBallSpell spellInstance = Instantiate(page.SpellPrefab, casterPos.position, Quaternion.identity, casterPos)
                                             .GetComponent<LightBallSpell>();

@@ -24,6 +24,23 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
             controller.LookDirection = dir;
 
             controller.Animator.UpdateAnimation(controller.Velocity, dir);
+            
+            if (controller.Target != null && controller.CanAttack)
+            {
+                float distanceToTarget = Vector2.Distance(controller.transform.position, controller.TargetPos);
+
+                // Decide which attack to use based on distance
+                if (distanceToTarget <= controller.StingAttackRange)
+                {
+                    // Close range - use sting attack
+                    controller.StateMachine.ChangeState<StoneScorpionStingAttackState>();
+                }
+                else if (distanceToTarget <= controller.SeekRadius)
+                {
+                    // Medium range - use projectile attack
+                    controller.StateMachine.ChangeState<StoneScorpionProjectileAttackState>();
+                }
+            }
         }
 
         public void FixedUpdate(StoneScorpionController agent) { }

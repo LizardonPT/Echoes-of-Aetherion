@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace EchoesOfEtherion.Player.Components
 {
@@ -14,6 +15,22 @@ namespace EchoesOfEtherion.Player.Components
         private void Awake()
         {
             OnValidate();
+        }
+
+        private void Update()
+        {
+            if (Keyboard.current.digit1Key.wasPressedThisFrame)
+            {
+                anim.SetTrigger("Hurt");
+            }
+            else if (Keyboard.current.digit2Key.wasPressedThisFrame)
+            {
+                anim.SetTrigger("Death");
+            }
+            else if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            {
+                anim.SetTrigger("Heal");
+            }
         }
 
         public void UpdateAnimation(Vector2 movementInput, Vector2 lookDirection)
@@ -36,7 +53,7 @@ namespace EchoesOfEtherion.Player.Components
                 anim.SetFloat(YHash, movementInput.y);
             }
         }
-        
+
         private void OnValidate()
         {
             if (anim == null)

@@ -9,6 +9,7 @@ namespace EchoesOfEtherion.Player.Components
         [field: SerializeField] public bool LookAtPointer { get; private set; } = true;
 
         private PlayerSpellCaster spellCaster;
+        private HealthSystem healthSystem;
 
         private static readonly int IsMovingHash = Animator.StringToHash("isMoving");
         private static readonly int XHash = Animator.StringToHash("x");
@@ -18,16 +19,21 @@ namespace EchoesOfEtherion.Player.Components
         {
             OnValidate();
             spellCaster = GetComponent<PlayerSpellCaster>();
+            healthSystem = GetComponent<HealthSystem>();
         }
 
         private void OnEnable()
         {
             spellCaster.SpellCasted += OnSpellCasted;
+            healthSystem.Damaged += OnDamaged;
+            healthSystem.Healed += OnHealed;
         }
 
         private void OnDisable()
         {
             spellCaster.SpellCasted -= OnSpellCasted;
+            healthSystem.Damaged -= OnDamaged;
+            healthSystem.Healed -= OnHealed;
         }
 
         public void UpdateAnimation(Vector2 movementInput, Vector2 lookDirection)
@@ -54,6 +60,16 @@ namespace EchoesOfEtherion.Player.Components
         private void OnSpellCasted()
         {
             anim.SetTrigger("Attack");
+        }
+
+        private void OnDamaged(float damageAmount)
+        {
+            anim.SetTrigger("Hurt");
+        }
+
+        private void OnHealed(float healAmount)
+        {
+            anim.SetTrigger("Heal");
         }
 
 #if UNITY_EDITOR

@@ -67,8 +67,11 @@ namespace EchoesOfEtherion.Spells
                 {
                     foreach (RaycastHit2D hit2D in enemyCollisions)
                     {
-                        //todo: Damage enemies.
+                        Debug.Log($"[LightBallSpell] Hit {hit2D.collider.name} for {damage} damage.");
+                        hit2D.collider.GetComponent<HealthSystem>()?.Damage(damage);
                     }
+
+                    IsActive = false;
 
                     Destroy(gameObject);
                 }

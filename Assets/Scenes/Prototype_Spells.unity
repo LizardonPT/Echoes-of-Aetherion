@@ -3965,6 +3965,7 @@ GameObject:
   - component: {fileID: 387109733}
   - component: {fileID: 387109732}
   - component: {fileID: 387109738}
+  - component: {fileID: 387109742}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -3987,6 +3988,7 @@ Transform:
   m_Children:
   - {fileID: 873817194}
   - {fileID: 1712005972}
+  - {fileID: 1490085213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &387109732
@@ -4177,6 +4179,20 @@ MonoBehaviour:
   maxResults: 5
   enableLogging: 0
   showInteractionRange: 1
+--- !u!114 &387109742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387109730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dce734cb1815174186fa9a13ed2f4af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpellCaster
+  spellPrefab: {fileID: 4440331190906441173, guid: 08a667bfae91b54479dc2a15f38087cf, type: 3}
+  casterPos: {fileID: 1490085213}
 --- !u!1 &389685261
 GameObject:
   m_ObjectHideFlags: 0
@@ -41622,6 +41638,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!1 &1490085212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1490085213}
+  m_Layer: 3
+  m_Name: CasterPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1490085213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490085212}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 7.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 387109731}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1504179882
 GameObject:
   m_ObjectHideFlags: 0

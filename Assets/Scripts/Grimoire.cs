@@ -50,9 +50,5 @@ public class Grimoire : MonoBehaviour
     public void CastSpell(int slotIndex, GameObject caster)
     {
         if (slotIndex < 0 || slotIndex >= activeSpells.Count) return;
-
-        // SpellPage spell = activeSpells[slotIndex];
-        // if (spell != null)
-        //     spell.Cast(caster);
     }
 }

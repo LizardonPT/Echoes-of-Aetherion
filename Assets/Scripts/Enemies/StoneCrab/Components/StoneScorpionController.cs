@@ -26,6 +26,8 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         private GameObject fakeTarget;
         public GameObject LastSeenTarget { get; private set; }
 
+        private HealthSystem healthSystem;
+
         protected override void Awake()
         {
             base.Awake();
@@ -36,11 +38,27 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             OrbitBehaviour = GetComponent<OrbitBehaviour>();
             ObstacleAvoidanceBehaviour = GetComponent<ObstacleAvoidanceBehaviour>();
             SeparationBehaviour = GetComponent<SeparationBehaviour>();
+            healthSystem = GetComponent<HealthSystem>();
 
             CreateFakeTarget();
             SetupStateMachine();
         }
 
+        private void OnDied()
+        {
+            Destroy(gameObject);
+        }
+
+        private void OnEnable()
+        {
+            healthSystem.Died += OnDied;
+        }
+
+        private void OnDisable()
+        {
+            healthSystem.Died -= OnDied;
+        }
+        
         public override void Tick()
         {
             base.Tick();

@@ -7,6 +7,7 @@ namespace EchoesOfEtherion.Spells
     {
         [SerializeField] private SpellPage spellData;
 
+        [SerializeField] private float radius = 16;
         [SerializeField] private float speed = 10f;
         [SerializeField] private float damage = 20f;
         [SerializeField] private int range = 50;
@@ -29,7 +30,7 @@ namespace EchoesOfEtherion.Spells
             {
                 transform.position = position;
                 originalPos = position;
-                
+
                 rb.WakeUp();
                 rb.linearVelocity = Vector3.zero;
                 rb.AddForce(direction * speed, ForceMode2D.Impulse);
@@ -49,7 +50,45 @@ namespace EchoesOfEtherion.Spells
                 Destroy(gameObject);
             }
         }
-        
+
+        private void FixedUpdate()
+        {
+            if (IsActive)
+            {
+                RaycastHit2D[] enemyCollisions = Physics2D.CircleCastAll(
+                    transform.position,
+                    radius,
+                    rb.linearVelocity.normalized,
+                    rb.linearVelocity.magnitude * Time.fixedDeltaTime,
+                    enemyMask
+                );
+
+                if (enemyCollisions.Length > 0)
+                {
+                    foreach (RaycastHit2D hit2D in enemyCollisions)
+                    {
+                        Debug.Log($"[LightBallSpell] Hit {hit2D.collider.name} for {damage} damage.");
+                        hit2D.collider.GetComponent<HealthSystem>()?.Damage(damage);
+                    }
+
+                    IsActive = false;
+
+                    Destroy(gameObject);
+                }
+
+                RaycastHit2D environmentCollision = Physics2D.CircleCast(
+                    transform.position,
+                    radius,
+                    rb.linearVelocity.normalized,
+                    rb.linearVelocity.magnitude * Time.fixedDeltaTime,
+                    environmentMask
+                );
+
+                if (environmentCollision.collider != null)
+                    Destroy(gameObject);
+            }
+        }
+
         public void OnTriggerEnter2D(Collider2D other)
         {
             // Check for enemy collision
@@ -65,6 +104,14 @@ namespace EchoesOfEtherion.Spells
             }
         }
 
+#if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.blue;
+
+            Gizmos.DrawWireSphere(transform.position, radius);
+        }
+#endif
 
     }
 }

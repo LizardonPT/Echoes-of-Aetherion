@@ -12,6 +12,7 @@ namespace EchoesOfEtherion.Player.Components
 {
     [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations))]
     [RequireComponent(typeof(PlayerInteractor))]
+    [RequireComponent(typeof(PlayerSpellCaster))]
     public class PlayerController : TickRegistor
     {
         [field: SerializeField]
@@ -21,6 +22,8 @@ namespace EchoesOfEtherion.Player.Components
         public PlayerAnimations Animator { get; private set; }
         public PlayerMovement Movement { get; private set; }
         public PlayerInteractor Interactor { get; private set; }
+
+        public PlayerSpellCaster SpellCaster { get; private set;}
 
         public FiniteStateMachine<PlayerController> StateMachine { get; private set; }
 
@@ -36,7 +39,7 @@ namespace EchoesOfEtherion.Player.Components
                     pointerPos - (Vector2)transform.position : Vector2.zero).normalized;
             }
         }
-
+        
         private void Awake()
         {
             OnValidate();
@@ -75,6 +78,7 @@ namespace EchoesOfEtherion.Player.Components
             Animator ??= GetComponent<PlayerAnimations>();
             Movement ??= GetComponent<PlayerMovement>();
             Interactor ??= GetComponent<PlayerInteractor>();
+            SpellCaster ??= GetComponent<PlayerSpellCaster>();
         }
     }
 }

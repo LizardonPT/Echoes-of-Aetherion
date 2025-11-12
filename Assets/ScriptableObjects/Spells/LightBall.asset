@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d79e0c6d69e9024ebb3a97114fe27e2, type: 3}
   m_Name: LightBall
   m_EditorClassIdentifier: Assembly-CSharp::SpellPage
-  <SpellPrefab>k__BackingField: {fileID: 0}
+  <SpellPrefab>k__BackingField: {fileID: 363552223797020508, guid: 08a667bfae91b54479dc2a15f38087cf, type: 3}
   <SpellName>k__BackingField: Light Ball
   <Icon>k__BackingField: {fileID: -2084250299, guid: 780fed32ab044404a9053f02966940e1, type: 3}
   <Description>k__BackingField: Shoot a light ball that deals damage when it hit

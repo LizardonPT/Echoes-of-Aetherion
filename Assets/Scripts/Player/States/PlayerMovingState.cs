@@ -22,7 +22,17 @@ namespace EchoesOfEtherion.Player.States
             {
                 controller.Interactor.InteractInput();
             }
+            CheckSpellInputs(controller);
         }
+        
+        private void CheckSpellInputs(PlayerController controller)
+        {
+            if (controller.PlayerInput.SpellSlotInputPressed)
+            {
+                controller.SpellCaster.CastSpell(1, controller.LookDirection);
+            }
+        }
+
 
         public void FixedUpdate(PlayerController controller)
         {

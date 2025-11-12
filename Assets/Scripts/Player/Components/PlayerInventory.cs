@@ -10,6 +10,9 @@ namespace EchoesOfEtherion.Player.Components
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
 
+        [SerializeField]
+        private SpellPage slot1;
+
         private List<SpellPage> spellPages;
 
         private void Awake()
@@ -22,6 +25,7 @@ namespace EchoesOfEtherion.Player.Components
             if (!spellPages.Contains(page))
             {
                 spellPages.Add(page);
+                if (slot1 == null) slot1 = page;
                 Log($"Page {page.SpellName} was added to the inventory.");
                 if (enableLogging)
                 {
@@ -48,6 +52,14 @@ namespace EchoesOfEtherion.Player.Components
                 AddSpellPage(collectableSpell.SpellPage);
                 Destroy(collectableSpell.gameObject);
             }
+        }
+
+        public SpellPage GetSpellInSlot(int i)
+        {
+            if (i == 1)
+                return slot1;
+
+            else return null;
         }
 
         private void Log(string message)

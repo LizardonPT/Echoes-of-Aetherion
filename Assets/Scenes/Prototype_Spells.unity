@@ -3962,10 +3962,10 @@ GameObject:
   - component: {fileID: 387109739}
   - component: {fileID: 387109740}
   - component: {fileID: 387109741}
+  - component: {fileID: 387109742}
   - component: {fileID: 387109733}
   - component: {fileID: 387109732}
   - component: {fileID: 387109738}
-  - component: {fileID: 387109742}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -4160,6 +4160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Player.Components.PlayerInventory
   enableLogging: 0
+  slot1: {fileID: 0}
 --- !u!114 &387109741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4178,7 +4179,7 @@ MonoBehaviour:
     m_Bits: 512
   maxResults: 5
   enableLogging: 0
-  showInteractionRange: 1
+  showInteractionRange: 0
 --- !u!114 &387109742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4191,7 +4192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dce734cb1815174186fa9a13ed2f4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSpellCaster
-  spellPrefab: {fileID: 4440331190906441173, guid: 08a667bfae91b54479dc2a15f38087cf, type: 3}
   casterPos: {fileID: 1490085213}
 --- !u!1 &389685261
 GameObject:
@@ -41663,7 +41663,7 @@ Transform:
   m_GameObject: {fileID: 1490085212}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 7.2, z: 0}
+  m_LocalPosition: {x: 0, y: 10.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

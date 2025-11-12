@@ -8,6 +8,8 @@ namespace EchoesOfEtherion.Player.Components
         [SerializeField] private Animator anim;
         [field: SerializeField] public bool LookAtPointer { get; private set; } = true;
 
+        private PlayerSpellCaster spellCaster;
+
         private static readonly int IsMovingHash = Animator.StringToHash("isMoving");
         private static readonly int XHash = Animator.StringToHash("x");
         private static readonly int YHash = Animator.StringToHash("y");
@@ -15,22 +17,17 @@ namespace EchoesOfEtherion.Player.Components
         private void Awake()
         {
             OnValidate();
+            spellCaster = GetComponent<PlayerSpellCaster>();
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            if (Keyboard.current.digit1Key.wasPressedThisFrame)
-            {
-                anim.SetTrigger("Hurt");
-            }
-            else if (Keyboard.current.digit2Key.wasPressedThisFrame)
-            {
-                anim.SetTrigger("Death");
-            }
-            else if (Keyboard.current.digit3Key.wasPressedThisFrame)
-            {
-                anim.SetTrigger("Heal");
-            }
+            spellCaster.SpellCasted += OnSpellCasted;
+        }
+
+        private void OnDisable()
+        {
+            spellCaster.SpellCasted -= OnSpellCasted;
         }
 
         public void UpdateAnimation(Vector2 movementInput, Vector2 lookDirection)
@@ -54,6 +51,12 @@ namespace EchoesOfEtherion.Player.Components
             }
         }
 
+        private void OnSpellCasted()
+        {
+            anim.SetTrigger("Attack");
+        }
+
+#if UNITY_EDITOR
         private void OnValidate()
         {
             if (anim == null)
@@ -62,4 +65,5 @@ namespace EchoesOfEtherion.Player.Components
             }
         }
     }
+#endif
 }

@@ -5,10 +5,11 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     [field: SerializeField] public float MaxHealth { get; private set; }
-    public float CurrentHealth { get; private set; }
+    [field: SerializeField] public float CurrentHealth { get; private set; }
 
     public event Action <float> Damaged;
     public event Action<float> Healed;
+    public event Action<float> OnHealthChanged;
     public event Action Died;
     
     private void Awake()
@@ -27,6 +28,7 @@ public class HealthSystem : MonoBehaviour
         }
 
         Damaged?.Invoke(damageAmount);
+        OnHealthChanged?.Invoke(CurrentHealth);
     }
 
     public void Heal(float healAmount)

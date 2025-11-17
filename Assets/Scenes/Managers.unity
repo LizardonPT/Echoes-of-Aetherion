@@ -1944,7 +1944,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HUDMenu
   pauseButton: {fileID: 1222378734}
   healthBar: {fileID: 1015713816}
-  manaBar: {fileID: 0}
+  healthText: {fileID: 233561781}
+  manaBar: {fileID: 347881840}
 --- !u!1 &549886058
 GameObject:
   m_ObjectHideFlags: 0

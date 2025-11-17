@@ -26,6 +26,7 @@ namespace EchoesOfEtherion.Game.Scenes
         public Action<string> SceneLoaded;
         public Action<string> SceneUnloaded;
         public Action<string> LoadingScene;
+        
         private void Start()
         {
             InitializeSceneSystem();

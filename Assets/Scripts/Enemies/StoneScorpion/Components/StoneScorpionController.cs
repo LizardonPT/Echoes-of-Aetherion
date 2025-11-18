@@ -72,7 +72,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             SetupStateMachine();
         }
 
-        private void OnDied()
+        private void OnDied(HealthModule module)
         {
             Destroy(gameObject);
         }

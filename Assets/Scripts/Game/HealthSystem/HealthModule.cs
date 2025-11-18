@@ -12,7 +12,7 @@ namespace EchoesOfEtherion.HealthSystem
         public event Action<DamageInfo> Damaged;
         public event Action<float> Healed;
         public event Action<float> HealthChanged;
-        public event Action Died;
+        public event Action<HealthModule> Died;
 
         public bool IsDead { get; private set; } = false;
 
@@ -31,17 +31,17 @@ namespace EchoesOfEtherion.HealthSystem
                 CurrentHealth = 0;
 
                 Damaged?.Invoke(
-                    new DamageInfo(damager, damageAmount, damager.transform.position, knockback, stunTime)
+                    new DamageInfo(damager, this, damageAmount, damager.transform.position, knockback, stunTime)
                     );
 
                 HealthChanged?.Invoke(CurrentHealth);
-                Died?.Invoke();
+                Died?.Invoke(this);
                 IsDead = true;
                 return;
             }
 
             Damaged?.Invoke(
-                new DamageInfo(damager, damageAmount, damager.transform.position, knockback, stunTime)
+                new DamageInfo(damager, this, damageAmount, damager.transform.position, knockback, stunTime)
                 );
             HealthChanged?.Invoke(CurrentHealth);
         }

@@ -10,6 +10,7 @@ namespace EchoesOfEtherion.Player.States
         public void Enter(PlayerController controller)
         {
             controller.Animator.Die();
+            controller.Movement.RB.linearVelocity = Vector2.zero;
         }
 
         //todo: Restart game with Input.

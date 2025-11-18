@@ -100,7 +100,7 @@ namespace EchoesOfEtherion.Player.Components
             StateMachine.ChangeState<PlayerIdleState>();
         }
 
-        private void OnDied()
+        private void OnDied(HealthModule module)
         {
             StateMachine.ChangeState<PlayerDeadState>();
         }

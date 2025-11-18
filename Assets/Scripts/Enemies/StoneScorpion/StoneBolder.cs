@@ -1,3 +1,4 @@
+using EchoesOfEtherion.HealthSystem;
 using FMODUnity;
 using UnityEngine;
 
@@ -75,7 +76,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
                 Mathf.Lerp(startPos.x, targetPosition.x, progress),
                 Mathf.Lerp(startPos.y, targetPosition.y, progress),
                 0);
-            
+
             if (progress >= 1)
             {
                 RuntimeManager.PlayOneShot(rockHit, transform.position);
@@ -92,9 +93,9 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             Collider2D[] playerHits = Physics2D.OverlapCircleAll(worldPosition, radius, playerMask);
             foreach (Collider2D hit in playerHits)
             {
-                if (hit.TryGetComponent<HealthSystem>(out var playerHealth))
+                if (hit.TryGetComponent<HealthModule>(out var playerHealth))
                 {
-                    playerHealth.Damage(damage);
+                    playerHealth.Damage(gameObject, damage, 20);
                     OnHitTarget();
                     return;
                 }

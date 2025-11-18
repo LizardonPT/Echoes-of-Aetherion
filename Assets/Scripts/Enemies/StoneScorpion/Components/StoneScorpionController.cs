@@ -1,11 +1,11 @@
 using EchoesOfEtherion.Enemies.Core;
 using EchoesOfEtherion.Enemies.SteeringBehaviours;
 using EchoesOfEtherion.Enemies.StoneScorpion.States;
+using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.Player.Components;
 using EchoesOfEtherion.StateMachine;
 using FMODUnity;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace EchoesOfEtherion.Enemies.StoneScorpion
 {
@@ -15,7 +15,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
     [RequireComponent(typeof(ObstacleAvoidanceBehaviour))]
     [RequireComponent(typeof(OrbitBehaviour))]
     [RequireComponent(typeof(SeparationBehaviour))]
-    [RequireComponent(typeof(HealthSystem))]
+    [RequireComponent(typeof(HealthModule))]
     public class StoneScorpionController : Agent
     {
         [field: SerializeField] public float CoolDownTime { get; private set; } = 2;
@@ -52,7 +52,9 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         public float StingDamage => stingDamage;
         public LayerMask PlayerDamageMask => playerDamageMask;
         public Transform ProjectileSpawnPoint => projectileSpawnPoint;
-        private HealthSystem healthSystem;
+        private HealthModule healthSystem;
+
+        public float StunTime { get; private set; } = 0;
 
         protected override void Awake()
         {
@@ -64,7 +66,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             OrbitBehaviour = GetComponent<OrbitBehaviour>();
             ObstacleAvoidanceBehaviour = GetComponent<ObstacleAvoidanceBehaviour>();
             SeparationBehaviour = GetComponent<SeparationBehaviour>();
-            healthSystem = GetComponent<HealthSystem>();
+            healthSystem = GetComponent<HealthModule>();
 
             CreateFakeTarget();
             SetupStateMachine();
@@ -124,8 +126,9 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             }
         }
 
-        private void OnDamaged(float damage)
+        private void OnDamaged(DamageInfo damageInfo)
         {
+            StunTime = damageInfo.StunTime;
             StateMachine.ChangeState<StoneScorpionDamagedState>();
         }
 
@@ -153,10 +156,10 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
 
             foreach (Collider2D playerCollider in hitPlayers)
             {
-                HealthSystem playerHealth = playerCollider.GetComponent<HealthSystem>();
+                HealthModule playerHealth = playerCollider.GetComponent<HealthModule>();
                 if (playerHealth != null)
                 {
-                    playerHealth.Damage(stingDamage);
+                    playerHealth.Damage(gameObject, stingDamage, 25);
                 }
             }
         }

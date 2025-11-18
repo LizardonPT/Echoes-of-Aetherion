@@ -3,7 +3,7 @@ using EchoesOfEtherion.Extentions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace EchoesOfEtherion.ScriptableObjects.Utils
+namespace EchoesOfEtherion.Game.Utils
 {
     [CreateAssetMenu(fileName = "InputReader", menuName = "Scriptable Objects/Utils/InputReader")]
     public class InputReader : ScriptableObject

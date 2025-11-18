@@ -1,8 +1,8 @@
 using EchoesOfEtherion.Game;
 using EchoesOfEtherion.Game.Scenes;
+using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.Player.Components;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +15,7 @@ namespace EchoesOfEtherion.Menu
         [SerializeField] private TextMeshProUGUI healthText;
         [SerializeField] private Slider manaBar;
 
-        private HealthSystem playerHealth;
+        private HealthModule playerHealth;
 
         private void Start()
         {
@@ -26,7 +26,7 @@ namespace EchoesOfEtherion.Menu
 
             if (player != null)
             {
-                playerHealth = player.GetComponent<HealthSystem>();
+                playerHealth = player.GetComponent<HealthModule>();
                 playerHealth.HealthChanged += UpdateHealthBar;
                 UpdateHealthBar(playerHealth.CurrentHealth);
             }
@@ -37,7 +37,7 @@ namespace EchoesOfEtherion.Menu
             PlayerController player = FindAnyObjectByType<PlayerController>();
             if (player != null)
             {
-                playerHealth = player.GetComponent<HealthSystem>();
+                playerHealth = player.GetComponent<HealthModule>();
                 playerHealth.HealthChanged += UpdateHealthBar;
                 UpdateHealthBar(playerHealth.CurrentHealth);
             }

@@ -1,3 +1,4 @@
+using EchoesOfEtherion.HealthSystem;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Spells
@@ -67,7 +68,7 @@ namespace EchoesOfEtherion.Spells
                 {
                     foreach (RaycastHit2D hit2D in enemyCollisions)
                     {
-                        hit2D.collider.GetComponent<HealthSystem>()?.Damage(damage);
+                        hit2D.collider.GetComponent<HealthModule>()?.Damage(gameObject, damage, 80, 0.25f);
                     }
 
                     IsActive = false;

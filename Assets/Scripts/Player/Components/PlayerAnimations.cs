@@ -1,3 +1,4 @@
+using EchoesOfEtherion.HealthSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,7 +10,7 @@ namespace EchoesOfEtherion.Player.Components
         [field: SerializeField] public bool LookAtPointer { get; private set; } = true;
 
         private PlayerSpellCaster spellCaster;
-        private HealthSystem healthSystem;
+        private HealthModule healthSystem;
 
         private static readonly int IsMovingHash = Animator.StringToHash("isMoving");
         private static readonly int XHash = Animator.StringToHash("x");
@@ -19,21 +20,17 @@ namespace EchoesOfEtherion.Player.Components
         {
             OnValidate();
             spellCaster = GetComponent<PlayerSpellCaster>();
-            healthSystem = GetComponent<HealthSystem>();
+            healthSystem = GetComponent<HealthModule>();
         }
 
         private void OnEnable()
         {
             spellCaster.SpellCasted += OnSpellCasted;
-            healthSystem.Damaged += OnDamaged;
-            healthSystem.Healed += OnHealed;
         }
 
         private void OnDisable()
         {
             spellCaster.SpellCasted -= OnSpellCasted;
-            healthSystem.Damaged -= OnDamaged;
-            healthSystem.Healed -= OnHealed;
         }
 
         public void UpdateAnimation(Vector2 movementInput, Vector2 lookDirection)
@@ -62,14 +59,19 @@ namespace EchoesOfEtherion.Player.Components
             anim.SetTrigger("Attack");
         }
 
-        private void OnDamaged(float damageAmount)
+        public void Damage()
         {
             anim.SetTrigger("Hurt");
         }
 
-        private void OnHealed(float healAmount)
+        public void Heal()
         {
             anim.SetTrigger("Heal");
+        }
+
+        public void Die()
+        {
+            anim.SetTrigger("Die");
         }
 
 #if UNITY_EDITOR

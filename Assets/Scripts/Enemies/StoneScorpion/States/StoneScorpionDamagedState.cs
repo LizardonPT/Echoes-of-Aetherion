@@ -11,7 +11,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
         public void Enter(StoneScorpionController controller)
         {
-            timer = controller.CoolDownTime;
+            timer = controller.StunTime;
 
             GameObject target = ValidateTarget(controller);
 
@@ -49,18 +49,23 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         private GameObject ValidateTarget(StoneScorpionController controller)
         {
             if (controller.Target != null)
-            {
                 return controller.Target;
-            }
 
             var player = GameObject.FindAnyObjectByType<PlayerController>();
+            if (player == null)
+                return null;
 
             Vector2 origin = controller.transform.position;
             Vector2 dirToTarget = (Vector2)player.transform.position - origin;
+
             LayerMask rayMask = (controller.PlayerMask | controller.EnvironmentMask) & ~controller.EnemyMask;
             RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, controller.SeekRadius, rayMask);
 
-            return rayHit.collider.gameObject;
+            if (rayHit.collider != null)
+                return rayHit.collider.gameObject;
+
+            return null;
         }
+
     }
 }

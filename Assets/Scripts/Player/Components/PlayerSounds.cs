@@ -10,27 +10,7 @@ namespace EchoesOfEtherion.Player.Components
         [SerializeField] private Tilemap earthTilemap;
         [SerializeField] private EventReference grassFootstepSound;
         [SerializeField] private EventReference earthFootstepSound;
-        [SerializeField] private EventReference hitSound;
 
-        private HealthSystem healthSystem;
-
-        private void Awake()
-        {
-            healthSystem = GetComponent<HealthSystem>();
-        }
-
-        private void OnEnable()
-        {
-            if (healthSystem != null)
-                healthSystem.Damaged += OnDamaged;
-        }
-
-        private void OnDisable()
-        {
-            if (healthSystem != null)
-                healthSystem.Damaged -= OnDamaged;
-        }
-        
         public void PlayFootStepSound()
         {
             Vector3 worldPos = transform.position;
@@ -52,11 +32,6 @@ namespace EchoesOfEtherion.Player.Components
             {
                 RuntimeManager.PlayOneShot(earthFootstepSound, transform.position);
             }
-        }
-
-        private void OnDamaged(float damage)
-        {
-            RuntimeManager.PlayOneShot(hitSound, transform.position);
         }
     }
 }

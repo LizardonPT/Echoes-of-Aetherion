@@ -2,7 +2,7 @@ using System;
 using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.Game.States;
 using EchoesOfEtherion.Menu;
-using EchoesOfEtherion.ScriptableObjects.Utils;
+using EchoesOfEtherion.Game.Utils;
 using EchoesOfEtherion.StateMachine;
 using UnityEngine;
 

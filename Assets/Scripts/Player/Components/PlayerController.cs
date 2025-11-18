@@ -5,14 +5,17 @@ using EchoesOfEtherion.Player.States;
 using EchoesOfEtherion.CameraUtils;
 using EchoesOfEtherion.Game;
 using EchoesOfEtherion.Menu;
-using EchoesOfEtherion.ScriptableObjects.Utils;
+using EchoesOfEtherion.Game.Utils;
 using System;
+using UnityEngine.PlayerLoop;
+using EchoesOfEtherion.HealthSystem;
 
 namespace EchoesOfEtherion.Player.Components
 {
     [RequireComponent(typeof(PlayerMovement), typeof(PlayerAnimations))]
     [RequireComponent(typeof(PlayerInteractor))]
     [RequireComponent(typeof(PlayerSpellCaster))]
+    [RequireComponent(typeof(HealthModule))]
     public class PlayerController : TickRegistor
     {
         [field: SerializeField]
@@ -23,7 +26,7 @@ namespace EchoesOfEtherion.Player.Components
         public PlayerMovement Movement { get; private set; }
         public PlayerInteractor Interactor { get; private set; }
 
-        public PlayerSpellCaster SpellCaster { get; private set;}
+        public PlayerSpellCaster SpellCaster { get; private set; }
 
         public FiniteStateMachine<PlayerController> StateMachine { get; private set; }
 
@@ -39,10 +42,20 @@ namespace EchoesOfEtherion.Player.Components
                     pointerPos - (Vector2)transform.position : Vector2.zero).normalized;
             }
         }
-        
+
+        public float StunTime { get; private set; }
+
+        private HealthModule healthSystem;
+
+        public bool IsDead => healthSystem.IsDead;
+
         private void Awake()
         {
-            OnValidate();
+            Animator ??= GetComponent<PlayerAnimations>();
+            Movement ??= GetComponent<PlayerMovement>();
+            Interactor ??= GetComponent<PlayerInteractor>();
+            SpellCaster ??= GetComponent<PlayerSpellCaster>();
+            healthSystem ??= GetComponent<HealthModule>();
 
             SetupStateMachine();
         }
@@ -61,6 +74,18 @@ namespace EchoesOfEtherion.Player.Components
             }
         }
 
+        private void OnEnable()
+        {
+            healthSystem.Died += OnDied;
+            healthSystem.Damaged += OnDamaged;
+        }
+
+        private void OnDisable()
+        {
+            healthSystem.Died -= OnDied;
+            healthSystem.Damaged -= OnDamaged;
+        }
+
         public override void Tick() => StateMachine?.Update();
         public override void FixedTick() => StateMachine?.FixedUpdate();
 
@@ -70,7 +95,26 @@ namespace EchoesOfEtherion.Player.Components
 
             StateMachine.AddState<PlayerIdleState>(new PlayerIdleState());
             StateMachine.AddState<PlayerMovingState>(new PlayerMovingState());
+            StateMachine.AddState<PlayerDeadState>(new PlayerDeadState());
+            StateMachine.AddState<PlayerStunState>(new PlayerStunState());
             StateMachine.ChangeState<PlayerIdleState>();
+        }
+
+        private void OnDied()
+        {
+            StateMachine.ChangeState<PlayerDeadState>();
+        }
+
+        private void OnDamaged(DamageInfo damageInfo)
+        {
+            if (IsDead) return;
+            float stun = damageInfo.StunTime;
+            if (stun > 0)
+            {
+                StunTime = stun;
+                StateMachine.ChangeState<PlayerStunState>();
+            }
+            Animator.Damage();
         }
 
         private void OnValidate()
@@ -79,6 +123,7 @@ namespace EchoesOfEtherion.Player.Components
             Movement ??= GetComponent<PlayerMovement>();
             Interactor ??= GetComponent<PlayerInteractor>();
             SpellCaster ??= GetComponent<PlayerSpellCaster>();
+            healthSystem ??= GetComponent<HealthModule>();
         }
     }
 }

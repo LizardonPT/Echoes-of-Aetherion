@@ -9,6 +9,6 @@ namespace EchoesOfEtherion.Spells
     public class CollectableSpell : MonoBehaviour
     {
         [field: SerializeField]
-        public SpellPage SpellPage { get; private set; }
+        public Spell Spell { get; private set; }
     }
 }

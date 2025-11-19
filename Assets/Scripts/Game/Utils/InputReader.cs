@@ -17,8 +17,17 @@ namespace EchoesOfEtherion.Game.Utils
         private InputActionReference interactActionReference;
 
         [SerializeField]
-        private InputActionReference spellSlotActionReference;
-
+        private InputActionReference slot1ActionReference;
+        [SerializeField]
+        private InputActionReference slot2ActionReference;
+        [SerializeField]
+        private InputActionReference slot3ActionReference;
+        [SerializeField]
+        private InputActionReference slot4ActionReference;
+        [SerializeField]
+        private InputActionReference slot5ActionReference;
+        [SerializeField]
+        private InputActionReference slot6ActionReference;
         public Vector2 MovementInput
         {
             get
@@ -48,11 +57,47 @@ namespace EchoesOfEtherion.Game.Utils
             }
         }
 
-        public bool SpellSlotInputPressed
+        public bool Slot1InputPressed
         {
             get
             {
-                return spellSlotActionReference?.action?.WasPressedThisFrame() ?? false;
+                return slot1ActionReference?.action?.WasPressedThisFrame() ?? false;
+            }
+        }
+
+        public bool Slot2InputPressed
+        {
+            get
+            {
+                return slot2ActionReference?.action?.WasPressedThisFrame() ?? false;
+            }
+        }
+        public bool Slot3InputPressed
+        {
+            get
+            {
+                return slot3ActionReference?.action?.WasPressedThisFrame() ?? false;
+            }
+        }
+        public bool Slot4InputPressed
+        {
+            get
+            {
+                return slot4ActionReference?.action?.WasPressedThisFrame() ?? false;
+            }
+        }
+        public bool Slot5InputPressed
+        {
+            get
+            {
+                return slot5ActionReference?.action?.WasPressedThisFrame() ?? false;
+            }
+        }
+        public bool Slot6InputPressed
+        {
+            get
+            {
+                return slot6ActionReference?.action?.WasPressedThisFrame() ?? false;
             }
         }
     }

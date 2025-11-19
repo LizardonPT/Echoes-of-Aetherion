@@ -8,25 +8,35 @@ namespace EchoesOfEtherion.Player.Components
     {
         [SerializeField] private Transform casterPos;
         private PlayerInventory inventory;
+        private PlayerAnimations animator;
 
         public event Action SpellCasted;
 
         private void Awake()
         {
             inventory = GetComponent<PlayerInventory>();
+            animator = GetComponent<PlayerAnimations>();
         }
 
-        public void CastSpell(int slot, Vector2 direction)
+        public void CastSpell(int slot)
         {
-            SpellPage page = inventory.GetSpellInSlot(slot);
-            if (page == null)
+            Spell spell = inventory.GetSpellInSlot(slot);
+            if (spell == null)
                 return;
 
-            LightBallSpell spellInstance = Instantiate(page.SpellPrefab, casterPos.position, Quaternion.identity, casterPos)
-                                            .GetComponent<LightBallSpell>();
-
-            spellInstance.ExecuteSpell(casterPos.position, direction);
+            if (spell.ExecuteSpell(this))
+                animator.PlayAnimationByName(spell.AnimationName);
+                
             SpellCasted?.Invoke();
+        }
+
+        private void Update()
+        {
+            foreach (Spell spell in inventory.Slots.Values)
+            {
+                if (spell != null)
+                    spell.UpdateSpell(this);
+            }
         }
     }
 }

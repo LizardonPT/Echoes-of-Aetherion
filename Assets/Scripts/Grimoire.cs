@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using EchoesOfEtherion.Spells;
 
 public class Grimoire : MonoBehaviour
 {
     [Header("Todas as Páginas Conhecidas")]
-    public List<SpellPage> allPages = new List<SpellPage>();
+    public List<Spell> allPages = new List<Spell>();
 
     [Header("Slots Ativos (Teclas 1-4, por exemplo)")]
-    public List<SpellPage> activeSpells = new List<SpellPage>();
+    public List<Spell> activeSpells = new List<Spell>();
     public int maxActiveSlots = 4;
 
     [SerializeField] private GameObject grimoirePanel;
@@ -23,13 +24,13 @@ public class Grimoire : MonoBehaviour
     }
     
     // --- Gestão de Páginas ---
-    public void AddPage(SpellPage newPage)
+    public void AddPage(Spell newPage)
     {
         if (!allPages.Contains(newPage))
             allPages.Add(newPage);
     }
 
-    public void EquipPage(SpellPage page, int slotIndex)
+    public void EquipPage(Spell page, int slotIndex)
     {
         if (!allPages.Contains(page)) return;
         if (slotIndex < 0 || slotIndex >= maxActiveSlots) return;

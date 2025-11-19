@@ -28,9 +28,29 @@ namespace EchoesOfEtherion.Player.States
 
         private void CheckSpellInputs(PlayerController controller)
         {
-            if (controller.PlayerInput.SpellSlotInputPressed)
+            if (controller.PlayerInput.Slot1InputPressed)
             {
-                controller.SpellCaster.CastSpell(1, controller.LookDirection);
+                controller.SpellCaster.CastSpell(1);
+            }
+            else if (controller.PlayerInput.Slot2InputPressed)
+            {
+                controller.SpellCaster.CastSpell(2);
+            }
+            else if (controller.PlayerInput.Slot3InputPressed)
+            {
+                controller.SpellCaster.CastSpell(3);
+            }
+            else if (controller.PlayerInput.Slot4InputPressed)
+            {
+                controller.SpellCaster.CastSpell(4);
+            }
+            else if (controller.PlayerInput.Slot5InputPressed)
+            {
+                controller.SpellCaster.CastSpell(5);
+            }
+            else if (controller.PlayerInput.Slot6InputPressed)
+            {
+                controller.SpellCaster.CastSpell(6);
             }
         }
 

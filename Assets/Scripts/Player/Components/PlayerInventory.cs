@@ -10,55 +10,71 @@ namespace EchoesOfEtherion.Player.Components
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
 
-        [SerializeField]
-        private SpellPage slot1;
+        public Dictionary<int, Spell> Slots { get; private set; }
 
-        private List<SpellPage> spellPages;
+        private List<Spell> spells;
 
         private void Awake()
         {
-            spellPages = new List<SpellPage>();
+            Slots = new Dictionary<int, Spell>
+            {
+                {1, null},
+                {2, null},
+                {3, null},
+                {4, null},
+                {5, null},
+                {6, null},
+            };
+            spells = new List<Spell>();
         }
 
-        public void AddSpellPage(SpellPage page)
+        public void AddSpellPage(Spell page)
         {
-            if (!spellPages.Contains(page))
+            if (!spells.Contains(page))
             {
-                spellPages.Add(page);
-                if (slot1 == null) slot1 = page;
+                spells.Add(page);
+                for (int i = 1; i <= Slots.Count; i++)
+                {
+                    if (Slots[i] == null)
+                    {
+                        Slots[i] = page;
+                        break;
+                    }
+                }
                 Log($"Page {page.SpellName} was added to the inventory.");
                 if (enableLogging)
                 {
                     string spells = "";
-                    for (int i = 0; i < spellPages.Count; i++)
+                    for (int i = 0; i < this.spells.Count; i++)
                     {
-                        spells += spellPages[i].SpellName;
-                        spells += i < spellPages.Count - 1 ? ", " : ".";
+                        spells += this.spells[i].SpellName;
+                        spells += i < this.spells.Count - 1 ? ", " : ".";
                     }
                     Log($"Inventory is now: {spells}");
                 }
             }
         }
-        public void RemoveSpellPage(SpellPage page)
+        public void RemoveSpellPage(Spell page)
         {
-            if (spellPages.Contains(page)) spellPages.Remove(page);
+            if (spells.Contains(page)) spells.Remove(page);
         }
 
         public void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent(out CollectableSpell collectableSpell))
             {
-                Log($"Trigger page {collectableSpell.SpellPage.SpellName}");
-                AddSpellPage(collectableSpell.SpellPage);
+                Log($"Trigger page {collectableSpell.Spell.SpellName}");
+                AddSpellPage(collectableSpell.Spell);
                 Destroy(collectableSpell.gameObject);
             }
         }
 
-        public SpellPage GetSpellInSlot(int i)
+        public Spell GetSpellInSlot(int i)
         {
-            if (i == 1)
-                return slot1;
-
+            if (i >= 0 && i < Slots.Count)
+            {
+                return Slots[i];
+            }
             else return null;
         }
 

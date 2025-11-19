@@ -15,4 +15,9 @@ MonoBehaviour:
   moveActionReference: {fileID: -1680190386980627800, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   pauseActionReference: {fileID: -6105268382535171658, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   interactActionReference: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  spellSlotActionReference: {fileID: 1757676783330076453, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  slot1ActionReference: {fileID: 1757676783330076453, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  slot2ActionReference: {fileID: -2299392924531434278, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  slot3ActionReference: {fileID: 1313540225942462451, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  slot4ActionReference: {fileID: -8776364859626412818, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  slot5ActionReference: {fileID: 486471405340815461, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  slot6ActionReference: {fileID: 5617250187718161918, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

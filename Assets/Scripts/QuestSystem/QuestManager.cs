@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Reflection;
 using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.QuestSystem.QuestSteps;
 using EchoesOfEtherion.QuestSystem.UI;
@@ -42,7 +43,7 @@ namespace EchoesOfEtherion.QuestSystem
         private void Start()
         {
             SceneLoader.Instance.SceneLoaded += OnSceneLoaded;
-            
+
             foreach (Quest quest in questMap.Values)
             {
                 QuestEvents.OnQuestStateChanged(quest);
@@ -56,10 +57,19 @@ namespace EchoesOfEtherion.QuestSystem
             foreach (Quest quest in questMap.Values)
             {
                 quest.state = QuestState.RequirementsNotMet;
+                //! I KNOW.
+                PropertyInfo currentIndexInfo =
+                    typeof(Quest).GetProperty(
+                        "CurrentQuestStepIndex",
+                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
+                    );
+
+                currentIndexInfo?.SetValue(quest, (uint)0);
+
             }
 
             QuestStep[] children = GetComponentsInChildren<QuestStep>();
-            foreach(QuestStep step in children)
+            foreach (QuestStep step in children)
                 Destroy(step.gameObject);
         }
 

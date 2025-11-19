@@ -59,5 +59,19 @@ namespace EchoesOfEtherion.HealthSystem
             Healed?.Invoke(healAmount);
             HealthChanged?.Invoke(CurrentHealth);
         }
+
+#if UNITY_EDITOR
+        [Button("Damage")]
+        public void DamageEditor()
+        {
+            Damage(gameObject, 20, 0, 0);
+        }
+        
+        [Button("Heal")]
+        public void HealEditor()
+        {
+            Heal(20);
+        }
+#endif
     }
 }

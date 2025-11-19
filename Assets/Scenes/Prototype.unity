@@ -4344,7 +4344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dce734cb1815174186fa9a13ed2f4af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Player.Components.PlayerSpellCaster
-  casterPos: {fileID: 27091446}
+  CasterPos: {fileID: 27091446}
 --- !u!1 &389685261
 GameObject:
   m_ObjectHideFlags: 0

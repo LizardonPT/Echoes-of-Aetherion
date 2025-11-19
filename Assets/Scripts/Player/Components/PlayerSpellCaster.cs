@@ -6,7 +6,7 @@ namespace EchoesOfEtherion.Player.Components
 {
     public class PlayerSpellCaster : MonoBehaviour
     {
-        [SerializeField] private Transform casterPos;
+        [SerializeField] public Transform CasterPos;
         private PlayerInventory inventory;
         private PlayerAnimations animator;
 

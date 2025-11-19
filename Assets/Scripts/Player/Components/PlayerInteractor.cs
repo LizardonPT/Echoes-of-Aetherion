@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using EchoesOfEtherion.CameraUtils;
 using EchoesOfEtherion.Game.Interactions;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -21,6 +22,8 @@ namespace EchoesOfEtherion.Player.Components
 
         private Collider2D[] hitBuffer;
         private ContactFilter2D contactFilter;
+
+        private Transform nearestInteractable;
 
         private void Awake()
         {
@@ -66,6 +69,42 @@ namespace EchoesOfEtherion.Player.Components
             Log("No interactable object found in range.");
         }
 
+        private void Update()
+        {
+            int hitCount = Physics2D.OverlapCircle(transform.position, InteractRange, contactFilter, hitBuffer);
+
+            GameObject nearest = null;
+            float nearestDistanceSq = float.MaxValue;
+            Vector2 myPos = transform.position;
+
+            for (int i = 0; i < hitCount; i++)
+            {
+                Collider2D col = hitBuffer[i];
+                if (col == null) continue;
+
+                if (col.TryGetComponent<IInteractable>(out _))
+                {
+                    float dSq = (col.transform.position - (Vector3)myPos).sqrMagnitude;
+
+                    if (dSq < nearestDistanceSq)
+                    {
+                        nearest = col.gameObject;
+                        nearestDistanceSq = dSq;
+                    }
+                }
+            }
+
+            if (nearest != null && nearest != nearestInteractable)
+            {
+                nearestInteractable = nearest.transform;
+                CameraController.Instance.CameraFollow.AddTarget(nearest.transform);
+            }
+            else if (nearest == null)
+            {
+                CameraController.Instance.CameraFollow.RemoveTarget(nearestInteractable);
+                nearestInteractable = null;
+            }
+        }
 
         private void Log(string message)
         {

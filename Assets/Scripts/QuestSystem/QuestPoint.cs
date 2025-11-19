@@ -14,7 +14,7 @@ namespace EchoesOfEtherion.QuestSystem
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
 
-        private QuestState currentState = QuestState.RequirementsNotMet;
+        public QuestState CurrentState { get; private set; } = QuestState.RequirementsNotMet;
         private QuestIcon questIcon;
 
         private void Awake()
@@ -24,18 +24,18 @@ namespace EchoesOfEtherion.QuestSystem
 
         private void Start()
         {
-            currentState = QuestManager.Instance.GetQuestState(questInfo.ID);
-            questIcon.UpdateState(currentState, startPoint, finishPoint);
+            CurrentState = QuestManager.Instance.GetQuestState(questInfo.ID);
+            questIcon.UpdateState(CurrentState, startPoint, finishPoint);
         }
 
         public void UpdateQuest()
         {
-            Log($"IsStartPoint: {startPoint}, IsFinishPoint: {finishPoint}, CurrentState: {currentState}");
-            if (startPoint && currentState == QuestState.CanStart)
+            Log($"IsStartPoint: {startPoint}, IsFinishPoint: {finishPoint}, CurrentState: {CurrentState}");
+            if (startPoint && CurrentState == QuestState.CanStart)
             {
                 QuestManager.Instance.QuestEvents.OnStartQuest(questInfo.ID);
             }
-            else if (finishPoint && currentState == QuestState.CanFinish)
+            else if (finishPoint && CurrentState == QuestState.CanFinish)
             {
                 QuestManager.Instance.QuestEvents.OnFinishQuest(questInfo.ID);
             }
@@ -55,9 +55,9 @@ namespace EchoesOfEtherion.QuestSystem
         {
             if (quest.QuestInfo.ID != questInfo.ID)
                 return;
-            currentState = quest.state;
-            questIcon.UpdateState(currentState, startPoint, finishPoint);
-            Log($"Quest state changed to {currentState} for quest '{questInfo.DisplayName}'");
+            CurrentState = quest.state;
+            questIcon.UpdateState(CurrentState, startPoint, finishPoint);
+            Log($"Quest state changed to {CurrentState} for quest '{questInfo.DisplayName}'");
         }
 
         private void Log(string message)

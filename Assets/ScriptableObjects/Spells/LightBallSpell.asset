@@ -18,5 +18,5 @@ MonoBehaviour:
   <AnimationName>k__BackingField: Attack
   spellRuntimePrefab: {fileID: 4440331190906441173, guid: 08a667bfae91b54479dc2a15f38087cf, type: 3}
   <Damage>k__BackingField: 20
-  <Speed>k__BackingField: 10
-  <Range>k__BackingField: 30
+  <Speed>k__BackingField: 300
+  <Range>k__BackingField: 250

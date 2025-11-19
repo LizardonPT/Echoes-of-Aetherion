@@ -62,13 +62,15 @@ namespace EchoesOfEtherion.Enemies.Core
                 steerWeighted += behaviour.Weight * steer;
             }
 
-            steerWeighted = Vector2.ClampMagnitude(steerWeighted, maxAccel);
-            RB.AddForce(steerWeighted, ForceMode2D.Impulse);
 
-            if (RB.linearVelocity.magnitude > maxSpeed)
+            if (RB.linearVelocity.magnitude < maxSpeed)
             {
-                RB.linearVelocity = RB.linearVelocity.normalized * maxSpeed;
+                steerWeighted = Vector2.ClampMagnitude(steerWeighted, maxSpeed - RB.linearVelocity.magnitude);
             }
+
+            steerWeighted = Vector2.ClampMagnitude(steerWeighted, maxAccel);
+
+            RB.AddForce(steerWeighted, ForceMode2D.Impulse);
         }
 
         private void ApplyFriction()

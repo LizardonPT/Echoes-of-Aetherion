@@ -8,6 +8,7 @@ namespace EchoesOfEtherion.Spells
     {
         [SerializeField] private LightBallSpellRuntime spellRuntimePrefab;
         [field: SerializeField] public float Damage { get; private set; } = 20f;
+        [field: SerializeField] public float KnockbackAmount { get; private set; } = 80;
         [field: SerializeField] public float Speed { get; private set; } = 10f;
         [field: SerializeField] public int Range { get; private set; } = 50;
         public override bool ExecuteSpell(PlayerSpellCaster caster)

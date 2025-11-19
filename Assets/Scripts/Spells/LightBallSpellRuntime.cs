@@ -63,7 +63,7 @@ namespace EchoesOfEtherion.Spells
                     {
                         if (hit2D.collider.TryGetComponent(out HealthModule health))
                         {
-                            health.Damage(gameObject, spellData.Damage, 80, 0.25f);
+                            health.Damage(gameObject, spellData.Damage, spellData.KnockbackAmount, 0.25f);
                             hit = true;
                         }
                     }

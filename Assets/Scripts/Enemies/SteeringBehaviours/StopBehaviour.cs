@@ -10,23 +10,19 @@ namespace EchoesOfEtherion.Enemies.SteeringBehaviours
         {
             if (Velocity.magnitude > 0.1f)
             {
-                Vector2 oppositeForce = -Velocity.normalized * MaxAccel;
-
-                if (Velocity.magnitude < slowingRadius)
-                {
-                    oppositeForce *= Velocity.magnitude / slowingRadius;
-                }
-
-                return Vector2.ClampMagnitude(oppositeForce, Velocity.magnitude);
+                Vector2 oppositeForce = -Velocity;
+                return Vector2.ClampMagnitude(oppositeForce, agent.MaxAccel);
             }
 
             return Vector2.zero;
         }
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             //! This is important since we shouldn't divide by 0.
             slowingRadius = slowingRadius <= 0 ? 1e-5f : slowingRadius;
         }
+#endif
     }
 }

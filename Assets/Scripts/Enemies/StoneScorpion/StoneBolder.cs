@@ -14,6 +14,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         [SerializeField] private float damage = 20f;
         [SerializeField] private float collisionCheckThreshold = 32f;
 
+        [SerializeField] private float knockback = 150;
         [SerializeField] private Transform bolder;
         [SerializeField] private float maxHeight;
         [SerializeField] private float duration;
@@ -95,7 +96,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             {
                 if (hit.TryGetComponent<HealthModule>(out var playerHealth))
                 {
-                    playerHealth.Damage(gameObject, damage, 100);
+                    playerHealth.Damage(gameObject, damage, knockback);
                     OnHitTarget();
                     return;
                 }

@@ -11,7 +11,7 @@ namespace EchoesOfEtherion.Player.States
 
         public void Update(PlayerController controller)
         {
-            controller.Animator.UpdateAnimation(controller.PlayerInput.MovementInput, controller.LookDirection);
+            controller.Animator.UpdateWalkAnimation(controller.PlayerInput.MovementInput, controller.LookDirection);
 
             if (!controller.Movement.IsMoving)
             {

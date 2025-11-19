@@ -87,7 +87,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         private void CheckForCollisions()
         {
             // Get world position for collision detection
-            Vector3 worldPosition = bolder.position;
+            Vector3 worldPosition = transform.position;
 
             // Check for player collisions
             Collider2D[] playerHits = Physics2D.OverlapCircleAll(worldPosition, radius, playerMask);

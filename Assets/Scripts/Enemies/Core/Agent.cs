@@ -1,6 +1,7 @@
 using EchoesOfEtherion.Enemies.SteeringBehaviours;
 using EchoesOfEtherion.Extentions;
 using EchoesOfEtherion.Game;
+using EchoesOfEtherion.Player.Components;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Enemies.Core
@@ -20,6 +21,7 @@ namespace EchoesOfEtherion.Enemies.Core
         [field: SerializeField] public LayerMask EnemyMask { get; private set; }
         [field: SerializeField] public LayerMask EnvironmentMask { get; private set; }
         [field: SerializeField] public float DetectionRadius { get; private set; } = 120f;
+        [field: SerializeField] public float MinDetectionRadius { get; private set; } = 60;
         [field: SerializeField] public float SeekRadius { get; private set; } = 180f;
         [field: SerializeField, Range(0, 360)] public int LookAngle { get; private set; } = 45;
 
@@ -86,11 +88,33 @@ namespace EchoesOfEtherion.Enemies.Core
             RB.linearVelocity = velocity * (newSpeed / speed);
         }
 
+        public void SignalEnemyHit()
+        {
+            if (Target != null) return;
+
+            var player = FindAnyObjectByType<PlayerController>();
+            if (player == null)
+                return;
+
+            Vector2 origin = transform.position;
+            Vector2 dirToTarget = (Vector2)player.transform.position - origin;
+
+            LayerMask rayMask = PlayerMask | EnvironmentMask;
+
+            RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, 500, rayMask);
+
+            if (rayHit.collider != null)
+                Target = rayHit.collider.gameObject;
+        }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
         {
             Vector2 pos = transform.position;
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(pos, MinDetectionRadius);
 
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(pos, DetectionRadius);

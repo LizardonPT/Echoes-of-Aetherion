@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.QuestSystem.QuestSteps;
 using EchoesOfEtherion.QuestSystem.UI;
 using UnityEngine;
@@ -40,10 +41,26 @@ namespace EchoesOfEtherion.QuestSystem
 
         private void Start()
         {
+            SceneLoader.Instance.SceneLoaded += OnSceneLoaded;
+            
             foreach (Quest quest in questMap.Values)
             {
                 QuestEvents.OnQuestStateChanged(quest);
             }
+        }
+
+        //todo: save progression when quit game or go to main menu.
+        private void OnSceneLoaded(string sceneName)
+        {
+            questTrackerUI.StopTrackingQuest();
+            foreach (Quest quest in questMap.Values)
+            {
+                quest.state = QuestState.RequirementsNotMet;
+            }
+
+            QuestStep[] children = GetComponentsInChildren<QuestStep>();
+            foreach(QuestStep step in children)
+                Destroy(step.gameObject);
         }
 
         private void Update()
@@ -76,6 +93,7 @@ namespace EchoesOfEtherion.QuestSystem
 
             return meetsRequirements;
         }
+
         private void ChangeQuestState(string id, QuestState newState)
         {
             Quest quest = GetQuestById(id);

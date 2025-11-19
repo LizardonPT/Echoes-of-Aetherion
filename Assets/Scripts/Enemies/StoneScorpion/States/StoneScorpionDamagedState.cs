@@ -24,8 +24,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
             controller.StopBehaviour.IsActive = true;
             controller.ObstacleAvoidanceBehaviour.IsActive = false;
             controller.SeparationBehaviour.IsActive = false;
-
-            RuntimeManager.PlayOneShot(controller.Hit, controller.transform.position);
         }
 
         public void Update(StoneScorpionController controller)

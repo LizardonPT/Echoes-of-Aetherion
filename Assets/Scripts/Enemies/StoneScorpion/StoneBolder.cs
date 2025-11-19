@@ -95,7 +95,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
             {
                 if (hit.TryGetComponent<HealthModule>(out var playerHealth))
                 {
-                    playerHealth.Damage(gameObject, damage, 20);
+                    playerHealth.Damage(gameObject, damage, 100);
                     OnHitTarget();
                     return;
                 }

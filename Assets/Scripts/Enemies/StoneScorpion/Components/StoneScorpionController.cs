@@ -34,7 +34,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         [field: SerializeField] public EventReference RockThrow { get; private set; }
         [field: SerializeField] public EventReference GatherRock { get; private set; }
         [field: SerializeField] public EventReference Sting { get; private set; }
-        [field: SerializeField] public EventReference Hit { get; private set; }
+        [field: SerializeField] public EventReference StingHit { get; private set; }
         public StoneScorpionAnimations Animator { get; private set; }
         public FiniteStateMachine<StoneScorpionController> StateMachine { get; private set; }
         public SeekBehaviour SeekBehaviour { get; private set; }
@@ -130,6 +130,14 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         {
             StunTime = damageInfo.StunTime;
             StateMachine.ChangeState<StoneScorpionDamagedState>();
+
+            if (damageInfo.KnockbackAmount > 0)
+            {
+                Vector2 source = damageInfo.DamageSourcePos;
+                Vector2 here = transform.position;
+                Vector2 sourceToHere = here - source;
+                RB.AddForce(sourceToHere.normalized * damageInfo.KnockbackAmount, ForceMode2D.Impulse);
+            }
         }
 
         private void SetupStateMachine()
@@ -159,7 +167,8 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
                 HealthModule playerHealth = playerCollider.GetComponent<HealthModule>();
                 if (playerHealth != null)
                 {
-                    playerHealth.Damage(gameObject, stingDamage, 25);
+                    playerHealth.Damage(gameObject, stingDamage, 150);
+                    RuntimeManager.PlayOneShot(StingHit, playerHealth.transform.position);
                 }
             }
         }

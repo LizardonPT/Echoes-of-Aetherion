@@ -75,6 +75,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fc2a5bc572fd874fbdd5e8293f66337, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Spells.LightBall
+  hitEventReference:
+    Guid:
+      Data1: 748838389
+      Data2: 1105729360
+      Data3: -1904679026
+      Data4: -1607484751
+    Path: event:/SFX/Hit
   spellData: {fileID: 11400000, guid: 9cf3aff920d093f45b5ead3f2221be5a, type: 2}
   radius: 8
   speed: 500

@@ -1,4 +1,5 @@
 using EchoesOfEtherion.HealthSystem;
+using FMODUnity;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Spells
@@ -6,6 +7,7 @@ namespace EchoesOfEtherion.Spells
     [RequireComponent(typeof(Rigidbody2D))]
     public class LightBallSpell : MonoBehaviour, IProjectileSpell
     {
+        [SerializeField] private EventReference hitEventReference;
         [SerializeField] private SpellPage spellData;
 
         [SerializeField] private float radius = 16;
@@ -23,25 +25,18 @@ namespace EchoesOfEtherion.Spells
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
+            rb.Sleep();
         }
 
         public void ExecuteSpell(Vector2 position, Vector2 direction)
         {
-            if (rb != null)
-            {
-                transform.position = position;
-                originalPos = position;
+            transform.position = position;
+            originalPos = position;
 
-                rb.WakeUp();
-                rb.linearVelocity = Vector3.zero;
-                rb.AddForce(direction * speed, ForceMode2D.Impulse);
-                IsActive = true;
-            }
-            else
-            {
-                Debug.LogError("[LightBallSpell] Doesn't contain a RigidBody2D!");
-                Destroy(gameObject);
-            }
+            rb.WakeUp();
+            rb.linearVelocity = Vector3.zero;
+            rb.AddForce(direction * speed, ForceMode2D.Impulse);
+            IsActive = true;
         }
 
         private void Update()
@@ -66,11 +61,17 @@ namespace EchoesOfEtherion.Spells
 
                 if (enemyCollisions.Length > 0)
                 {
+                    bool hit = false;
                     foreach (RaycastHit2D hit2D in enemyCollisions)
                     {
-                        hit2D.collider.GetComponent<HealthModule>()?.Damage(gameObject, damage, 80, 0.25f);
+                        if (hit2D.collider.TryGetComponent(out HealthModule health))
+                        {
+                            health.Damage(gameObject, damage, 80, 0.25f);
+                            hit = true;
+                        }
                     }
-
+                    if (hit && hitEventReference.Path != null)
+                        RuntimeManager.PlayOneShot(hitEventReference, transform.position);
                     IsActive = false;
 
                     Destroy(gameObject);

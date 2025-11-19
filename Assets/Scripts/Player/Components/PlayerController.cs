@@ -114,6 +114,14 @@ namespace EchoesOfEtherion.Player.Components
                 StunTime = stun;
                 StateMachine.ChangeState<PlayerStunState>();
             }
+            
+            if (damageInfo.KnockbackAmount > 0)
+            {
+                Vector2 source = damageInfo.DamageSourcePos;
+                Vector2 here = transform.position;
+                Vector2 sourceToHere = here - source;
+                Movement.RB.AddForce(sourceToHere.normalized * damageInfo.KnockbackAmount, ForceMode2D.Impulse);
+            }
             Animator.Damage();
         }
 

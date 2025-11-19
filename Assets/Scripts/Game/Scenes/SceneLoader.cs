@@ -238,11 +238,6 @@ namespace EchoesOfEtherion.Game.Scenes
             SceneLoaded?.Invoke(newScene);
         }
 
-        public string GetCurrentSceneName()
-        {
-            return currentSceneName;
-        }
-
         public void RestartCurrentScene()
         {
             SwitchToScene(currentSceneName);

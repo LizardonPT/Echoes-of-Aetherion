@@ -26,8 +26,8 @@ namespace EchoesOfEtherion.Spawner
         private readonly List<GameObject> spawnedObjects = new List<GameObject>();
         private PolygonCollider2D polygon;
 
-        public event Action<GameObject> OnSpawned;
-        public event Action<GameObject> OnObjectDied;
+        public event Action<GameObject> EnemySpawned;
+        public event Action<GameObject> EnemyDied;
 
         private void Awake()
         {
@@ -73,12 +73,12 @@ namespace EchoesOfEtherion.Spawner
                 health.Died += OnDied;
             }
 
-            OnSpawned?.Invoke(instance);
+            EnemySpawned?.Invoke(instance);
         }
 
         private void OnDied(HealthModule module)
         {
-            OnObjectDied?.Invoke(module.gameObject);
+            EnemyDied?.Invoke(module.gameObject);
         }
 
         private void CleanSpawnList()

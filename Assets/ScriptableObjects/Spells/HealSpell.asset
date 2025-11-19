@@ -16,4 +16,4 @@ MonoBehaviour:
   <Cooldown>k__BackingField: 2
   <SpellName>k__BackingField: 
   <AnimationName>k__BackingField: Heal
-  healAmount: 30
+  healAmount: 20

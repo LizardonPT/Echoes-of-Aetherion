@@ -82,11 +82,8 @@ MonoBehaviour:
       Data3: -1904679026
       Data4: -1607484751
     Path: event:/SFX/Hit
-  spellData: {fileID: 11400000, guid: 9cf3aff920d093f45b5ead3f2221be5a, type: 2}
+  spellData: {fileID: 11400000, guid: 356ae8f5f8a2a2e45b79305c36ab1b2a, type: 2}
   radius: 8
-  speed: 500
-  damage: 20
-  range: 300
   enemyMask:
     serializedVersion: 2
     m_Bits: 128

@@ -8,12 +8,9 @@ namespace EchoesOfEtherion.Spells
     public class LightBallSpellRuntime : MonoBehaviour, IProjectileSpell
     {
         [SerializeField] private EventReference hitEventReference;
-        [SerializeField] private Spell spellData;
+        [SerializeField] private LightBallSpell spellData;
 
         [SerializeField] private float radius = 16;
-        [SerializeField] private float speed = 10f;
-        [SerializeField] private float damage = 20f;
-        [SerializeField] private int range = 50;
 
         [SerializeField] private LayerMask enemyMask;
         [SerializeField] private LayerMask environmentMask;
@@ -35,13 +32,13 @@ namespace EchoesOfEtherion.Spells
 
             rb.WakeUp();
             rb.linearVelocity = Vector3.zero;
-            rb.AddForce(direction * speed, ForceMode2D.Impulse);
+            rb.AddForce(direction * spellData.Speed, ForceMode2D.Impulse);
             IsActive = true;
         }
 
         private void Update()
         {
-            if (IsActive && Vector2.Distance(originalPos, transform.position) >= range)
+            if (IsActive && Vector2.Distance(originalPos, transform.position) >= spellData.Range)
             {
                 Destroy(gameObject);
             }
@@ -66,7 +63,7 @@ namespace EchoesOfEtherion.Spells
                     {
                         if (hit2D.collider.TryGetComponent(out HealthModule health))
                         {
-                            health.Damage(gameObject, damage, 80, 0.25f);
+                            health.Damage(gameObject, spellData.Damage, 80, 0.25f);
                             hit = true;
                         }
                     }

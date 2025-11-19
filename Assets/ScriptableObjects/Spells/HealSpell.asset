@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HealSpell
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Spells.HealSpell
   <ManaCost>k__BackingField: 0
-  <Cooldown>k__BackingField: 2
+  <Cooldown>k__BackingField: 6
   <SpellName>k__BackingField: 
   <AnimationName>k__BackingField: Heal
   healAmount: 20

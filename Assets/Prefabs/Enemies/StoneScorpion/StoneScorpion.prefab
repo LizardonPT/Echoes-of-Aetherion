@@ -109,7 +109,7 @@ MonoBehaviour:
   <CoolDownTime>k__BackingField: 0.25
   projectilePrefab: {fileID: 2887405655751014425, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
   projectileSpawnPoint: {fileID: 249726820157230752}
-  projectileDamage: 20
+  projectileDamage: 35
   stingAttackRange: 64
   stingAttackRadius: 64
   stingDamage: 25
@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e3eb0adf57fb484dba8d6a9fb0d3463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
-  <MaxHealth>k__BackingField: 100
+  <MaxHealth>k__BackingField: 80
   <CurrentHealth>k__BackingField: 0
 --- !u!114 &6219993989691955429
 MonoBehaviour:

@@ -150,8 +150,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   radius: 10
-  damage: 20
+  damage: 30
   collisionCheckThreshold: 8
+  knockback: 150
   bolder: {fileID: 6837867283763105024}
   maxHeight: 54
   duration: 1

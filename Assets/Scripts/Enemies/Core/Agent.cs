@@ -8,6 +8,8 @@ namespace EchoesOfEtherion.Enemies.Core
     [RequireComponent(typeof(Rigidbody2D))]
     public class Agent : TickRegistor
     {
+        public virtual string EnemyType { get; }
+
         [Header("Movement Settings")]
         [SerializeField] protected float maxAccel = 15f;
         [SerializeField] protected float maxSpeed = 65f;

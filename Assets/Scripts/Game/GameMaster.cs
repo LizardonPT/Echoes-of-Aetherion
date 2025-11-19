@@ -74,6 +74,7 @@ namespace EchoesOfEtherion.Game
 
         private void OnSceneLoadStarted(string sceneName)
         {
+            RequestResume();
             StateMachine.ChangeState<GameLoadingState>();
         }
 

@@ -43,6 +43,8 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         public ObstacleAvoidanceBehaviour ObstacleAvoidanceBehaviour { get; private set; }
         public SeparationBehaviour SeparationBehaviour { get; private set; }
 
+        public override string EnemyType => "StoneScorpion";
+
         private GameObject fakeTarget;
         public GameObject LastSeenTarget { get; private set; }
         private float lastAttackTime = 0;

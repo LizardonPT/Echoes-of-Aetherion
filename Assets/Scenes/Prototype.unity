@@ -276,9 +276,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad3181391bfc35d47a680c34c62c43d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Spawner.Spawner2D
-  spawnPrefabs:
-  - {fileID: 655625550423913511, guid: f43f239507c045441baef61eefd6962f, type: 3}
-  maxCount: 5
+  <SpawnPrefabs>k__BackingField:
+  - {fileID: 502836434180091174, guid: f43f239507c045441baef61eefd6962f, type: 3}
+  <MaxCount>k__BackingField: 5
   spawnInterval: 5
   spawnIntervalRandom: 2
   densityMultiplier: 1.25

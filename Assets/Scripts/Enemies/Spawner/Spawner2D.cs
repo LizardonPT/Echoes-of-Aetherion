@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EchoesOfEtherion.Enemies.Core;
 using EchoesOfEtherion.HealthSystem;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,24 +11,24 @@ namespace EchoesOfEtherion.Spawner
     public class Spawner2D : MonoBehaviour
     {
         [Header("Spawn Settings")]
-        public GameObject[] spawnPrefabs;
-        public int maxCount = 5;
+        [field: SerializeField] public Agent[] SpawnPrefabs { get; private set; }
+        [field: SerializeField] public int MaxCount { get; private set; } = 5;
 
         [Tooltip("Base spawn time in seconds.")]
-        public float spawnInterval = 5f;
+        [SerializeField] private float spawnInterval = 5f;
 
         [Tooltip("Random extra seconds added/subtracted from the base interval.")]
-        public float spawnIntervalRandom = 2f;
+        [SerializeField] private float spawnIntervalRandom = 2f;
 
         [Tooltip("Multiplier that increases interval based on density (0 = off)")]
-        public float densityMultiplier = 3f;
+        [SerializeField] private float densityMultiplier = 1.25f;
 
         private float timer;
-        private readonly List<GameObject> spawnedObjects = new List<GameObject>();
+        private readonly List<Agent> spawnedObjects = new();
         private PolygonCollider2D polygon;
 
-        public event Action<GameObject> EnemySpawned;
-        public event Action<GameObject> EnemyDied;
+        public event Action<Agent> EnemySpawned;
+        public event Action<Agent> EnemyDied;
 
         private void Awake()
         {
@@ -38,7 +39,7 @@ namespace EchoesOfEtherion.Spawner
         {
             CleanSpawnList();
 
-            if (spawnedObjects.Count >= maxCount)
+            if (spawnedObjects.Count >= MaxCount)
                 return;
 
             timer -= Time.deltaTime;
@@ -51,7 +52,7 @@ namespace EchoesOfEtherion.Spawner
 
         private void ResetTimer()
         {
-            float density = (float)spawnedObjects.Count / maxCount;
+            float density = (float)spawnedObjects.Count / MaxCount;
             float densityScale = 1f + density * densityMultiplier;
 
             timer = (spawnInterval * densityScale) + Random.Range(-spawnIntervalRandom, spawnIntervalRandom);
@@ -60,12 +61,12 @@ namespace EchoesOfEtherion.Spawner
 
         private void SpawnRandomObject()
         {
-            if (spawnPrefabs.Length == 0) return;
+            if (SpawnPrefabs.Length == 0) return;
 
-            GameObject prefab = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
+            Agent prefab = SpawnPrefabs[Random.Range(0, SpawnPrefabs.Length)];
             Vector2 spawnPos = GetRandomPointInPolygon();
 
-            GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
+            Agent instance = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
             spawnedObjects.Add(instance);
 
             if (instance.TryGetComponent(out HealthModule health))
@@ -78,7 +79,7 @@ namespace EchoesOfEtherion.Spawner
 
         private void OnDied(HealthModule module)
         {
-            EnemyDied?.Invoke(module.gameObject);
+            EnemyDied?.Invoke(module.GetComponent<Agent>());
         }
 
         private void CleanSpawnList()

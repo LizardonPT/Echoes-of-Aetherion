@@ -30,7 +30,7 @@ namespace EchoesOfEtherion.QuestSystem
         }
         public QuestStep InstantiateCurrentQuestStepPrefab(Transform parent)
         {
-            GameObject questStepPrefab = GetCurrentQuestStepPrefab();
+            QuestStep questStepPrefab = GetCurrentQuestStepPrefab();
             if (questStepPrefab != null)
             {
                 QuestStep questStep = GameObject.Instantiate(questStepPrefab, parent)
@@ -41,9 +41,9 @@ namespace EchoesOfEtherion.QuestSystem
             }
             return null;
         }
-        public GameObject GetCurrentQuestStepPrefab()
+        public QuestStep GetCurrentQuestStepPrefab()
         {
-            GameObject questStepPrefab = null;
+            QuestStep questStepPrefab = null;
             if (CurrentStepExists())
             {
                 questStepPrefab = QuestInfo.QuestStepPrefabs[CurrentQuestStepIndex];

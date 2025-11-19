@@ -46,6 +46,7 @@ namespace EchoesOfEtherion.Game
             // Resume all rigidbodies
             foreach (Rigidbody2D rb in pausedRigidbodies.Keys)
             {
+                if (rb == null) continue;
                 if (pausedRigidbodies.TryGetValue(rb, out bool b))
                 {
                     if (!b)

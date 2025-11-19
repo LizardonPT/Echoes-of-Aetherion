@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using EchoesOfEtherion.Enemies.Core;
 using EchoesOfEtherion.Game.Locations;
-using EchoesOfEtherion.Spawner;
+using EchoesOfEtherion.Enemies.Spawner;
 using UnityEngine;
 
 namespace EchoesOfEtherion.QuestSystem.QuestSteps

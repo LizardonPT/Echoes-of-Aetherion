@@ -5,7 +5,7 @@ using EchoesOfEtherion.HealthSystem;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace EchoesOfEtherion.Spawner
+namespace EchoesOfEtherion.Enemies.Spawner
 {
     [RequireComponent(typeof(PolygonCollider2D))]
     public class Spawner2D : MonoBehaviour
@@ -13,6 +13,10 @@ namespace EchoesOfEtherion.Spawner
         [Header("Spawn Settings")]
         [field: SerializeField] public Agent[] SpawnPrefabs { get; private set; }
         [field: SerializeField] public int MaxCount { get; private set; } = 5;
+        [SerializeField] private LayerMask playerLayer;
+        [SerializeField] private LayerMask enemiesLayer;
+        [SerializeField] private float spawnCheckRadius = 32f;
+
 
         [Tooltip("Base spawn time in seconds.")]
         [SerializeField] private float spawnInterval = 5f;
@@ -64,7 +68,9 @@ namespace EchoesOfEtherion.Spawner
             if (SpawnPrefabs.Length == 0) return;
 
             Agent prefab = SpawnPrefabs[Random.Range(0, SpawnPrefabs.Length)];
-            Vector2 spawnPos = GetRandomPointInPolygon();
+
+            // Keep trying to get a valid point
+            Vector2 spawnPos = GetValidSpawnPosition();
 
             Agent instance = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
             spawnedObjects.Add(instance);
@@ -77,6 +83,7 @@ namespace EchoesOfEtherion.Spawner
             EnemySpawned?.Invoke(instance);
         }
 
+
         private void OnDied(HealthModule module)
         {
             EnemyDied?.Invoke(module.GetComponent<Agent>());
@@ -86,28 +93,44 @@ namespace EchoesOfEtherion.Spawner
         {
             spawnedObjects.RemoveAll(item => item == null);
         }
+        
+        private Vector2 GetValidSpawnPosition()
+        {
+            int attempts = 0;
+
+            while (attempts < 50)
+            {
+                attempts++;
+
+                Vector2 point = GetRandomPointInPolygon();
+
+                bool blocked = Physics2D.OverlapCircle(point, spawnCheckRadius, playerLayer | enemiesLayer);
+
+                if (!blocked)
+                    return point;
+            }
+
+            return GetRandomPointInPolygon();
+        }
 
         private Vector2 GetRandomPointInPolygon()
         {
             Bounds bounds = polygon.bounds;
             Vector2 point;
-            int safety = 0;
 
-            do
+            for (int i = 0; i < 50; i++)
             {
                 point = new Vector2(
                     Random.Range(bounds.min.x, bounds.max.x),
                     Random.Range(bounds.min.y, bounds.max.y)
                 );
 
-                safety++;
+                if (polygon.OverlapPoint(point))
+                    return point;
+            }
 
-                if (safety > 40)
-                    return polygon.ClosestPoint(point);
-
-            } while (!polygon.OverlapPoint(point));
-
-            return point;
+            return polygon.ClosestPoint(transform.position);
         }
+
     }
 }

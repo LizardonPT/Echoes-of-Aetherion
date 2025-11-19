@@ -2,6 +2,7 @@ using UnityEngine;
 using EchoesOfEtherion.StateMachine;
 using EchoesOfEtherion.Player.Components;
 using FMODUnity;
+using EchoesOfEtherion.Enemies.Core;
 
 namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 {
@@ -13,12 +14,20 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         {
             timer = controller.StunTime;
 
-            GameObject target = ValidateTarget(controller);
+            RaycastHit2D[] hits = Physics2D.CircleCastAll(
+                controller.transform.position,
+                controller.DetectionRadius,
+                controller.LookDirection,
+                controller.EnemyMask);
 
-            if (target != null)
+            foreach (RaycastHit2D hit in hits)
             {
-                controller.Target = target;
+                if (hit.collider.TryGetComponent(out Agent agent))
+                {
+                    agent.SignalEnemyHit();
+                }
             }
+
             controller.SeekBehaviour.IsActive = false;
             controller.OrbitBehaviour.IsActive = false;
             controller.StopBehaviour.IsActive = true;
@@ -43,27 +52,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         public void FixedUpdate(StoneScorpionController controller) { }
 
         public void Exit(StoneScorpionController controller) { }
-
-        private GameObject ValidateTarget(StoneScorpionController controller)
-        {
-            if (controller.Target != null)
-                return controller.Target;
-
-            var player = GameObject.FindAnyObjectByType<PlayerController>();
-            if (player == null)
-                return null;
-
-            Vector2 origin = controller.transform.position;
-            Vector2 dirToTarget = (Vector2)player.transform.position - origin;
-
-            LayerMask rayMask = (controller.PlayerMask | controller.EnvironmentMask) & ~controller.EnemyMask;
-            RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, controller.SeekRadius, rayMask);
-
-            if (rayHit.collider != null)
-                return rayHit.collider.gameObject;
-
-            return null;
-        }
 
     }
 }

@@ -1,6 +1,7 @@
 using EchoesOfEtherion.Enemies.SteeringBehaviours;
 using EchoesOfEtherion.Extentions;
 using EchoesOfEtherion.Game;
+using EchoesOfEtherion.Player.Components;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Enemies.Core
@@ -84,6 +85,23 @@ namespace EchoesOfEtherion.Enemies.Core
             float newSpeed = Mathf.Max(speed - drop, 0);
 
             RB.linearVelocity = velocity * (newSpeed / speed);
+        }
+
+        public void SignalEnemyHit()
+        {
+            if (Target != null) return;
+
+            var player = GameObject.FindAnyObjectByType<PlayerController>();
+            if (player == null)
+                return;
+
+            Vector2 origin = transform.position;
+            Vector2 dirToTarget = (Vector2)player.transform.position - origin;
+
+            LayerMask rayMask = (PlayerMask | EnvironmentMask) & ~EnemyMask;
+            RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, SeekRadius, rayMask);
+
+            Target = rayHit.collider.gameObject;
         }
 
 

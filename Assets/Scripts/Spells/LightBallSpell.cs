@@ -70,7 +70,7 @@ namespace EchoesOfEtherion.Spells
                             hit = true;
                         }
                     }
-                    if (hit && hitEventReference.Path != null)
+                    if (hit)
                         RuntimeManager.PlayOneShot(hitEventReference, transform.position);
                     IsActive = false;
 

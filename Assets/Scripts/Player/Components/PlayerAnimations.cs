@@ -18,7 +18,6 @@ namespace EchoesOfEtherion.Player.Components
 
         private void Awake()
         {
-            OnValidate();
             spellCaster = GetComponent<PlayerSpellCaster>();
             healthSystem = GetComponent<HealthModule>();
         }
@@ -82,6 +81,6 @@ namespace EchoesOfEtherion.Player.Components
                 anim = GetComponentInChildren<Animator>();
             }
         }
-    }
 #endif
+    }
 }

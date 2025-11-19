@@ -281,6 +281,7 @@ MonoBehaviour:
   maxCount: 5
   spawnInterval: 5
   spawnIntervalRandom: 2
+  densityMultiplier: 1.25
 --- !u!60 &17425704
 PolygonCollider2D:
   m_ObjectHideFlags: 0

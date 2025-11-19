@@ -19,6 +19,9 @@ namespace EchoesOfEtherion.Spawner
         [Tooltip("Random extra seconds added/subtracted from the base interval.")]
         public float spawnIntervalRandom = 2f;
 
+        [Tooltip("Multiplier that increases interval based on density (0 = off)")]
+        public float densityMultiplier = 3f;
+
         private float timer;
         private readonly List<GameObject> spawnedObjects = new List<GameObject>();
         private PolygonCollider2D polygon;
@@ -48,8 +51,11 @@ namespace EchoesOfEtherion.Spawner
 
         private void ResetTimer()
         {
-            timer = spawnInterval + Random.Range(-spawnIntervalRandom, spawnIntervalRandom);
-            timer = Mathf.Max(0.1f, timer); // Ensure timer never goes negative
+            float density = (float)spawnedObjects.Count / maxCount;
+            float densityScale = 1f + density * densityMultiplier;
+
+            timer = (spawnInterval * densityScale) + Random.Range(-spawnIntervalRandom, spawnIntervalRandom);
+            timer = Mathf.Max(0.1f, timer);
         }
 
         private void SpawnRandomObject()
@@ -59,7 +65,7 @@ namespace EchoesOfEtherion.Spawner
             GameObject prefab = spawnPrefabs[Random.Range(0, spawnPrefabs.Length)];
             Vector2 spawnPos = GetRandomPointInPolygon();
 
-            GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity);
+            GameObject instance = Instantiate(prefab, spawnPos, Quaternion.identity, transform);
             spawnedObjects.Add(instance);
 
             if (instance.TryGetComponent(out HealthModule health))
@@ -82,9 +88,7 @@ namespace EchoesOfEtherion.Spawner
 
         private Vector2 GetRandomPointInPolygon()
         {
-            // Pick a random point inside the polygon via RandomPointInBounds, validate with Contains
             Bounds bounds = polygon.bounds;
-
             Vector2 point;
             int safety = 0;
 
@@ -97,7 +101,6 @@ namespace EchoesOfEtherion.Spawner
 
                 safety++;
 
-                // Safety fallback (in case of thin polygons)
                 if (safety > 40)
                     return polygon.ClosestPoint(point);
 

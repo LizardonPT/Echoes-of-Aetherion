@@ -10,15 +10,15 @@ namespace EchoesOfEtherion.Game
         [SerializeField] private float acceleration = 15f;
         [SerializeField] private float friction = 8f;
 
-        public bool IsMoving => rb.linearVelocity.sqrMagnitude > 1e-5f;
-        public Vector2 Velocity => rb.linearVelocity;
-        public float Speed => rb.linearVelocity.magnitude;
+        public bool IsMoving => RB.linearVelocity.sqrMagnitude > 1e-5f;
+        public Vector2 Velocity => RB.linearVelocity;
+        public float Speed => RB.linearVelocity.magnitude;
 
-        private Rigidbody2D rb;
+        public Rigidbody2D RB { get; private set; }
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody2D>();
+            RB = GetComponent<Rigidbody2D>();
         }
 
         public void UpdateMovement(Vector2 movementInput)
@@ -37,7 +37,7 @@ namespace EchoesOfEtherion.Game
 
         private Vector2 Accelerate(Vector2 wishDir, float wishSpeed, float accel)
         {
-            float currentSpeed = rb.linearVelocity.magnitude;
+            float currentSpeed = RB.linearVelocity.magnitude;
             float addSpeed = wishSpeed - currentSpeed;
 
             if (addSpeed <= 0) return Vector2.zero;
@@ -50,26 +50,26 @@ namespace EchoesOfEtherion.Game
 
         private void ApplyFriction()
         {
-            Vector2 velocity = rb.linearVelocity;
+            Vector2 velocity = RB.linearVelocity;
             float speed = velocity.magnitude;
 
             if (speed < 0.01f)
             {
-                rb.linearVelocity = Vector2.zero;
+                RB.linearVelocity = Vector2.zero;
                 return;
             }
 
             float drop = speed * friction * Time.fixedDeltaTime;
             float newSpeed = Mathf.Max(speed - drop, 0);
 
-            rb.linearVelocity = velocity * (newSpeed / speed);
+            RB.linearVelocity = velocity * (newSpeed / speed);
         }
 
         private void ApplyVelocity(Vector2 accumulatedForce)
         {
             if (accumulatedForce.sqrMagnitude > 0.01f)
             {
-                rb.AddForce(accumulatedForce, ForceMode2D.Impulse);
+                RB.AddForce(accumulatedForce, ForceMode2D.Impulse);
             }
         }
     }

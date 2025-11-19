@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="MixerGroup" id="{91dfdc72-3edf-4cd9-81bd-ceeed2db947a}">
+		<property name="name">
+			<value>StoneScorpion</value>
+		</property>
+		<relationship name="effectChain">
+			<destination>{1d050514-a2e3-4cf1-8612-ab7a31141955}</destination>
+		</relationship>
+		<relationship name="panner">
+			<destination>{7e6bc71e-3329-4c9b-8250-a8e06575ab17}</destination>
+		</relationship>
+		<relationship name="output">
+			<destination>{c51ae0ee-2215-439c-90a0-14c908cc89a6}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusEffectChain" id="{1d050514-a2e3-4cf1-8612-ab7a31141955}">
+		<relationship name="effects">
+			<destination>{e35ed806-621a-4c91-8df6-e71b5d055c5e}</destination>
+		</relationship>
+	</object>
+	<object class="MixerBusPanner" id="{7e6bc71e-3329-4c9b-8250-a8e06575ab17}" />
+	<object class="MixerBusFader" id="{e35ed806-621a-4c91-8df6-e71b5d055c5e}" />
+</objects>

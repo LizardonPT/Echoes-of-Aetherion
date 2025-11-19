@@ -6,7 +6,7 @@ namespace EchoesOfEtherion.Game
     public class GamePauser : MonoBehaviour
     {
         private readonly List<Animator> pausedAnimators = new();
-        private readonly List<Rigidbody2D> pausedRigidbodies = new();
+        private readonly Dictionary<Rigidbody2D, bool> pausedRigidbodies = new();
 
         public void PauseGame()
         {
@@ -27,7 +27,7 @@ namespace EchoesOfEtherion.Game
             {
                 if (!rb.IsSleeping())
                 {
-                    pausedRigidbodies.Add(rb);
+                    pausedRigidbodies.Add(rb, rb.IsSleeping());
                     rb.Sleep();
                 }
             }
@@ -44,11 +44,14 @@ namespace EchoesOfEtherion.Game
             pausedAnimators.Clear();
 
             // Resume all rigidbodies
-            for (int i = 0; i < pausedRigidbodies.Count; i++)
+            foreach (Rigidbody2D rb in pausedRigidbodies.Keys)
             {
-                Rigidbody2D rb = pausedRigidbodies[i];
-                if (rb != null)
-                    rb.WakeUp();
+                if (rb == null) continue;
+                if (pausedRigidbodies.TryGetValue(rb, out bool b))
+                {
+                    if (!b)
+                        rb.WakeUp();
+                }
             }
             pausedRigidbodies.Clear();
         }

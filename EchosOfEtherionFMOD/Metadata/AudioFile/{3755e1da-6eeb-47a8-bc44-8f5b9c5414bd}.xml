@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{3755e1da-6eeb-47a8-bc44-8f5b9c5414bd}">
+		<property name="assetPath">
+			<value>SFX/StoneScorpion/Rock/rock_hit_1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.6428571428571429</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{4f04db67-f2d0-403e-ac85-55ef1ec0d9a1}</destination>
+		</relationship>
+	</object>
+</objects>

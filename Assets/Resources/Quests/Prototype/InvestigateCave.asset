@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c38fc632b30b545b4927f4f0f5831d, type: 3}
   m_Name: InvestigateCave
   m_EditorClassIdentifier: Assembly-CSharp::QuestInfoSO
-  <ID>k__BackingField: 
+  <ID>k__BackingField: investigate_cave
   <DisplayName>k__BackingField: Investigate cave
   <Description>k__BackingField: Witch asked you to go investigate that cave.
   <CompleteText>k__BackingField: Return to the Witch.
   <RequiredLevel>k__BackingField: 1
   questPrerequisites: []
   <QuestStepPrefabs>k__BackingField:
-  - {fileID: 7490663586218121289, guid: b97f984a1b270cf4cb1e8a42417be1f6, type: 3}
+  - {fileID: -7779259348225823751, guid: b97f984a1b270cf4cb1e8a42417be1f6, type: 3}
+  - {fileID: 9204074146079148867, guid: 60cd2ba41c9b8394897af7ce9c9c0dd6, type: 3}
+  - {fileID: 9204074146079148867, guid: 541f005bb08bb0a4c90b4b12c0d13342, type: 3}
   <ExperienceReward>k__BackingField: 0
   <GoldReward>k__BackingField: 0

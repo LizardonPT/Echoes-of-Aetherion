@@ -32,8 +32,6 @@ namespace EchoesOfEtherion.Player.Components
             {
                 RuntimeManager.PlayOneShot(earthFootstepSound, transform.position);
             }
-
         }
-
     }
 }

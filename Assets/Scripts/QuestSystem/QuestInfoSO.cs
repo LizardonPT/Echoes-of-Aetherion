@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using EchoesOfEtherion.QuestSystem.QuestSteps;
 using UnityEngine;
 
 namespace EchoesOfEtherion.QuestSystem
@@ -29,7 +30,7 @@ namespace EchoesOfEtherion.QuestSystem
 
         [field: Header("Steps")]
         [field: SerializeField]
-        public GameObject[] QuestStepPrefabs { get; private set; } = Array.Empty<GameObject>();
+        public QuestStep[] QuestStepPrefabs { get; private set; } = Array.Empty<QuestStep>();
 
         [field: Header("Rewards")]
         [field: SerializeField]
@@ -48,7 +49,7 @@ namespace EchoesOfEtherion.QuestSystem
         private void OnValidate()
         {
             // Automatically fix null arrays to avoid runtime issues.
-            QuestStepPrefabs ??= Array.Empty<GameObject>();
+            QuestStepPrefabs ??= Array.Empty<QuestStep>();
             questPrerequisites ??= Array.Empty<QuestInfoSO>();
 
             bool displayNameCorrect = !string.IsNullOrWhiteSpace(DisplayName);

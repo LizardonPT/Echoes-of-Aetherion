@@ -26,6 +26,7 @@ namespace EchoesOfEtherion.Game.Scenes
         public Action<string> SceneLoaded;
         public Action<string> SceneUnloaded;
         public Action<string> LoadingScene;
+        
         private void Start()
         {
             InitializeSceneSystem();
@@ -235,11 +236,6 @@ namespace EchoesOfEtherion.Game.Scenes
             managersCamera.enabled = false;
             loadingScreen?.SetActive(false);
             SceneLoaded?.Invoke(newScene);
-        }
-
-        public string GetCurrentSceneName()
-        {
-            return currentSceneName;
         }
 
         public void RestartCurrentScene()

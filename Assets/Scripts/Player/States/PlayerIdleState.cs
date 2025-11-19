@@ -11,7 +11,7 @@ namespace EchoesOfEtherion.Player.States
 
         public void Update(PlayerController controller)
         {
-            controller.Animator.UpdateAnimation(Vector2.zero, controller.LookDirection);
+            controller.Animator.UpdateWalkAnimation(Vector2.zero, controller.LookDirection);
 
             if (controller.PlayerInput.MovementInput.magnitude > 1e-5f)
             {

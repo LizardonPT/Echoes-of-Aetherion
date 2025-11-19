@@ -23,7 +23,7 @@ namespace EchoesOfEtherion.Player.States
                 controller.StateMachine.ChangeState<PlayerIdleState>();
             }
 
-            controller.Animator.UpdateAnimation(Vector2.zero, controller.LookDirection);
+            controller.Animator.UpdateWalkAnimation(Vector2.zero, controller.LookDirection);
         }
 
         public void FixedUpdate(PlayerController controller) { }

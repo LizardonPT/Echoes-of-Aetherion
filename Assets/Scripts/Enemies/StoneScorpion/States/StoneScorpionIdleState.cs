@@ -1,6 +1,7 @@
 using UnityEngine;
 using EchoesOfEtherion.StateMachine;
 using EchoesOfEtherion.Player.Components;
+using System.Runtime.InteropServices;
 
 namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 {
@@ -51,6 +52,15 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
                 {
                     controller.Target = player.gameObject;
                     return true;
+                }
+            }
+            float radius2 = controller.MinDetectionRadius;
+            Collider2D[] hits2 = Physics2D.OverlapCircleAll(origin, radius2, controller.PlayerMask);
+            foreach (Collider2D col in hits2)
+            {
+                if (col.TryGetComponent(out PlayerController _))
+                {
+                    controller.Target = col.gameObject;
                 }
             }
 

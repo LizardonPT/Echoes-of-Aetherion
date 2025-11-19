@@ -22,6 +22,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
             foreach (RaycastHit2D hit in hits)
             {
+                if (hit.collider == null) continue;
                 if (hit.collider.TryGetComponent(out Agent agent))
                 {
                     agent.SignalEnemyHit();

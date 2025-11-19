@@ -21,6 +21,7 @@ namespace EchoesOfEtherion.Enemies.Core
         [field: SerializeField] public LayerMask EnemyMask { get; private set; }
         [field: SerializeField] public LayerMask EnvironmentMask { get; private set; }
         [field: SerializeField] public float DetectionRadius { get; private set; } = 120f;
+        [field: SerializeField] public float MinDetectionRadius { get; private set; } = 60;
         [field: SerializeField] public float SeekRadius { get; private set; } = 180f;
         [field: SerializeField, Range(0, 360)] public int LookAngle { get; private set; } = 45;
 
@@ -91,17 +92,19 @@ namespace EchoesOfEtherion.Enemies.Core
         {
             if (Target != null) return;
 
-            var player = GameObject.FindAnyObjectByType<PlayerController>();
+            var player = FindAnyObjectByType<PlayerController>();
             if (player == null)
                 return;
 
             Vector2 origin = transform.position;
             Vector2 dirToTarget = (Vector2)player.transform.position - origin;
 
-            LayerMask rayMask = (PlayerMask | EnvironmentMask) & ~EnemyMask;
-            RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, SeekRadius, rayMask);
+            LayerMask rayMask = PlayerMask | EnvironmentMask;
 
-            Target = rayHit.collider.gameObject;
+            RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, 500, rayMask);
+
+            if (rayHit.collider != null)
+                Target = rayHit.collider.gameObject;
         }
 
 
@@ -109,6 +112,9 @@ namespace EchoesOfEtherion.Enemies.Core
         private void OnDrawGizmosSelected()
         {
             Vector2 pos = transform.position;
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawWireSphere(pos, MinDetectionRadius);
 
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(pos, DetectionRadius);

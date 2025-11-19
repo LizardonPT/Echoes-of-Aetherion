@@ -73,6 +73,11 @@ namespace EchoesOfEtherion.Player.Components
             anim.SetTrigger(dieHash);
         }
 
+        public void PlayAnimationByName(string name)
+        {
+            anim.SetTrigger(name);
+        }
+
 #if UNITY_EDITOR
         private void OnValidate()
         {

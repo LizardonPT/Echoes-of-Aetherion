@@ -1,4 +1,5 @@
 using EchoesOfEtherion.Player.Components;
+using EchoesOfEtherion.ManaSystem;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Spells
@@ -13,8 +14,9 @@ namespace EchoesOfEtherion.Spells
         [field: SerializeField] public int Range { get; private set; } = 50;
         public override bool ExecuteSpell(PlayerSpellCaster caster)
         {
-            if (cdTimer > 0f)
+            if (cdTimer > 0f || caster.TryGetComponent(out ManaModule manaModule) && manaModule.CurrentMana < ManaCost)
                 return false;
+            manaModule.ConsumeMana(ManaCost);
             cdTimer = Cooldown;
             Vector2 direction = caster.GetComponent<PlayerController>().LookDirection;
             LightBallSpellRuntime spellInstance = Instantiate(spellRuntimePrefab, caster.CasterPos.position, Quaternion.identity, caster.transform)

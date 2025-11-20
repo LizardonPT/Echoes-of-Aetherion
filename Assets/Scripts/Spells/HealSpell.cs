@@ -1,4 +1,5 @@
 using EchoesOfEtherion.HealthSystem;
+using EchoesOfEtherion.ManaSystem;
 using EchoesOfEtherion.Player.Components;
 using UnityEngine;
 
@@ -11,9 +12,10 @@ namespace EchoesOfEtherion.Spells
 
         public override bool ExecuteSpell(PlayerSpellCaster caster)
         {
-            if (cdTimer > 0f)
+            if (cdTimer > 0f || caster.TryGetComponent(out ManaModule manaModule) && manaModule.CurrentMana < ManaCost)
                 return false;
 
+            manaModule.ConsumeMana(ManaCost);
             cdTimer = Cooldown;
             if (caster.TryGetComponent(out HealthModule healthModule))
             {

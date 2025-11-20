@@ -84,8 +84,9 @@ namespace EchoesOfEtherion.Menu
         private void UpdateManaBar(float currentMana)
         {
             manaBar.maxValue = playerMana.MaxMana;
-            float v = Mathf.Clamp(currentMana, 0, playerMana.MaxMana);
-            manaBar.value = Mathf.RoundToInt(v);
+            int currentManaRounded = Mathf.RoundToInt(currentMana);
+            int v = Mathf.Clamp(currentManaRounded, 0, (int)playerMana.MaxMana);
+            manaBar.value = v;
             manaText.text = $"{v}/{playerMana.MaxMana}";
         }
 

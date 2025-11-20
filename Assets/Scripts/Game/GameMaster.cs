@@ -15,16 +15,12 @@ namespace EchoesOfEtherion.Game
         [field: Header("ScriptableObjects")]
         [field: SerializeField] public InputReader InputReader { get; private set; }
 
-        [field: Space]
-        [field: Header("References")]
-        [field: SerializeField] public PauseMenu PauseMenu { get; private set; }
-
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
 
         public FiniteStateMachine<GameMaster> StateMachine { get; private set; }
-        private GamePauser _gamePauser;
-        private TickController _tickController;
+        private GamePauser gamePauser;
+        private TickController tickController;
 
         public event Action GamePaused;
         public event Action GameResumed;
@@ -41,8 +37,8 @@ namespace EchoesOfEtherion.Game
         {
             base.Awake();
 
-            _gamePauser = GetComponent<GamePauser>();
-            _tickController = GetComponent<TickController>();
+            gamePauser = GetComponent<GamePauser>();
+            tickController = GetComponent<TickController>();
 
             SetupStateMachine();
             SetupEventListeners();
@@ -137,39 +133,29 @@ namespace EchoesOfEtherion.Game
 
         internal void SetTickPaused(bool paused)
         {
-            _tickController.SetPaused(paused);
+            tickController.SetPaused(paused);
         }
 
         internal void SetGamePaused(bool paused)
         {
             if (paused)
             {
-                _gamePauser.PauseGame();
+                gamePauser.PauseGame();
                 GamePaused?.Invoke();
             }
             else
             {
-                _gamePauser.ResumeGame();
+                gamePauser.ResumeGame();
                 GameResumed?.Invoke();
             }
         }
 
-        internal void ShowPauseMenu()
-        {
-            PauseMenu?.ShowPauseMenu();
-        }
-
-        internal void HidePauseMenu()
-        {
-            PauseMenu?.HidePauseMenu();
-        }
-
-        internal void InvokeGameplayStarted()
+        public void InvokeGameplayStarted()
         {
             GameplayStarted?.Invoke();
         }
 
-        internal void InvokeLoadingStarted()
+        public void InvokeLoadingStarted()
         {
             LoadingStarted?.Invoke();
         }
@@ -198,7 +184,7 @@ namespace EchoesOfEtherion.Game
             StateMachine.ChangeState<GameLoadingState>();
         }
 
-        internal void Log(string message)
+        public void Log(string message)
         {
             if (enableLogging)
                 Debug.Log($"[GameMaster] {message}");

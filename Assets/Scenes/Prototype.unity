@@ -5002,7 +5002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.ManaSystem.ManaModule
   <MaxMana>k__BackingField: 100
   <CurrentMana>k__BackingField: 0
-  <ManaPerSecond>k__BackingField: 1
+  <ManaPerSecond>k__BackingField: 0.5
 --- !u!1 &389685261
 GameObject:
   m_ObjectHideFlags: 0

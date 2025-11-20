@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d4630eebcd8678469ded2e8537c4de5, type: 3}
   m_Name: HealSpell
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Spells.HealSpell
-  <ManaCost>k__BackingField: 10
+  <ManaCost>k__BackingField: 15
   <Cooldown>k__BackingField: 6
   <SpellName>k__BackingField: 
   <AnimationName>k__BackingField: Heal

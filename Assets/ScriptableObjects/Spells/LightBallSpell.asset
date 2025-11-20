@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adbfc54c4a3beec428b6f016e3bf3988, type: 3}
   m_Name: LightBallSpell
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Spells.LightBallSpell
-  <ManaCost>k__BackingField: 5
+  <ManaCost>k__BackingField: 10
   <Cooldown>k__BackingField: 1
   <SpellName>k__BackingField: 
   <AnimationName>k__BackingField: Attack

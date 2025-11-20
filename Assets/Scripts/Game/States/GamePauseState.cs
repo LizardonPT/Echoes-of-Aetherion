@@ -13,13 +13,11 @@ namespace EchoesOfEtherion.Game.States
             master.SetTimeScale(0f);
             master.SetTickPaused(true);
             master.SetGamePaused(true);
-            master.ShowPauseMenu();
         }
 
         public void Exit(GameMaster master)
         {
             master.Log("Exiting Pause State");
-            master.HidePauseMenu();
         }
 
         public void Update(GameMaster master)

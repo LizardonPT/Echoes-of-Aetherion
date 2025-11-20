@@ -13,7 +13,6 @@ namespace EchoesOfEtherion.Game.States
             master.SetTimeScale(1f);
             master.SetTickPaused(false);
             master.SetGamePaused(false);
-            master.HidePauseMenu();
 
             master.InvokeGameplayStarted();
         }

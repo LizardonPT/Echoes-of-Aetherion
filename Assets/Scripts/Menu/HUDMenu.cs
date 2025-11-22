@@ -3,6 +3,7 @@ using EchoesOfEtherion.Game;
 using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.ManaSystem;
+using EchoesOfEtherion.CurrencySystem;
 using EchoesOfEtherion.Player.Components;
 using TMPro;
 using Unity.VisualScripting;
@@ -19,9 +20,11 @@ namespace EchoesOfEtherion.Menu
         [SerializeField] private TextMeshProUGUI healthText;
         [SerializeField] private Slider manaBar;
         [SerializeField] private TextMeshProUGUI manaText;
+        [SerializeField] private TextMeshProUGUI goldText;
 
         [SerializeField] private HealthModule playerHealth;
         [SerializeField] private ManaModule playerMana;
+        [SerializeField] private GoldModule playerGold;
 
         private void Start()
         {
@@ -29,9 +32,11 @@ namespace EchoesOfEtherion.Menu
 
             playerHealth ??= GetComponentInParent<HealthModule>();
             playerMana ??= GetComponentInParent<ManaModule>();
+            playerGold ??= GetComponentInParent<GoldModule>();
 
             UpdateHealthBar(playerHealth.CurrentHealth);
             UpdateManaBar(playerMana.CurrentMana);
+            UpdateGoldText(playerGold.CurrentGold);
         }
 
         private void OnEnable()
@@ -41,6 +46,9 @@ namespace EchoesOfEtherion.Menu
 
             if (playerMana != null)
                 playerMana.ManaChanged += UpdateManaBar;
+            
+            if (playerGold != null)
+                playerGold.GoldChanged += UpdateGoldText;
         }
 
         private void OnDisable()
@@ -50,6 +58,9 @@ namespace EchoesOfEtherion.Menu
 
             if (playerMana != null)
                 playerMana.ManaChanged -= UpdateManaBar;
+            
+            if (playerGold != null)
+                playerGold.GoldChanged -= UpdateGoldText;
         }
 
         private void UpdateHealthBar(float currentHealth)
@@ -70,6 +81,11 @@ namespace EchoesOfEtherion.Menu
             else p = 0;
             manaBar.value = p;
             manaText.text = $"{Mathf.FloorToInt(currentMana)}/{playerMana.MaxMana}";
+        }
+
+        private void UpdateGoldText(int currentGold)
+        {
+            goldText.text = $"{currentGold}";
         }
 
         private void OnPauseClicked()

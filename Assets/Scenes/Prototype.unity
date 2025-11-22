@@ -4742,6 +4742,7 @@ GameObject:
   - component: {fileID: 387109743}
   - component: {fileID: 387109742}
   - component: {fileID: 387109744}
+  - component: {fileID: 387109745}
   - component: {fileID: 387109733}
   - component: {fileID: 387109732}
   - component: {fileID: 387109738}
@@ -5002,7 +5003,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.ManaSystem.ManaModule
   <MaxMana>k__BackingField: 100
   <CurrentMana>k__BackingField: 0
-  <ManaPerSecond>k__BackingField: 0.5
+  <ManaPerSecond>k__BackingField: 1
+--- !u!114 &387109745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 387109730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee60122ac21cce42805b2079ca0eb99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.CurrencySystem.GoldModule
+  <CurrentGold>k__BackingField: 0
 --- !u!1 &389685261
 GameObject:
   m_ObjectHideFlags: 0
@@ -7557,6 +7571,10 @@ MonoBehaviour:
   healthText: {fileID: 233561781}
   manaBar: {fileID: 347881840}
   manaText: {fileID: 756456219}
+  goldText: {fileID: 1489546700}
+  playerHealth: {fileID: 387109742}
+  playerMana: {fileID: 387109744}
+  playerGold: {fileID: 387109745}
 --- !u!1 &580760677
 GameObject:
   m_ObjectHideFlags: 0

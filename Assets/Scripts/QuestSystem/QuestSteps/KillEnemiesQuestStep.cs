@@ -13,6 +13,7 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
         [SerializeField] private string enemyType;
         [SerializeField] private int killCountNeeded = 1;
         [field: SerializeField] public override string StepDescription { get; protected set; }
+        [field: SerializeField] public override int GoldReward { get; protected set; } = 200;
         public override event Action<int, int> ProgressChanged;
 
         private List<Spawner2D> thisEnemySpawner = new();

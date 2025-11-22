@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using EchoesOfEtherion.CurrencySystem;
 
 namespace EchoesOfEtherion.QuestSystem.QuestSteps
 {
@@ -9,8 +10,11 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
         protected string id;
 
         public abstract string StepDescription { get; protected set; }
+        public abstract int GoldReward { get; protected set; }
 
         public abstract event Action<int, int> ProgressChanged;
+
+        private GoldModule playerGold;
 
         public void InitializeQuestStep(string id)
         {
@@ -25,6 +29,8 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
             isFinished = true;
 
             QuestManager.Instance.QuestEvents.OnAdvanceQuestStep(id);
+
+            playerGold.AddGold(GoldReward);
 
             Destroy(gameObject);
         }

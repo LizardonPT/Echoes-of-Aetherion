@@ -3,6 +3,7 @@ using System.Reflection;
 using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.QuestSystem.QuestSteps;
 using EchoesOfEtherion.QuestSystem.UI;
+using EchoesOfEtherion.CurrencySystem;
 using UnityEngine;
 
 namespace EchoesOfEtherion.QuestSystem

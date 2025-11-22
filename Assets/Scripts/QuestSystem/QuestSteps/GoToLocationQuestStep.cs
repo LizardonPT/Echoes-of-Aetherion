@@ -9,6 +9,7 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
         [SerializeField] private string targetLocationName;
         [SerializeField] private LocationType targetLocationType;
         [field: SerializeField] public override string StepDescription { get; protected set; } = "Go to the designated location.";
+        [field: SerializeField] public override int GoldReward { get; protected set; } = 100;
         public override event Action<int, int> ProgressChanged;
         private void Start()
         {

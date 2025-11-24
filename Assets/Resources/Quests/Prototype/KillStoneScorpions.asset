@@ -14,14 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.QuestSystem.QuestInfoSO
   <ID>k__BackingField: kill_stone_scorpions
   <DisplayName>k__BackingField: Kill Stone Scorpions
-  <Description>k__BackingField: '"These stone scorpions are annoying, kill them for
-    me" - Witch'
+  <Description>k__BackingField: These scorpions are annoying, kill them for me
   <CompleteText>k__BackingField: Return to the Witch.
   <RequiredLevel>k__BackingField: 1
-  questPrerequisites:
-  - {fileID: 11400000, guid: eebefb5f2d87e94468028980314bfae7, type: 2}
+  questPrerequisites: []
   <QuestStepPrefabs>k__BackingField:
   - {fileID: 9204074146079148867, guid: 60cd2ba41c9b8394897af7ce9c9c0dd6, type: 3}
-  - {fileID: 9204074146079148867, guid: 541f005bb08bb0a4c90b4b12c0d13342, type: 3}
   <ExperienceReward>k__BackingField: 0
   <GoldReward>k__BackingField: 0

@@ -30,7 +30,7 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
 
             QuestManager.Instance.QuestEvents.OnAdvanceQuestStep(id);
 
-            playerGold.AddGold(GoldReward);
+            playerGold?.AddGold(GoldReward);
 
             Destroy(gameObject);
         }

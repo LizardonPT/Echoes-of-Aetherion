@@ -5,6 +5,7 @@ namespace EchoesOfEtherion.Spells
 {
     public abstract class Spell : ScriptableObject
     {
+        [field: SerializeField] public Sprite SpellIcon { get; private set; }
         [field: SerializeField]
         public int ManaCost { get; protected set; }
         [field: SerializeField]

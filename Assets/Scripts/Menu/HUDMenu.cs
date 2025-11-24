@@ -1,13 +1,8 @@
-using System;
 using EchoesOfEtherion.Game;
-using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.ManaSystem;
 using EchoesOfEtherion.CurrencySystem;
-using EchoesOfEtherion.Player.Components;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 

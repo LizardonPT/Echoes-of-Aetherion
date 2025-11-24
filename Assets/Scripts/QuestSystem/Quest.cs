@@ -41,6 +41,7 @@ namespace EchoesOfEtherion.QuestSystem
             }
             return null;
         }
+        
         public QuestStep GetCurrentQuestStepPrefab()
         {
             QuestStep questStepPrefab = null;
@@ -52,6 +53,11 @@ namespace EchoesOfEtherion.QuestSystem
                 Debug.LogWarning($"No quest step exists at index {CurrentQuestStepIndex} for quest {QuestInfo.DisplayName}");
 
             return questStepPrefab;
+        }
+
+        public void ResetQuest()
+        {
+            CurrentQuestStepIndex = 0;
         }
     }
 }

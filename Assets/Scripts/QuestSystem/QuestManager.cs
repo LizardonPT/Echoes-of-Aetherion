@@ -58,15 +58,7 @@ namespace EchoesOfEtherion.QuestSystem
             foreach (Quest quest in questMap.Values)
             {
                 quest.state = QuestState.RequirementsNotMet;
-                //! I KNOW.
-                PropertyInfo currentIndexInfo =
-                    typeof(Quest).GetProperty(
-                        "CurrentQuestStepIndex",
-                        BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic
-                    );
-
-                currentIndexInfo?.SetValue(quest, (uint)0);
-
+                quest.ResetQuest();
             }
 
             QuestStep[] children = GetComponentsInChildren<QuestStep>();

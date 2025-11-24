@@ -2,6 +2,7 @@ using UnityEngine;
 using EchoesOfEtherion.Extentions;
 using EchoesOfEtherion.StateMachine;
 using EchoesOfEtherion.Player.Components;
+using UnityEngine.EventSystems;
 
 namespace EchoesOfEtherion.Player.States
 {
@@ -22,37 +23,16 @@ namespace EchoesOfEtherion.Player.States
             {
                 controller.Interactor.InteractInput();
             }
-            CheckSpellInputs(controller);
-        }
+            controller.Inventory.UpdateInput();
 
-        private void CheckSpellInputs(PlayerController controller)
-        {
-            if (controller.PlayerInput.Slot1InputPressed)
+            if (controller.PlayerInput.AttackInputPressed)
             {
-                controller.SpellCaster.CastSpell(1);
-            }
-            else if (controller.PlayerInput.Slot2InputPressed)
-            {
-                controller.SpellCaster.CastSpell(2);
-            }
-            else if (controller.PlayerInput.Slot3InputPressed)
-            {
-                controller.SpellCaster.CastSpell(3);
-            }
-            else if (controller.PlayerInput.Slot4InputPressed)
-            {
-                controller.SpellCaster.CastSpell(4);
-            }
-            else if (controller.PlayerInput.Slot5InputPressed)
-            {
-                controller.SpellCaster.CastSpell(5);
-            }
-            else if (controller.PlayerInput.Slot6InputPressed)
-            {
-                controller.SpellCaster.CastSpell(6);
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    controller.SpellCaster.CastSelectedSpell();
+                }   
             }
         }
-
 
         public void FixedUpdate(PlayerController controller)
         {

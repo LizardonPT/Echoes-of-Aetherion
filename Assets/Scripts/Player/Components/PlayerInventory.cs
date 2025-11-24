@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using EchoesOfEtherion.Spells;
+using EchoesOfEtherion.Game.Utils;
 
 namespace EchoesOfEtherion.Player.Components
 {
@@ -9,8 +10,10 @@ namespace EchoesOfEtherion.Player.Components
     {
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
+        [SerializeField] private InputReader inputReader;
 
         public Dictionary<int, Spell> Slots { get; private set; }
+        public Spell SelectedSpell { get; private set; }
 
         private List<Spell> spells;
 
@@ -76,6 +79,34 @@ namespace EchoesOfEtherion.Player.Components
                 return Slots[i];
             }
             else return null;
+        }
+
+        public void UpdateInput()
+        {
+            if (inputReader.Slot1InputPressed)
+            {
+                SelectedSpell = Slots[1];
+            }
+            else if (inputReader.Slot2InputPressed)
+            {
+                SelectedSpell = Slots[2];
+            }
+            else if (inputReader.Slot3InputPressed)
+            {
+                SelectedSpell = Slots[3];
+            }
+            else if (inputReader.Slot4InputPressed)
+            {
+                SelectedSpell = Slots[4];
+            }
+            else if (inputReader.Slot5InputPressed)
+            {
+                SelectedSpell = Slots[5];
+            }
+            else if (inputReader.Slot6InputPressed)
+            {
+                SelectedSpell = Slots[6];
+            }
         }
 
         private void Log(string message)

@@ -8,6 +8,7 @@ namespace EchoesOfEtherion.Spells
     public class LightBallSpell : Spell
     {
         [SerializeField] private LightBallSpellRuntime spellRuntimePrefab;
+        [SerializeField] private Sprite spellIcon;
         [field: SerializeField] public float Damage { get; private set; } = 20f;
         [field: SerializeField] public float KnockbackAmount { get; private set; } = 80;
         [field: SerializeField] public float Speed { get; private set; } = 10f;

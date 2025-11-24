@@ -18,9 +18,9 @@ namespace EchoesOfEtherion.Player.Components
             animator = GetComponent<PlayerAnimations>();
         }
 
-        public void CastSpell(int slot)
+        public void CastSelectedSpell()
         {
-            Spell spell = inventory.GetSpellInSlot(slot);
+            Spell spell = inventory.SelectedSpell;
             if (spell == null)
                 return;
 

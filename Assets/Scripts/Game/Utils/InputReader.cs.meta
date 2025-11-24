@@ -1,2 +1,21 @@
 fileFormatVersion: 2
 guid: 1bddbc15610d60c47b6ef5ff8e84e3ee
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - moveActionReference: {instanceID: 0}
+  - pauseActionReference: {instanceID: 0}
+  - interactActionReference: {instanceID: 0}
+  - slot1ActionReference: {instanceID: 0}
+  - slot2ActionReference: {instanceID: 0}
+  - slot3ActionReference: {instanceID: 0}
+  - slot4ActionReference: {instanceID: 0}
+  - slot5ActionReference: {instanceID: 0}
+  - slot6ActionReference: {instanceID: 0}
+  - shootSpellActionReference: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

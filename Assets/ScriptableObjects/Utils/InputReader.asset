@@ -21,3 +21,4 @@ MonoBehaviour:
   slot4ActionReference: {fileID: -8776364859626412818, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   slot5ActionReference: {fileID: 486471405340815461, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   slot6ActionReference: {fileID: 5617250187718161918, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  shootSpellActionReference: {fileID: 1120369429361536294, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

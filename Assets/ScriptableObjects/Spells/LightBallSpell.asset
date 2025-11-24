@@ -17,6 +17,7 @@ MonoBehaviour:
   <SpellName>k__BackingField: 
   <AnimationName>k__BackingField: Attack
   spellRuntimePrefab: {fileID: 4440331190906441173, guid: 08a667bfae91b54479dc2a15f38087cf, type: 3}
+  spellIcon: {fileID: -2008061908, guid: 41d5f0ba26245f94b911778396407ee8, type: 3}
   <Damage>k__BackingField: 20
   <KnockbackAmount>k__BackingField: 150
   <Speed>k__BackingField: 300

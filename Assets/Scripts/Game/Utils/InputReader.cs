@@ -28,6 +28,17 @@ namespace EchoesOfEtherion.Game.Utils
         private InputActionReference slot5ActionReference;
         [SerializeField]
         private InputActionReference slot6ActionReference;
+        [SerializeField]
+        private InputActionReference shootSpellActionReference;
+
+        public bool AttackInputPressed
+        {
+            get
+            {
+                return shootSpellActionReference?.action?.WasPressedThisFrame() ?? false;
+            }
+        }
+
         public Vector2 MovementInput
         {
             get

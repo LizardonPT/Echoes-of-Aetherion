@@ -1,35 +1,43 @@
 using UnityEngine;
 using NaughtyAttributes;
+using System;
 
 namespace EchoesOfEtherion.CurrencySystem
 {
     public class GoldModule : MonoBehaviour
     {
-        [field: SerializeField] public int CurrentGold { get; private set; }
+        [SerializeField] private int currentGold;
 
-        public event System.Action<int> GoldChanged;
+        public int CurrentGold
+        {
+            get => currentGold;
+            private set
+            {
+                currentGold = value < 0 ? 0 : value;
+                GoldChanged?.Invoke(currentGold);
+            }
+        }
+
+        public event Action<int> GoldChanged;
 
         private void Awake()
         {
-            // Initialize gold if needed
             CurrentGold = 0;
         }
 
         public void AddGold(int amount)
         {
             CurrentGold += amount;
-            GoldChanged?.Invoke(CurrentGold);
         }
 
         public bool SpendGold(int amount)
         {
             if (amount > CurrentGold)
             {
-                return false; // Not enough gold
+                return false;
             }
 
             CurrentGold -= amount;
-            GoldChanged?.Invoke(CurrentGold);
             return true;
         }
 

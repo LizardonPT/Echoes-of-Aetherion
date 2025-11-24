@@ -3,6 +3,7 @@ using EchoesOfEtherion.StateMachine;
 using UnityEngine;
 using EchoesOfEtherion.Player.Components;
 using UnityEngine.EventSystems;
+using EchoesOfEtherion.Game.Utils;
 
 namespace EchoesOfEtherion.Player.States
 {
@@ -28,11 +29,10 @@ namespace EchoesOfEtherion.Player.States
 
             if (controller.PlayerInput.AttackInputPressed)
             {
-                if (!EventSystem.current.IsPointerOverGameObject())
+                if (!UIHelpers.IsPointerOverInteractableUI())
                 {
                     controller.SpellCaster.CastSelectedSpell();
                 }
-                    
             }
         }
 

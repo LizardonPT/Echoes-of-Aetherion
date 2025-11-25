@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using EchoesOfEtherion.DeveloperConsole;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Game.Locations
@@ -85,6 +86,7 @@ namespace EchoesOfEtherion.Game.Locations
             {
                 Debug.Log($"[LocationController] {message}");
             }
+            ConsoleLogger.Log($"[LocationController] {message}");
         }
     }
 }

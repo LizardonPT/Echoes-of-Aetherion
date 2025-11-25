@@ -30,7 +30,7 @@ namespace EchoesOfEtherion.Game.Utils
         private InputActionReference slot6ActionReference;
         [SerializeField]
         private InputActionReference shootSpellActionReference;
-
+        
         public bool AttackInputPressed
         {
             get
@@ -104,6 +104,7 @@ namespace EchoesOfEtherion.Game.Utils
                 return slot5ActionReference?.action?.WasPressedThisFrame() ?? false;
             }
         }
+
         public bool Slot6InputPressed
         {
             get

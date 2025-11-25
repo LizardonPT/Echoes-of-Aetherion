@@ -5,6 +5,7 @@ using EchoesOfEtherion.Menu;
 using EchoesOfEtherion.Game.Utils;
 using EchoesOfEtherion.StateMachine;
 using UnityEngine;
+using EchoesOfEtherion.DeveloperConsole;
 
 namespace EchoesOfEtherion.Game
 {
@@ -187,7 +188,10 @@ namespace EchoesOfEtherion.Game
         public void Log(string message)
         {
             if (enableLogging)
+            {
                 Debug.Log($"[GameMaster] {message}");
+            }
+            ConsoleLogger.Log($"[GameMaster] {message}");
         }
     }
 }

@@ -104,6 +104,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DeveloperConsole",
+                    "type": "Button",
+                    "id": "938e2916-55ab-4f6f-9ee6-6a0ed5d77f6d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -434,6 +443,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Spell6",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99534022-28ec-42fa-aa66-1998ae2665de",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DeveloperConsole",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

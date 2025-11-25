@@ -117,7 +117,7 @@ namespace EchoesOfEtherion.Player.Components
                 StunTime = stun;
                 StateMachine.ChangeState<PlayerStunState>();
             }
-            
+
             if (damageInfo.KnockbackAmount > 0)
             {
                 Vector2 source = damageInfo.DamageSourcePos;
@@ -127,7 +127,8 @@ namespace EchoesOfEtherion.Player.Components
             }
             Animator.Damage();
         }
-
+        
+# if UNITY_EDITOR
         private void OnValidate()
         {
             Animator ??= GetComponent<PlayerAnimations>();
@@ -136,5 +137,6 @@ namespace EchoesOfEtherion.Player.Components
             SpellCaster ??= GetComponent<PlayerSpellCaster>();
             healthSystem ??= GetComponent<HealthModule>();
         }
+#endif
     }
 }

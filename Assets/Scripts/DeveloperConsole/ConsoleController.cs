@@ -14,15 +14,15 @@ namespace EchoesOfEtherion.DeveloperConsole
         [SerializeField] private GameObject panel;
         [SerializeField] private Button closeButton;
 
-        public event Action OpenConsole;
-        public event Action CloseConsole;
+        public event Action ConsoleOpened;
+        public event Action ConsoleClosed;
 
         public bool IsOpen { get; private set; }
 
         private void Start()
         {
             panel.SetActive(false);
-            CloseConsole?.Invoke();
+            ConsoleClosed?.Invoke();
             IsOpen = false;
             closeButton.onClick.AddListener(() => { if (IsOpen) ToggleCloseConsole(); });
         }
@@ -47,13 +47,13 @@ namespace EchoesOfEtherion.DeveloperConsole
             if (IsOpen)
             {
                 panel.SetActive(false);
-                CloseConsole?.Invoke();
+                ConsoleClosed?.Invoke();
                 IsOpen = false;
             }
             else
             {
                 panel.SetActive(true);
-                OpenConsole?.Invoke();
+                ConsoleOpened?.Invoke();
                 IsOpen = true;
             }
         }

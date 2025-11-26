@@ -50,14 +50,14 @@ namespace EchoesOfEtherion.DeveloperConsole
 
         private void OnEnable()
         {
-            controller.OpenConsole += OnOpenConsole;
-            controller.CloseConsole += OnCloseConsole;
+            controller.ConsoleOpened += OnOpenConsole;
+            controller.ConsoleClosed += OnCloseConsole;
         }
 
         private void OnDisable()
         {
-            controller.OpenConsole -= OnOpenConsole;
-            controller.CloseConsole -= OnCloseConsole;
+            controller.ConsoleOpened -= OnOpenConsole;
+            controller.ConsoleClosed -= OnCloseConsole;
         }
 
         private void Update()

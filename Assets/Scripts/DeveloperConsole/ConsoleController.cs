@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace EchoesOfEtherion.DeveloperConsole
 {
-    public class ConsoleController : MonoBehaviour
+    public class ConsoleController : Singleton<ConsoleController>
     {
         [Header("References")]
         [SerializeField] private InputActionReference openCloseActionReference;

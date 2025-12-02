@@ -15,7 +15,7 @@ namespace EchoesOfEtherion.DeveloperConsole
         [SerializeField] private float padding = 6;
 
         [Header("Console Settings")]
-        [SerializeField] private int maxLines = 100;
+        [SerializeField] private int maxLines = 1000;
 
         private readonly List<string> lines = new();
         private bool userScrolled = false;
@@ -84,7 +84,14 @@ namespace EchoesOfEtherion.DeveloperConsole
         {
             // If the user scrolls anywhere except the very bottom,
             // stop auto-follow
-            userScrolled = scrollRect.verticalNormalizedPosition > 0.001f;
+            userScrolled = scrollRect.verticalNormalizedPosition > 0.01f;
+        }
+
+        public static void ClearLog()
+        {
+            Instance.lines.Clear();
+            Instance.logTMP.text = "";
+            ScaleText();
         }
 
 #if UNITY_EDITOR

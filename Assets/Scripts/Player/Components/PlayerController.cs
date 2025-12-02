@@ -96,11 +96,10 @@ namespace EchoesOfEtherion.Player.Components
         {
             StateMachine = new FiniteStateMachine<PlayerController>(this);
 
-            StateMachine.AddState<PlayerIdleState>(new PlayerIdleState());
-            StateMachine.AddState<PlayerMovingState>(new PlayerMovingState());
+            StateMachine.AddState<PlayerRoamingState>(new PlayerRoamingState());
             StateMachine.AddState<PlayerDeadState>(new PlayerDeadState());
             StateMachine.AddState<PlayerStunState>(new PlayerStunState());
-            StateMachine.ChangeState<PlayerIdleState>();
+            StateMachine.ChangeState<PlayerRoamingState>();
         }
 
         private void OnDied(HealthModule module)

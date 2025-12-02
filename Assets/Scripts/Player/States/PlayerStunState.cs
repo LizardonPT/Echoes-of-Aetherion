@@ -20,7 +20,7 @@ namespace EchoesOfEtherion.Player.States
 
             if (timer <= 0)
             {
-                controller.StateMachine.ChangeState<PlayerIdleState>();
+                controller.StateMachine.ChangeState<PlayerRoamingState>();
             }
 
             controller.Animator.UpdateWalkAnimation(Vector2.zero, controller.LookDirection);

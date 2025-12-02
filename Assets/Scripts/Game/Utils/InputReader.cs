@@ -9,7 +9,13 @@ namespace EchoesOfEtherion.Game.Utils
     public class InputReader : ScriptableObject
     {
         [SerializeField]
-        private InputActionReference moveActionReference;
+        private InputActionReference moveUpActionReference;
+        [SerializeField]
+        private InputActionReference moveDownActionReference;
+        [SerializeField]
+        private InputActionReference moveLeftActionReference;
+        [SerializeField]
+        private InputActionReference moveRightActionReference;
         [SerializeField]
         private InputActionReference pauseActionReference;
 
@@ -30,7 +36,7 @@ namespace EchoesOfEtherion.Game.Utils
         private InputActionReference slot6ActionReference;
         [SerializeField]
         private InputActionReference shootSpellActionReference;
-        
+
         public bool AttackInputPressed
         {
             get
@@ -43,12 +49,27 @@ namespace EchoesOfEtherion.Game.Utils
         {
             get
             {
-                if (moveActionReference?.action?.TryReadValue(out Vector2 value) ?? false)
+                float x = 0f;
+                float y = 0f;
+
+                if (moveRightActionReference?.action != null && moveRightActionReference.action.IsPressed())
                 {
-                    return value;
+                    x += 1f;
                 }
-                else
-                    return Vector2.zero;
+                if (moveLeftActionReference?.action != null && moveLeftActionReference.action.IsPressed())
+                {
+                    x -= 1f;
+                }
+                if (moveUpActionReference?.action != null && moveUpActionReference.action.IsPressed())
+                {
+                    y += 1f;
+                }
+                if (moveDownActionReference?.action != null && moveDownActionReference.action.IsPressed())
+                {
+                    y -= 1f;
+                }
+
+                return new Vector2(x, y).normalized;
             }
         }
 

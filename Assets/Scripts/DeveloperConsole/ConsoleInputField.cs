@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EchoesOfEtherion.DeveloperConsole.Commands;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -65,6 +66,8 @@ namespace EchoesOfEtherion.DeveloperConsole
 
         private void Update()
         {
+            if (!consoleController.IsOpen)
+                return;
             if (Keyboard.current.upArrowKey.wasPressedThisFrame)
             {
                 if (!isOnHistory || inputField.text == "")
@@ -74,8 +77,11 @@ namespace EchoesOfEtherion.DeveloperConsole
                 }
                 else HistoryIndex -= 1;
 
-                inputField.text = commandHistory[HistoryIndex];
-                inputField.caretPosition = inputField.text.Count();
+                if (commandHistory.Count > 0)
+                {
+                    inputField.text = commandHistory[HistoryIndex];
+                    inputField.caretPosition = inputField.text.Count();
+                }
             }
             else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
             {
@@ -104,8 +110,19 @@ namespace EchoesOfEtherion.DeveloperConsole
         {
             if (!string.IsNullOrEmpty(message))
             {
-                ConsoleLogger.Log(message);
+                // Log the command that was entered
+                ConsoleLogger.Log($"");
+                ConsoleLogger.Log($"> {message}");
 
+                // Execute the command through the database
+                bool success = CommandDatabase.Instance.ExecuteCommand(message);
+
+                if (!success)
+                {
+                    ConsoleLogger.Log($"Command failed or not recognized");
+                }
+
+                // Add to history
                 if (commandHistory.Count == maxHistory)
                 {
                     commandHistory.RemoveAt(0);

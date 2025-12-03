@@ -185,6 +185,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
 
             // Check if key is already bound in the same map
             string existingAction = GetActionForKey(keyAlias, mapName);
+
             if (!string.IsNullOrEmpty(existingAction) && existingAction != actionName)
             {
                 UnbindKeyFromAction(keyAlias, existingAction); // only affects this map
@@ -200,7 +201,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             // Update cache
             keyToActionCache[(mapName, keyAlias.ToLower())] = actionName;
             BindingChanged?.Invoke(actionName, bindingPath);
-
+            UpdateCacheForAction(actionName);
             ConsoleLogger.Log($"Bound {keyAlias} to {actionName} in map {mapName}");
             return true;
         }

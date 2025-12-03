@@ -482,12 +482,12 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "bind",
                 description: "Bind a key to an action",
-                usage: "bind <key> <action>",
+                usage: "bind <key> [action]",
                 action: (args) =>
                 {
                     if (args.Count < 2)
                     {
-                        ConsoleLogger.Log("Usage: bind <key> <action>");
+                        ConsoleLogger.Log("Usage: bind <key> [action]");
                         return;
                     }
 
@@ -537,7 +537,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "unbind_action",
                 description: "Unbind all keys from an action",
-                usage: "unbind [action]",
+                usage: "unbind_action [action]",
                 action: (args) =>
                 {
                     if (args.Count < 1)

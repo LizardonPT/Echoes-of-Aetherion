@@ -176,7 +176,6 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
                             {
                                 string keyAlias = GetKeyAlias(key);
                                 writer.WriteLine($"bind {keyAlias} {actionName.ToLower()}");
-
                             }
                         }
 

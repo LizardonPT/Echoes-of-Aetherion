@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace EchoesOfEtherion.DeveloperConsole
 {
-    [RequireComponent(typeof(ConsoleController))]
+    [RequireComponent(typeof(ConsoleController), typeof(ConsoleSuggestion))]
     public class ConsoleInputField : MonoBehaviour
     {
         [SerializeField]
@@ -18,6 +18,7 @@ namespace EchoesOfEtherion.DeveloperConsole
         private int maxHistory = 100;
 
         private ConsoleController consoleController;
+        private ConsoleSuggestion consoleSuggestion;
 
         private List<string> commandHistory = new();
 
@@ -41,35 +42,49 @@ namespace EchoesOfEtherion.DeveloperConsole
         }
 
         private bool isOnHistory = false;
+        private bool hasSuggestions;
 
         private void Awake()
         {
             consoleController = GetComponent<ConsoleController>();
+            consoleSuggestion = GetComponent<ConsoleSuggestion>();
         }
 
         private void Start()
         {
             inputField.onSubmit.AddListener(OnSubmit);
+            inputField.onValueChanged.AddListener(OnValueChanged);
         }
 
         private void OnEnable()
         {
             consoleController.ConsoleOpened += OnConsoleOpened;
             consoleController.ConsoleClosed += OnConsoleClosed;
+            consoleSuggestion.SuggestionClicked += OnSuggestionClicked;
         }
 
         private void OnDisable()
         {
             consoleController.ConsoleOpened -= OnConsoleOpened;
             consoleController.ConsoleClosed -= OnConsoleClosed;
+            consoleSuggestion.SuggestionClicked -= OnSuggestionClicked;
         }
 
         private void Update()
         {
             if (!consoleController.IsOpen)
                 return;
+
+            hasSuggestions = consoleSuggestion.SuggestionCount > 0;
+
             if (Keyboard.current.upArrowKey.wasPressedThisFrame)
             {
+                if (hasSuggestions)
+                { // Prioritize suggestions over history navigation
+                    consoleSuggestion.UpdateArrowUp();
+                    return;
+                }
+
                 if (!isOnHistory || inputField.text == "")
                 {
                     isOnHistory = true;
@@ -85,6 +100,11 @@ namespace EchoesOfEtherion.DeveloperConsole
             }
             else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
             {
+                if (hasSuggestions)
+                { // Prioritize suggestions over history navigation
+                    consoleSuggestion.UpdateArrowDown();
+                    return;
+                }
                 if (commandHistory.Count == 0) return;
                 if (!isOnHistory || inputField.text == "")
                 {
@@ -103,11 +123,47 @@ namespace EchoesOfEtherion.DeveloperConsole
 
                 inputField.caretPosition = inputField.text.Count();
             }
+            else if (Keyboard.current.tabKey.wasPressedThisFrame)
+            {
+                if (hasSuggestions)
+                {
+                    if (consoleSuggestion.TryGetCurrentSuggestion(out string suggestion))
+                    {
+                        inputField.text = suggestion;
+                        inputField.caretPosition = inputField.text.Count();
+                        inputField.ActivateInputField();
+                    }
+                }
+            }
+        }
 
+        private void OnValueChanged(string newText)
+        {
+            if (isOnHistory)
+                return;
+
+            if (string.IsNullOrEmpty(newText))
+            {
+                consoleSuggestion.ClearSuggestions();
+                return;
+            }
+
+            consoleSuggestion.UpdateSuggestions(newText);
         }
 
         private void OnSubmit(string message)
         {
+            if (hasSuggestions)
+            {
+                if (consoleSuggestion.TryGetCurrentSuggestion(out string suggestion))
+                {
+                    inputField.text = suggestion;
+                    inputField.caretPosition = inputField.text.Count();
+                    inputField.ActivateInputField();
+                    return;
+                }
+            }
+
             if (!string.IsNullOrEmpty(message))
             {
                 // Log the command that was entered
@@ -136,6 +192,13 @@ namespace EchoesOfEtherion.DeveloperConsole
             }
             else
                 inputField.ActivateInputField();
+        }
+
+        private void OnSuggestionClicked(string suggestion)
+        {
+            inputField.text = suggestion;
+            inputField.caretPosition = inputField.text.Count();
+            inputField.ActivateInputField();
         }
 
         private void OnConsoleOpened()

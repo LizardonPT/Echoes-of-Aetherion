@@ -42,7 +42,13 @@ namespace EchoesOfEtherion.DeveloperConsole
 
         public void UpdateSuggestions(string newText)
         {
+            bool hadNoSuggestions = false;
+
+            if (SuggestionCount == 0)
+                hadNoSuggestions = true;
+
             ClearSuggestions();
+
 
             if (string.IsNullOrWhiteSpace(newText))
                 return;
@@ -56,11 +62,14 @@ namespace EchoesOfEtherion.DeveloperConsole
                     InstantiateSuggestion(command);
                 }
             }
-
             if (suggestions.Count > 0)
                 suggestionScrollRect.gameObject.SetActive(true);
 
-            currentIndex = -1;
+            if (hadNoSuggestions && SuggestionCount > 0)
+            {
+                currentIndex = 0;
+                UpdateHighLight();
+            }
         }
 
         public void UpdateArrowDown()
@@ -69,19 +78,7 @@ namespace EchoesOfEtherion.DeveloperConsole
             if (currentIndex >= suggestions.Count)
                 currentIndex = suggestions.Count - 1;
 
-            if (suggestions.Count == 0)
-                return;
-
-            foreach (var suggestion in suggestions)
-            {
-                suggestion.UnhighlightButton();
-            }
-
-            if (currentIndex < suggestions.Count)
-            {
-                Suggestion suggestion = suggestions[currentIndex];
-                suggestion.HighlightButton();
-            }
+            UpdateHighLight();
         }
 
         public void UpdateArrowUp()
@@ -90,6 +87,11 @@ namespace EchoesOfEtherion.DeveloperConsole
             if (currentIndex < 0)
                 currentIndex = 0;
 
+            UpdateHighLight();
+        }
+
+        private void UpdateHighLight()
+        {
             if (suggestions.Count == 0)
                 return;
 

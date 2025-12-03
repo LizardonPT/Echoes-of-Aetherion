@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace EchoesOfEtherion.DeveloperConsole.Commands
 {
@@ -16,7 +17,19 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
 
         public readonly bool TryGetNumber(out float result)
         {
-            return float.TryParse(Value, out result);
+            var styles = NumberStyles.AllowThousands |
+                         NumberStyles.AllowDecimalPoint |
+                         NumberStyles.Float;
+
+            string normalized = Value.StartsWith(".") ? "0" + Value : Value;
+
+            return float.TryParse(
+                normalized,
+                styles,
+                CultureInfo.InvariantCulture,
+                out result
+            );
+
         }
 
         public readonly bool TryGetBoolean(out bool result)

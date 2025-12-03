@@ -129,7 +129,7 @@ namespace EchoesOfEtherion.DeveloperConsole
                 {
                     if (consoleSuggestion.TryGetCurrentSuggestion(out string suggestion))
                     {
-                        inputField.text = suggestion;
+                        inputField.text = suggestion + " ";
                         inputField.caretPosition = inputField.text.Count();
                         inputField.ActivateInputField();
                     }
@@ -157,7 +157,7 @@ namespace EchoesOfEtherion.DeveloperConsole
             {
                 if (consoleSuggestion.TryGetCurrentSuggestion(out string suggestion))
                 {
-                    inputField.text = suggestion;
+                    inputField.text = suggestion + " ";
                     inputField.caretPosition = inputField.text.Count();
                     inputField.ActivateInputField();
                     return;

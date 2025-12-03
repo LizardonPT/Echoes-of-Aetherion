@@ -86,6 +86,15 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
         private void RegisterSystemCommands()
         {
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+            key: "echo",
+            description: "Prints text to the console",
+            usage: "echo <text>",
+            action: (args) => ConsoleLogger.Log(args[0].GetString())
+
+            ), "System");
+
+
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "clear",
                 description: "Clears the console output",
                 usage: "clear",
@@ -121,6 +130,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
 
                     if (arguments[0].TryGetNumber(out float numValue))
                     {
+                        ConsoleLogger.Log($"Time scale set to {numValue}");
                         Time.timeScale = Mathf.Max(0, numValue);
                         return;
                     }

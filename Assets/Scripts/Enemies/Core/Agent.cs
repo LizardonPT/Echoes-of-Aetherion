@@ -1,18 +1,24 @@
-using EchoesOfEtherion.Enemies.SteeringBehaviours;
-using EchoesOfEtherion.Extentions;
+using EchoesOfEtherion.Enemies.EnemiesStateMachine;
+using EchoesOfEtherion.Enemies.EnemiesStateMachine.States;
 using EchoesOfEtherion.Game;
+using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.Player.Components;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Enemies.Core
 {
     [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(StateMachine))]
+    [RequireComponent(typeof(HealthModule))]
     public class Agent : TickRegistor
     {
         public virtual string EnemyType { get; }
+        [Header("Debug")]
+        [SerializeField] public bool debugLog = false;
+        [SerializeField] private bool showMovementGizmos = true;
 
         [Header("Movement Settings")]
-        [SerializeField] protected float maxAccel = 15f;
+        [SerializeField] protected float accel = 15f;
         [SerializeField] protected float maxSpeed = 65f;
         [SerializeField] protected float friction = 8f;
 
@@ -20,57 +26,60 @@ namespace EchoesOfEtherion.Enemies.Core
         [field: SerializeField] public LayerMask PlayerMask { get; private set; }
         [field: SerializeField] public LayerMask EnemyMask { get; private set; }
         [field: SerializeField] public LayerMask EnvironmentMask { get; private set; }
-        [field: SerializeField] public float DetectionRadius { get; private set; } = 120f;
-        [field: SerializeField] public float MinDetectionRadius { get; private set; } = 60;
-        [field: SerializeField] public float SeekRadius { get; private set; } = 180f;
+        [field: SerializeField] public float SignalRange { get; private set; } = 120f;
         [field: SerializeField, Range(0, 360)] public int LookAngle { get; private set; } = 45;
 
-        private ISteeringBehaviour[] steeringBehaviours;
         public Rigidbody2D RB { get; private set; }
 
-        public float MaxAccel => maxAccel;
+        public float Accel => accel;
         public float MaxSpeed => maxSpeed;
         public Vector2 Velocity => RB.linearVelocity;
         public Vector2 LookDirection = Vector2.right;
-        public GameObject Target { get; set; }
+        public PlayerController Target { get; set; }
+        public Vector2? TargetPosition = null;
         public Vector2 TargetPos => Target != null ? new Vector2(Target.transform.position.x, Target.transform.position.y + 6) : Vector2.zero;
+
+        private StateMachine stateMachine;
+        private HealthModule healthModule;
 
         protected virtual void Awake()
         {
             RB = GetComponent<Rigidbody2D>();
-            steeringBehaviours = GetComponents<ISteeringBehaviour>();
+            stateMachine = GetComponent<StateMachine>();
+            healthModule = GetComponent<HealthModule>();
+        }
+
+        private void OnEnable()
+        {
+            healthModule.Died += OnDied;
+            healthModule.Damaged += OnDamaged;
+        }
+
+        private void OnDisable()
+        {
+            healthModule.Died -= OnDied;
+            healthModule.Damaged -= OnDamaged;
         }
 
         public override void FixedTick()
         {
-            ApplySteering();
             ApplyFriction();
         }
 
-        private void ApplySteering()
+        public void MoveToPosition(Vector2 targetPosition, float speedMultiplier = 1f)
         {
-            if (steeringBehaviours == null || steeringBehaviours.Length == 0)
-                return;
+            Vector2 origin = transform.position;
+            Vector2 wishVelocity = accel * speedMultiplier * (targetPosition - origin).normalized;
 
-            Vector2 steerWeighted = Vector2.zero;
-
-            foreach (ISteeringBehaviour behaviour in steeringBehaviours)
+            if (RB.linearVelocity.magnitude < maxSpeed * speedMultiplier)
             {
-                if (!behaviour.IsActive) continue;
-
-                Vector2 steer = behaviour.GetSteering(Target);
-                steerWeighted += behaviour.Weight * steer;
+                float maxAddition = (maxSpeed * speedMultiplier) - RB.linearVelocity.magnitude;
+                wishVelocity = Vector2.ClampMagnitude(wishVelocity, maxAddition);
             }
 
+            wishVelocity = Vector2.ClampMagnitude(wishVelocity, accel);
 
-            if (RB.linearVelocity.magnitude < maxSpeed)
-            {
-                steerWeighted = Vector2.ClampMagnitude(steerWeighted, maxSpeed - RB.linearVelocity.magnitude);
-            }
-
-            steerWeighted = Vector2.ClampMagnitude(steerWeighted, maxAccel);
-
-            RB.AddForce(steerWeighted, ForceMode2D.Impulse);
+            RB.AddForce(wishVelocity, ForceMode2D.Impulse);
         }
 
         private void ApplyFriction()
@@ -106,30 +115,58 @@ namespace EchoesOfEtherion.Enemies.Core
             RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, 500, rayMask);
 
             if (rayHit.collider != null)
-                Target = rayHit.collider.gameObject;
+            {
+                if (rayHit.collider.TryGetComponent(out PlayerController playerController))
+                {
+                    Target = playerController;
+                    stateMachine.ChangeState(typeof(RoamingState));
+                }
+            }
+        }
+
+        private void OnDamaged(DamageInfo info)
+        {
+            // StunTime = damageInfo.StunTime;
+
+            if (info.KnockbackAmount > 0)
+            {
+                Vector2 source = info.DamageSourcePos;
+                Vector2 here = transform.position;
+                Vector2 sourceToHere = here - source;
+                RB.AddForce(sourceToHere.normalized * info.KnockbackAmount, ForceMode2D.Impulse);
+            }
+
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, SignalRange, EnemyMask);
+
+            foreach (Collider2D col in hits)
+            {
+                if (col.TryGetComponent(out Agent agent))
+                {
+                    agent.SignalEnemyHit();
+                }
+            }
+
+            SignalEnemyHit();
+        }
+
+        private void OnDied(HealthModule module)
+        {
+            Destroy(gameObject);
         }
 
 
 #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        private void OnDrawGizmos()
         {
-            Vector2 pos = transform.position;
+            if (!showMovementGizmos || !Application.isPlaying) return;
 
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireSphere(pos, MinDetectionRadius);
-
+            // Draw movement direction
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(pos, DetectionRadius);
+            Gizmos.DrawRay(transform.position, RB.linearVelocity.normalized * 50);
 
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(pos, SeekRadius);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(pos, pos + LookDirection.normalized * DetectionRadius);
-
+            // Draw look direction
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(pos, pos + LookDirection.Rotate(LookAngle).normalized * DetectionRadius);
-            Gizmos.DrawLine(pos, pos + LookDirection.Rotate(-LookAngle).normalized * DetectionRadius);
+            Gizmos.DrawRay(transform.position, LookDirection * 50f);
         }
 #endif
     }

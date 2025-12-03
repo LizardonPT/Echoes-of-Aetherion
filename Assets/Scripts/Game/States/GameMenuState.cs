@@ -1,4 +1,4 @@
-using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Game.StateMachine;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Game.States

@@ -1,6 +1,6 @@
 using EchoesOfEtherion.CameraUtils;
 using EchoesOfEtherion.Player.Components;
-using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Game.StateMachine;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Player.States

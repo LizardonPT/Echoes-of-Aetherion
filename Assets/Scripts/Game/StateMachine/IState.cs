@@ -1,4 +1,4 @@
-namespace EchoesOfEtherion.StateMachine
+namespace EchoesOfEtherion.Game.StateMachine
 {
     public interface IState<T> where T : class
     {

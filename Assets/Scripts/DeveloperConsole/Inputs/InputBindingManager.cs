@@ -174,6 +174,13 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             if (string.IsNullOrEmpty(actionName) || string.IsNullOrEmpty(keyAlias))
                 return false;
 
+            if (keyAliases.ContainsKey(keyAlias.ToLower()) == false)
+            {
+                ConsoleLogger.Log($"Key alias '{keyAlias}' is not recognized.");
+                ConsoleLogger.Log($"Use command 'key_list' to see all available key aliases.");
+                return false;
+            }
+
             var action = FindInputAction(actionName);
             if (action == null)
             {

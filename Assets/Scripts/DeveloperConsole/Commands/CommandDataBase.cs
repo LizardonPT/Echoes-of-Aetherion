@@ -27,27 +27,36 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
 
         public bool ExecuteCommand(string input)
         {
-            if (string.IsNullOrWhiteSpace(input))
-                return false;
+            List<string> commandStrings = SplitCommands(input);
 
-            var parts = ParseInput(input);
-            if (parts.Length == 0)
-                return false;
+            bool allExecuted = true;
 
-            string commandKey = parts[0].ToLower();
-
-            // First check if the command exist
-            // Avoid checking arguments if command is not found
-            if (!commands.ContainsKey(commandKey))
+            foreach (string cmd in commandStrings)
             {
-                ConsoleLogger.Log($"Unknown command: '{commandKey}'. Type 'help' for available commands.");
-                return false;
+                string[] parts = ParseArguments(cmd);
+                if (parts.Length == 0)
+                    continue;
+
+                string commandKey = parts[0].ToLower();
+
+                if (!commands.ContainsKey(commandKey))
+                {
+                    ConsoleLogger.Log($"Unknown command: '{commandKey}'. Type 'help' for available commands.");
+                    allExecuted = false;
+                    continue;
+                }
+
+                List<Argument> arguments = parts.Skip(1)
+                                                .Select(a => new Argument(a))
+                                                .ToList();
+
+                if (!commands[commandKey].Execute(arguments))
+                    allExecuted = false;
             }
 
-            List<Argument> arguments = parts.Skip(1).Select(a => new Argument(a)).ToList();
-
-            return commands[commandKey].Execute(arguments);
+            return allExecuted;
         }
+
 
         public bool TryGetCommand(string key, out IConsoleCommand command)
         {
@@ -81,44 +90,66 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
             return result;
         }
 
-        private string[] ParseInput(string input)
+        private string[] ParseArguments(string input)
         {
-            var result = new List<string>();
-            int currentPos = 0;
+            List<string> result = new();
             bool inQuotes = false;
-            string currentToken = "";
+            string current = "";
 
-            while (currentPos < input.Length)
+            foreach (char c in input)
             {
-                char currentChar = input[currentPos];
-
-                if (currentChar == '"')
+                if (c == '"')
                 {
                     inQuotes = !inQuotes;
-                    currentPos++;
                 }
-                else if (currentChar == ' ' && !inQuotes)
+                else if (char.IsWhiteSpace(c) && !inQuotes)
                 {
-                    if (!string.IsNullOrEmpty(currentToken))
+                    if (!string.IsNullOrEmpty(current))
                     {
-                        result.Add(currentToken);
-                        currentToken = "";
+                        result.Add(current);
+                        current = "";
                     }
-                    currentPos++;
+                    continue;
+                }
+
+                current += c;
+            }
+
+            if (!string.IsNullOrEmpty(current))
+                result.Add(current);
+
+            return result.ToArray();
+        }
+
+        private List<string> SplitCommands(string input)
+        {
+            List<string> commands = new();
+            bool inQuotes = false;
+            string current = "";
+
+            foreach (char c in input)
+            {
+                if (c == '"')
+                {
+                    inQuotes = !inQuotes;
+                    current += c; // keep quotes for argument parsing
+                }
+                else if (c == ';' && !inQuotes)
+                {
+                    if (!string.IsNullOrWhiteSpace(current))
+                        commands.Add(current.Trim());
+                    current = "";
                 }
                 else
                 {
-                    currentToken += currentChar;
-                    currentPos++;
+                    current += c;
                 }
             }
 
-            if (!string.IsNullOrEmpty(currentToken))
-            {
-                result.Add(currentToken);
-            }
+            if (!string.IsNullOrWhiteSpace(current))
+                commands.Add(current.Trim());
 
-            return result.ToArray();
+            return commands;
         }
     }
 }

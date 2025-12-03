@@ -118,7 +118,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                         ConsoleLogger.Log("Usage: time_scale <value>");
                         return;
                     }
-                    
+
                     if (arguments[0].TryGetNumber(out float numValue))
                     {
                         Time.timeScale = Mathf.Max(0, numValue);
@@ -338,7 +338,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
 
                     for (int i = 1; i < args.Count; i++)
                     {
-                        commands.Add(args[i].GetString());
+                        commands.Add(args[i].GetString().Trim('"'));
                     }
 
                     fileName = fileName.EndsWith(".cfg") ? fileName : fileName + ".cfg";

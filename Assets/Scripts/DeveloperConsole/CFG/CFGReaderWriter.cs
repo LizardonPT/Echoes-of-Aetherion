@@ -257,9 +257,7 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
 
                         // Skip empty lines and comments
                         if (string.IsNullOrEmpty(trimmedLine) ||
-                            trimmedLine.StartsWith("//") ||
-                            trimmedLine.StartsWith("#") ||
-                            trimmedLine.StartsWith(";"))
+                            trimmedLine.StartsWith("//"))
                         {
                             continue;
                         }
@@ -303,74 +301,19 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
 
                     // Skip empty lines and comments
                     if (string.IsNullOrEmpty(trimmedLine) ||
-                        trimmedLine.StartsWith("//") ||
-                        trimmedLine.StartsWith("#") ||
-                        trimmedLine.StartsWith(";"))
+                        trimmedLine.StartsWith("//"))
                     {
                         continue;
                     }
 
-                    // Special handling for bind command to ensure it goes through InputBindingManager
-                    if (trimmedLine.StartsWith("bind ", StringComparison.OrdinalIgnoreCase))
-                    {
-                        // Parse bind command
-                        string bindArgs = trimmedLine.Substring(5).Trim();
-                        string[] parts = bindArgs.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
+                    bool success = CommandDatabase.Instance.ExecuteCommand(trimmedLine);
 
-                        if (parts.Length == 2)
-                        {
-                            string key = parts[0];
-                            string action = parts[1];
-
-                            if (InputBindingManager.Instance != null)
-                            {
-                                if (InputBindingManager.Instance.Bind(action, key))
-                                    commandsExecuted++;
-                                else
-                                    ConsoleLogger.Log($"Error on line {lineNumber}: Could not bind {key} to {action}");
-                            }
-                            else
-                            {
-                                ConsoleLogger.Log($"Error on line {lineNumber}: InputBindingManager not available");
-                            }
-                        }
-                        else
-                        {
-                            ConsoleLogger.Log($"Error on line {lineNumber}: Invalid bind command format");
-                        }
-                    }
-                    else if (trimmedLine.StartsWith("unbind ", StringComparison.OrdinalIgnoreCase))
-                    {
-                        // Parse unbind command
-                        string unbindArgs = trimmedLine.Substring(7).Trim();
-                        string[] parts = unbindArgs.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-
-                        if (parts.Length >= 1)
-                        {
-                            string key = parts[0];
-                            string action = parts.Length > 1 ? parts[1] : null;
-
-                            if (InputBindingManager.Instance != null)
-                            {
-                                if (InputBindingManager.Instance.Unbind(key, action))
-                                    commandsExecuted++;
-                                else
-                                    ConsoleLogger.Log($"Error on line {lineNumber}: Could not unbind {key}");
-                            }
-                        }
-                    }
+                    if (success)
+                        commandsExecuted++;
                     else
-                    {
-                        // Normal command execution
-                        bool success = CommandDatabase.Instance.ExecuteCommand(trimmedLine);
-
-                        if (success)
-                            commandsExecuted++;
-                        else
-                            ConsoleLogger.Log($"Error on line {lineNumber}: {trimmedLine}");
-                    }
+                        ConsoleLogger.Log($"Error on line {lineNumber}: {trimmedLine}");
                 }
-
+                
                 ConsoleLogger.Log($"Executed {commandsExecuted} commands from {System.IO.Path.GetFileName(filePath)}");
             }
             catch (Exception e)

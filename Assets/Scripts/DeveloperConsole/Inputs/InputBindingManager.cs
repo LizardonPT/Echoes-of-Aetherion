@@ -96,6 +96,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             keyAliases["nummultiply"] = "<Keyboard>/numpadMultiply";
             keyAliases["numdivide"] = "<Keyboard>/numpadDivide";
 
+            keyAliases["backquote"] = "<Keyboard>/backquote";
             keyAliases["semicolon"] = "<Keyboard>/semicolon";
             keyAliases["quote"] = "<Keyboard>/quote";
             keyAliases["comma"] = "<Keyboard>/comma";

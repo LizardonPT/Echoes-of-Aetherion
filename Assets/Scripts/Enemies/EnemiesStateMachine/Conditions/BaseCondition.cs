@@ -15,7 +15,10 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
         public void Initialize(Agent agent)
         {
             this.agent = agent;
+            OnInitialize();
         }
+
+        protected abstract void OnInitialize();
 
         private void Update()
         {

@@ -48,7 +48,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
         private void InitializeConditions()
         {
             // Initialize all conditions on all states
-            foreach (var state in stateCache.Values)
+            foreach (BaseState state in stateCache.Values)
             {
                 foreach (var transition in state.Transitions)
                 {
@@ -70,13 +70,6 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
 
             if (newState == currentState) return;
 
-#if UNITY_EDITOR
-            if (showDebugInfo)
-            {
-                Debug.Log($"{gameObject.name}: {currentState?.GetType().Name ?? "None"} → {newStateType.Name}", gameObject);
-            }
-#endif
-
             currentState?.OnExit();
             currentState = newState;
             currentState.OnEnter();
@@ -86,7 +79,6 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
         {
             currentState?.OnUpdate();
 
-            // Check transitions for current state
             foreach (var transition in currentState?.Transitions ?? new List<StateTransition>())
             {
                 bool conditionMet = transition.Condition.IsMet();

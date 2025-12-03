@@ -12,6 +12,15 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
         private bool timerActive;
         bool conditionMet;
 
+        protected override void OnInitialize()
+        {
+            
+        }
+
+        public void SetDuration(float d)
+        {
+            duration = d;
+        }
         public void StartTimer()
         {
             startTime = Time.time;

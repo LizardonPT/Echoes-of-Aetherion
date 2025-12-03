@@ -18,10 +18,8 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
         {
             this.stateMachine = stateMachine;
             this.agent = stateMachine.Agent;
-            OnInitialize();
         }
 
-        protected virtual void OnInitialize() { }
         public virtual void OnEnter() { enabled = true; }
         public virtual void OnExit() { enabled = false; }
         public virtual void OnUpdate() { }

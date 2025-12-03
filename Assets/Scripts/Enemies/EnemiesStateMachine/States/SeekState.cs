@@ -10,10 +10,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
 
         public override void OnEnter()
         {
-            if (agent.Target != null)
-            {
-                Debug.Log($"{gameObject.name}: Entered Seek State targeting {agent.Target.name}");
-            }
+            
         }
 
         public override void OnUpdate()

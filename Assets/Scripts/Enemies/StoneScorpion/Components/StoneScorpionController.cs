@@ -40,8 +40,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         public LayerMask PlayerDamageMask => playerDamageMask;
         public Transform ProjectileSpawnPoint => projectileSpawnPoint;
 
-        public float StunTime { get; private set; } = 0;
-
         protected override void Awake()
         {
             base.Awake();
@@ -84,6 +82,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion
         {
             lastAttackTime = Time.time;
         }
+
         protected override void OnDestroy()
         {
             base.OnDestroy();

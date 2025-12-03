@@ -13,8 +13,6 @@ namespace EchoesOfEtherion.Enemies.Core
     public class Agent : TickRegistor
     {
         public virtual string EnemyType { get; }
-        [Header("Debug")]
-        [SerializeField] public bool debugLog = false;
         [SerializeField] private bool showMovementGizmos = true;
 
         [Header("Movement Settings")]
@@ -27,16 +25,12 @@ namespace EchoesOfEtherion.Enemies.Core
         [field: SerializeField] public LayerMask EnemyMask { get; private set; }
         [field: SerializeField] public LayerMask EnvironmentMask { get; private set; }
         [field: SerializeField] public float SignalRange { get; private set; } = 120f;
-        [field: SerializeField, Range(0, 360)] public int LookAngle { get; private set; } = 45;
 
         public Rigidbody2D RB { get; private set; }
 
-        public float Accel => accel;
-        public float MaxSpeed => maxSpeed;
-        public Vector2 Velocity => RB.linearVelocity;
         public Vector2 LookDirection = Vector2.right;
         public PlayerController Target { get; set; }
-        public Vector2? TargetPosition = null;
+        public float StunTime { get; private set; }
         public Vector2 TargetPos => Target != null ? new Vector2(Target.transform.position.x, Target.transform.position.y + 6) : Vector2.zero;
 
         private StateMachine stateMachine;
@@ -110,7 +104,7 @@ namespace EchoesOfEtherion.Enemies.Core
             Vector2 origin = transform.position;
             Vector2 dirToTarget = (Vector2)player.transform.position - origin;
 
-            LayerMask rayMask = PlayerMask | EnvironmentMask;
+            LayerMask rayMask = (PlayerMask | EnvironmentMask) & ~EnemyMask;
 
             RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, 500, rayMask);
 
@@ -119,14 +113,13 @@ namespace EchoesOfEtherion.Enemies.Core
                 if (rayHit.collider.TryGetComponent(out PlayerController playerController))
                 {
                     Target = playerController;
-                    stateMachine.ChangeState(typeof(RoamingState));
                 }
             }
         }
 
         private void OnDamaged(DamageInfo info)
         {
-            // StunTime = damageInfo.StunTime;
+            StunTime = info.StunTime;
 
             if (info.KnockbackAmount > 0)
             {

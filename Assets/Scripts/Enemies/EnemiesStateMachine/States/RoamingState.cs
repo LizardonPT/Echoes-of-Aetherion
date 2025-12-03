@@ -14,26 +14,18 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
         private float duration;
         private float startTime;
 
-        protected override void OnInitialize()
+        public override void OnEnter()
         {
             duration = Random.Range(minRoamTime, maxRoamTime);
+            agent.Target = null;
+
+            SetNewRoamTarget();
             StartTimer();
         }
-
+        
         private void StartTimer()
         {
             startTime = Time.time;
-        }
-
-        public override void OnEnter()
-        {
-#if UNITY_EDITOR
-            Debug.Log($"{gameObject.name}: Entered Roaming State");
-#endif
-
-            agent.Target = null;
-            SetNewRoamTarget();
-            StartTimer();
         }
 
         public override void OnUpdate()

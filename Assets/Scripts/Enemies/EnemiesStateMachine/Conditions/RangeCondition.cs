@@ -35,10 +35,11 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 
         private PlayerController playerInstance;
 
-        private void Start()
+        protected override void OnInitialize()
         {
             playerInstance = FindAnyObjectByType<PlayerController>();
         }
+
         protected override void Evaluate()
         {
             conditionMet = false;
@@ -78,7 +79,6 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
                 }
                 else if (distance > range && rangeType == RangeType.OurOfRange)
                 {
-                    Debug.Log("OUT OF RANGE");
                     conditionMet = true;
                     return;
                 }
@@ -103,8 +103,6 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
                 LayerMask rayMask = (agent.PlayerMask | agent.EnvironmentMask) & ~agent.EnemyMask;
                 RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget.normalized, range, rayMask);
 
-                if (rayHit.collider != null)
-                    Debug.Log($"hit {rayHit.collider.name}");
                 if (rayHit.collider != null &&
                     rayHit.collider.TryGetComponent(out PlayerController playerController))
                 {

@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EchoesOfEtherion.DeveloperConsole.CFG;
 using EchoesOfEtherion.DeveloperConsole.Inputs;
 using EchoesOfEtherion.Game.Scenes;
+using EchoesOfEtherion.Player.Components;
+using EchoesOfEtherion.Player.States;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -70,7 +73,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                         { // Provide info on argument types
                             if (commandKey == "bool")
                                 ConsoleLogger.Log("Boolean values can be represented as: 1/0, true/false, yes/no, on/off");
-                            else if (commandKey == "number")
+                            else if (commandKey == "number" || commandKey == "float")
                                 ConsoleLogger.Log("Number values should be in standard decimal format as: 3.14, -42, 0.001");
                             else if (commandKey == "string")
                                 ConsoleLogger.Log("String values are plain text. If spaces are needed, enclose in quotes.");
@@ -195,7 +198,6 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                 getter: () => "Check not implemented"
                 ), "Player");
 
-            //todo: NoClip mode
             CommandDatabase.Instance.RegisterCommand(new SettingCommand(
                 key: "noclip",
                 description: "Toggles noclip mode",
@@ -210,10 +212,71 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
 
                     bool enabled = boolValue;
 
-                    //todo: Implement noclip logic
                     ConsoleLogger.Log($"Noclip {(enabled ? "enabled" : "disabled")}");
+
+                    var player = FindAnyObjectByType<PlayerController>();
+
+                    if (player != null)
+                    {
+                        if (enabled)
+                            player.StateMachine.ChangeState<PlayerNoClipState>();
+                        else
+                            player.StateMachine.ChangeState<PlayerRoamingState>();
+                    }
+                    else
+                    {
+                        ConsoleLogger.Log("Error: PlayerController not found in scene");
+                    }
                 },
-                getter: () => "Check not implemented"
+                getter: () => FindAnyObjectByType<PlayerController>()?.StateMachine.CurrentState is PlayerNoClipState ? "1" : "0"
+                ), "Player");
+
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "noclip_toggle",
+                description: "Toggles no clip",
+                usage: "noclip_toggle",
+                action: (args) =>
+                {
+                    var player = FindAnyObjectByType<PlayerController>();
+
+                    if (player != null)
+                    {
+                        if (player.StateMachine.CurrentState is PlayerNoClipState)
+                        {
+                            ConsoleLogger.Log("Noclip disabled");
+                            player.StateMachine.ChangeState<PlayerRoamingState>();
+                        }
+                        else
+                        {
+                            ConsoleLogger.Log("Noclip enabled");
+                            player.StateMachine.ChangeState<PlayerNoClipState>();
+                        }
+                    }
+                    else
+                    {
+                        ConsoleLogger.Log("Error: PlayerController not found in scene");
+                    }
+                }
+                ), "Player");
+
+            CommandDatabase.Instance.RegisterCommand(new SettingCommand(
+                key: "noclip_speed",
+                description: "Changes no clip movement speed",
+                usage: "noclip_speed <speed>",
+                setter: (value) =>
+                {
+                    if (!value.TryGetNumber(out float floatValue))
+                    {
+                        ConsoleLogger.Log("Error: Invalid float format");
+                        ConsoleLogger.Log("Use command 'help float' for more info");
+                        return;
+                    }
+
+                    PlayerNoClipState.speed = floatValue;
+                    ConsoleLogger.Log($"Noclip speed set to {floatValue}");
+                },
+                getter: () => PlayerNoClipState.speed.ToString(),
+                isPersistent: true
                 ), "Player");
         }
 

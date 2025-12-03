@@ -21,7 +21,7 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
         [SerializeField] private bool autoSaveSettingsOnQuit = true;
         [SerializeField] private bool executeAutoExecOnStart = true;
 
-        private readonly Dictionary<string, SettingCommand> persistentSettings = new();
+        private readonly List<SettingCommand> persistentSettings = new();
         private string configsPath;
         private InputBindingManager inputBindingManager;
 
@@ -32,7 +32,6 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
             configsPath = Path.Combine(Application.persistentDataPath, configsFolder);
             inputBindingManager = GetComponent<InputBindingManager>();
             InitializePaths();
-            RegisterPersistentSettings();
         }
 
         private void Start()
@@ -42,6 +41,8 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
 
             if (autoLoadSettingsOnStart)
                 LoadSettings();
+                
+            RegisterPersistentSettings();
         }
 
         protected override void OnApplicationQuit()
@@ -74,7 +75,7 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
                     // Only register if marked as persistent
                     if (settingCommand.IsPersistent)
                     {
-                        persistentSettings[command.Key.ToLower()] = settingCommand;
+                        persistentSettings.Add(settingCommand);
                         ConsoleLogger.Log($"Registered persistent setting: {command.Key} ({settingCommand.Category})");
                     }
                 }
@@ -122,19 +123,19 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
                     writer.WriteLine();
 
                     // Group settings by category
-                    Dictionary<string, List<KeyValuePair<string, SettingCommand>>> categorizedSettings =
+                    Dictionary<string, List<SettingCommand>> categorizedSettings =
                         new();
 
-                    foreach (var kvp in persistentSettings)
+                    foreach (SettingCommand command in persistentSettings)
                     {
-                        if (kvp.Value.IsPersistent)
+                        if (command.IsPersistent)
                         {
-                            string category = kvp.Value.Category ?? "General";
+                            string category = command.Category ?? "General";
 
                             if (!categorizedSettings.ContainsKey(category))
-                                categorizedSettings[category] = new List<KeyValuePair<string, SettingCommand>>();
+                                categorizedSettings[category] = new List<SettingCommand>();
 
-                            categorizedSettings[category].Add(kvp);
+                            categorizedSettings[category].Add(command);
                         }
                     }
 
@@ -142,20 +143,19 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
                     foreach (var category in categorizedSettings.Keys)
                     {
                         writer.WriteLine($"// === {category.ToUpper()} ===");
-
-                        foreach (var kvp in categorizedSettings[category])
+                        foreach (SettingCommand command in categorizedSettings[category])
                         {
                             try
                             {
-                                var getter = kvp.Value.Getter;
+                                var getter = command.Getter;
                                 string currentValue = getter?.Invoke();
 
                                 if (currentValue != null)
-                                    writer.WriteLine($"{kvp.Key} {currentValue}");
+                                    writer.WriteLine($"{command.Key} {currentValue}");
                             }
                             catch (Exception e)
                             {
-                                writer.WriteLine($"// Error getting value for {kvp.Key}: {e.Message}");
+                                writer.WriteLine($"// Error getting value for {command.Key}: {e.Message}");
                             }
                         }
 
@@ -313,7 +313,7 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
                     else
                         ConsoleLogger.Log($"Error on line {lineNumber}: {trimmedLine}");
                 }
-                
+
                 ConsoleLogger.Log($"Executed {commandsExecuted} commands from {System.IO.Path.GetFileName(filePath)}");
             }
             catch (Exception e)

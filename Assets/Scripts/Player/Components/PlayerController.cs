@@ -99,6 +99,12 @@ namespace EchoesOfEtherion.Player.Components
             StateMachine.AddState<PlayerRoamingState>(new PlayerRoamingState());
             StateMachine.AddState<PlayerDeadState>(new PlayerDeadState());
             StateMachine.AddState<PlayerStunState>(new PlayerStunState());
+
+            // Cheat states
+            StateMachine.AddState<PlayerNoClipState>(new PlayerNoClipState());
+
+
+            // Start with Roaming.
             StateMachine.ChangeState<PlayerRoamingState>();
         }
 
@@ -126,8 +132,8 @@ namespace EchoesOfEtherion.Player.Components
             }
             Animator.Damage();
         }
-        
-# if UNITY_EDITOR
+
+#if UNITY_EDITOR
         private void OnValidate()
         {
             Animator ??= GetComponent<PlayerAnimations>();

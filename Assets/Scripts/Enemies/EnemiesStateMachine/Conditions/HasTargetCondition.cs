@@ -12,7 +12,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 
         protected override void OnInitialize()
         {
-            Debug.Log($"{(agent != null ? "not null" : "null")}");
+            
         }
 
         protected override void Evaluate()
@@ -21,9 +21,6 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 
         public override bool IsMet()
         {
-            if (agent == null)
-                return false;
-
             bool hasTarget = agent.Target != null;
             return checkIfHaveTarget ? hasTarget : !hasTarget;
         }

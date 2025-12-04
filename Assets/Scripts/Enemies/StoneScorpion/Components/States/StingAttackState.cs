@@ -1,5 +1,9 @@
+using System.Threading;
 using EchoesOfEtherion.Enemies.EnemiesStateMachine;
+using EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions;
 using EchoesOfEtherion.Enemies.EnemiesStateMachine.States;
+using EchoesOfEtherion.HealthSystem;
+using EchoesOfEtherion.Player.Components;
 using FMODUnity;
 using UnityEngine;
 
@@ -8,103 +12,90 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
     public class StingAttackState : BaseState
     {
         [Header("Sting Attack Settings")]
-        [SerializeField] private float stingDuration = 0.7f;
         [SerializeField] private float stingSpeed = 120f;
-        [SerializeField] private float attackPoint = 0.3f;
+        [SerializeField] private float stingDamage = 25;
+        [SerializeField] private float stingRange = 60;
+        [SerializeField] private float minStingCooldown = 3;
+        [SerializeField] private float maxStingCooldown = 5;
+        [SerializeField] private EventReference stingHitSoundEvent;
+        [SerializeField] private EventReference stingAttackSoundEvent;
 
-        private float timer;
+        [SerializeField] private TimerCondition timer;
+        [SerializeField] private RangeCondition stingRangeCondition;
+
         private bool hasAttacked;
+        private float windUpTimer;
         private Vector2 stingDirection;
         private StoneScorpionController scorpion;
 
+        protected override void OnInitialize()
+        {
+            scorpion = agent as StoneScorpionController;
+            timer.SetDuration(minStingCooldown, maxStingCooldown);
+            timer.StartTimer();
+
+            stingRangeCondition.SetRange(stingRange);
+        }
 
         public override void OnEnter()
         {
-            scorpion = agent as StoneScorpionController;
-            
-            timer = 0f;
+            base.OnEnter();
+            timer.StopTimer();
+
             hasAttacked = false;
+            finished = false;
 
             // Set sting direction
             stingDirection = agent.LookDirection;
 
             // Play sting sound
-            RuntimeManager.PlayOneShot(scorpion.StingSoundEvent, agent.transform.position);
+            RuntimeManager.PlayOneShot(stingAttackSoundEvent, agent.transform.position);
+        }
 
-            // Optional: Start sting animation
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            timer.SetDuration(minStingCooldown, maxStingCooldown);
+            timer.StartTimer();
+            hasAttacked = false;
         }
 
         public override void OnUpdate()
         {
-            timer += Time.deltaTime;
-            float normalizedTime = timer / stingDuration;
-
-            // Dash forward during first 40% of attack
-            if (normalizedTime < 0.4f)
+            if (!hasAttacked)
             {
-                agent.RB.linearVelocity = stingDirection * stingSpeed;
-
-                // Perform attack at the attack point
-                if (!hasAttacked && normalizedTime >= attackPoint)
+                windUpTimer -= Time.deltaTime;
+                if (windUpTimer < 0)
                 {
                     PerformStingAttack();
-                    hasAttacked = true;
                 }
             }
-            else
-            {
-                // Slow down after dash
-                agent.RB.linearVelocity = Vector2.Lerp(agent.RB.linearVelocity, Vector2.zero, Time.deltaTime * 5f);
-            }
-
-            // Update animation
-            if (scorpion != null)
-            {
-                scorpion.Animator.UpdateAnimation(agent.RB.linearVelocity, agent.LookDirection);
-            }
-        }
-
-        public override void OnFixedUpdate()
-        {
-            // Movement is handled in Update
         }
 
         private void PerformStingAttack()
         {
+            hasAttacked = true;
+            finished = true;
+
             if (scorpion == null) return;
 
-            // Perform sting attack using controller method
-            scorpion.PerformStingAttack();
 
-            // Reset attack cooldown
-            scorpion.ResetAttackCooldown();
-        }
+            PlayerController player = FindAnyObjectByType<PlayerController>();
 
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
-        {
-            if (!Application.isPlaying || !enabled) return;
-            
-            // Draw sting attack range and direction
-            Gizmos.color = Color.red;
-            Vector3 startPos = agent.transform.position;
-            Vector3 endPos = startPos + (Vector3)stingDirection * stingSpeed * 0.4f;
-            Gizmos.DrawLine(startPos, endPos);
-            
-            // Draw sting attack radius at the end
-            if (scorpion != null)
+            if (player == null) return;
+
+            agent.RB.AddForce(agent.LookDirection * stingSpeed, ForceMode2D.Impulse);
+
+            if (Vector2.Distance(agent.transform.position, player.transform.position) <= stingRange)
             {
-                Gizmos.DrawWireSphere(endPos, scorpion.StingAttackRadius);
+                if (player.TryGetComponent<HealthModule>(out var playerHealth))
+                {
+                    playerHealth.Damage(gameObject, stingDamage, 150);
+                    RuntimeManager.PlayOneShot(stingHitSoundEvent, playerHealth.transform.position);
+                }
             }
-            
-            // Draw attack timing
-            Gizmos.color = Color.yellow;
-            float progress = Mathf.Clamp01(timer / stingDuration);
-            Vector3 pos = agent.transform.position + Vector3.up * 2f;
-            Gizmos.DrawWireCube(pos, new Vector3(1f, 0.2f, 0f));
-            Gizmos.DrawCube(pos - new Vector3(0.5f - progress * 0.5f, 0f, 0f),
-                          new Vector3(progress, 0.15f, 0f));
+
         }
-#endif
     }
 }

@@ -14,15 +14,22 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
         private float duration;
         private float startTime;
 
+        protected override void OnInitialize()
+        {
+
+        }
+
         public override void OnEnter()
         {
+            base.OnEnter();
+
             duration = Random.Range(minRoamTime, maxRoamTime);
             agent.Target = null;
 
             SetNewRoamTarget();
             StartTimer();
         }
-        
+
         private void StartTimer()
         {
             startTime = Time.time;
@@ -59,8 +66,10 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
         }
 
 #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        protected override void OnDrawGizmosSelected()
         {
+            base.OnDrawGizmosSelected();
+            
             if (!Application.isPlaying || !enabled) return;
 
             // Draw roam target and path

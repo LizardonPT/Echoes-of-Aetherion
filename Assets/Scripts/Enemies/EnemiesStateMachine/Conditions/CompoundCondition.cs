@@ -12,8 +12,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 
         protected override void OnInitialize()
         {
-            foreach (BaseCondition condition in conditions)
-                condition.Initialize(agent);
+            
         }
         protected override void Evaluate()
         {

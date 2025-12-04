@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 {
-    public class SmartRangeCondition : BaseCondition
+    public class RangeCondition : BaseCondition
     {
         public enum RangeType
         {
@@ -38,6 +38,11 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
         protected override void OnInitialize()
         {
             playerInstance = FindAnyObjectByType<PlayerController>();
+        }
+
+        public void SetRange(float r)
+        {
+            range = r;
         }
 
         protected override void Evaluate()

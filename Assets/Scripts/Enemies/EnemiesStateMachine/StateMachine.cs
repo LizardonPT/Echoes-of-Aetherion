@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
 using EchoesOfEtherion.Enemies.Core;
+using EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions;
 using EchoesOfEtherion.Enemies.EnemiesStateMachine.States;
+using EchoesOfEtherion.Game;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
 {
-    public class StateMachine : MonoBehaviour
+    [RequireComponent(typeof(Agent))]
+    public class StateMachine : TickRegistor
     {
         [Header("State Configuration")]
         [SerializeField] private BaseState initialState;
@@ -17,7 +20,10 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
 
         private Agent agent;
         private BaseState currentState;
-        private Dictionary<Type, BaseState> stateCache = new();
+        private readonly Dictionary<Type, BaseState> stateCache = new();
+
+        private readonly List<BaseCondition> conditions = new();
+        private readonly List<BaseState> states = new();
 
         public BaseState CurrentState => currentState;
         public Agent Agent => agent;
@@ -30,67 +36,67 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
 
             if (initialState != null)
             {
-                ChangeState(initialState.GetType());
+                currentState = initialState;
+                currentState.OnEnter();
             }
         }
 
         private void CacheAllStates()
         {
-            var states = GetComponents<BaseState>();
-            foreach (var state in states)
+            var stateComponents = GetComponents<BaseState>();
+            foreach (var state in stateComponents)
             {
                 stateCache[state.GetType()] = state;
+                states.Add(state);
                 state.Initialize(this);
-                state.enabled = false; // Start disabled
+                state.enabled = false;
             }
         }
 
         private void InitializeConditions()
         {
-            // Initialize all conditions on all states
-            foreach (BaseState state in stateCache.Values)
+            // Initialize all conditions
+            foreach (BaseCondition condition in GetComponentsInChildren<BaseCondition>())
             {
-                foreach (var transition in state.Transitions)
-                {
-                    if (transition.Condition != null)
-                    {
-                        transition.Condition.Initialize(agent);
-                    }
-                }
+                condition.Initialize(agent);
+                conditions.Add(condition);
             }
         }
 
-        public void ChangeState(Type newStateType)
+        public void ChangeState(BaseState newState)
         {
-            if (!stateCache.TryGetValue(newStateType, out var newState))
+            if (!states.Contains(newState))
             {
-                Debug.LogError($"State {newStateType.Name} not found!");
+                Debug.LogError($"State {newState.GetType().Name} not found!");
                 return;
             }
 
             if (newState == currentState) return;
 
-            currentState?.OnExit();
+            currentState.OnExit();
             currentState = newState;
             currentState.OnEnter();
         }
 
-        private void Update()
+        public override void Tick()
         {
             currentState?.OnUpdate();
+            conditions.ForEach(c => c.OnUpdate());
 
             foreach (var transition in currentState?.Transitions ?? new List<StateTransition>())
             {
+                if (!currentState.Finished) continue;
+
                 bool conditionMet = transition.Condition.IsMet();
                 if (transition.Condition != null && conditionMet)
                 {
-                    ChangeState(transition.TargetState.GetType());
+                    ChangeState(transition.TargetState);
                     break;
                 }
             }
         }
 
-        private void FixedUpdate()
+        public override void FixedTick()
         {
             currentState?.OnFixedUpdate();
         }
@@ -112,22 +118,6 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
                     fontStyle = FontStyle.Bold
                 }
             );
-
-            // Draw transitions
-            if (currentState != null)
-            {
-                foreach (var transition in currentState.Transitions)
-                {
-                    if (transition.Condition != null && transition.TargetState != null)
-                    {
-                        Gizmos.color = transition.Condition.IsMet() ? Color.green : Color.gray;
-                        Gizmos.DrawLine(
-                            transform.position + Vector3.up * 1.5f,
-                            transform.position + Vector3.up * 1.8f
-                        );
-                    }
-                }
-            }
         }
 #endif
     }

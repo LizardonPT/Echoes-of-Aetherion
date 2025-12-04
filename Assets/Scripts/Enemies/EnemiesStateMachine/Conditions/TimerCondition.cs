@@ -1,31 +1,51 @@
+using System;
+using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 {
     public class TimerCondition : BaseCondition
     {
         [Header("Timer Settings")]
-        [SerializeField] float duration = 3f;
+        [SerializeField] float maxDuration = 3f;
+        [SerializeField] float minDuration = 3;
         [SerializeField] private bool autoReset = true;
+        [ShowIf(nameof(autoReset)), SerializeField] private float resetTime = 0.01f;
+        [SerializeField] private bool autoUpdateCondition = true;
+        [SerializeField] private UnityEvent OnReachTime;
+        public event Action ReachTime;
 
-        private float startTime;
         private bool timerActive;
-        bool conditionMet;
+        private bool conditionMet;
+        private float timer;
+
+        public bool TimerEnded => conditionMet;
+        public bool TimerActive => timerActive;
+
+        private void OnEnable()
+        {
+            checkInterval = 0;
+        }
 
         protected override void OnInitialize()
         {
-            
+
         }
 
-        public void SetDuration(float d)
+        public void SetDuration(float min, float max)
         {
-            duration = d;
+            minDuration = min;
+            maxDuration = max;
         }
+
         public void StartTimer()
         {
-            startTime = Time.time;
             timerActive = true;
             conditionMet = false;
+
+            timer = Random.Range(minDuration, maxDuration);
         }
 
         public void StopTimer()
@@ -42,12 +62,26 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
         {
             if (!timerActive) return;
 
-            conditionMet = Time.time - startTime >= duration;
+            timer -= Time.deltaTime;
 
-            if (conditionMet && autoReset)
+            bool reachedZero = timer < 0;
+
+            if (reachedZero)
             {
-                StartTimer();
+                ReachTime?.Invoke();
+                OnReachTime?.Invoke();
+
+                if (autoReset)
+                    Invoke(nameof(StartTimer), resetTime);
+
+                if (autoUpdateCondition)
+                    conditionMet = autoUpdateCondition;
             }
+        }
+
+        public void SetMetCondition()
+        {
+            conditionMet = true;
         }
 
         public override bool IsMet()
@@ -62,10 +96,9 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 
             if (timerActive)
             {
-                float progress = Mathf.Clamp01((Time.time - startTime) / duration);
+                float progress = Mathf.Clamp01(timer);
                 Gizmos.color = Color.Lerp(Color.yellow, Color.green, progress);
 
-                // Draw a progress bar above the enemy
                 Vector3 pos = transform.position + Vector3.up * 1.5f;
                 Gizmos.DrawWireCube(pos, new Vector3(1f, 0.2f, 0f));
                 Gizmos.DrawCube(pos - new Vector3(0.5f - progress * 0.5f, 0f, 0f),

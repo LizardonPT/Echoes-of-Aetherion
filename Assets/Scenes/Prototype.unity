@@ -164,7 +164,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.SmartRangeCondition
   checkInterval: 0.2
-  debugLog: 0
   rangeType: 0
   range: 90
   tryFindTarget: 0
@@ -697,6 +696,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 53990975}
   m_CullTransparentMesh: 1
+--- !u!1 &59089398
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 59089399}
+  - component: {fileID: 59089400}
+  m_Layer: 7
+  m_Name: AttackSting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &59089399
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59089398}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 120692339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &59089400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 59089398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 208e35780e1be564fa1685f2b1f61149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.AndCondition
+  checkInterval: 0
+  conditions:
+  - {fileID: 1150035368}
+  - {fileID: 421462902}
 --- !u!1 &61427993
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,11 +789,60 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Core.Conditions.SmartRangeCondition
   checkInterval: 0.2
-  debugLog: 0
   rangeType: 1
   range: 180
   tryFindTarget: 0
   visionAngle: 45
+  requireLineOfSight: 0
+--- !u!1 &73779489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 73779490}
+  - component: {fileID: 73779491}
+  m_Layer: 7
+  m_Name: OutOfStingRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &73779490
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73779489}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 120692339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &73779491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73779489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1945f471deeff134eaaf9723cf40b21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.RangeCondition
+  checkInterval: 0.2
+  rangeType: 1
+  range: 60
+  tryFindTarget: 0
+  visionAngle: 90
   requireLineOfSight: 0
 --- !u!1 &83164947
 GameObject:
@@ -1005,6 +1101,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 97366762}
   m_CullTransparentMesh: 1
+--- !u!1 &120692338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 120692339}
+  m_Layer: 7
+  m_Name: Attacks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &120692339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120692338}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 59089399}
+  - {fileID: 1150035367}
+  - {fileID: 421462901}
+  - {fileID: 73779490}
+  - {fileID: 1185598995}
+  m_Father: {fileID: 352133970}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &124625477
 GameObject:
   m_ObjectHideFlags: 0
@@ -4465,6 +4597,7 @@ Transform:
   - {fileID: 10971219}
   - {fileID: 877903655}
   - {fileID: 1527174416}
+  - {fileID: 120692339}
   m_Father: {fileID: 249726819996902898}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &353408213
@@ -6390,6 +6523,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!1 &421462900
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 421462901}
+  - component: {fileID: 421462902}
+  m_Layer: 7
+  m_Name: StingTime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &421462901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421462900}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 120692339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &421462902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 421462900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a53945678956c8e40a95ba1b061410a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.TimerCondition
+  checkInterval: 0
+  maxDuration: 3
+  minDuration: 3
+  autoReset: 0
+  resetTime: 0.01
+  autoUpdateCondition: 1
+  OnReachTime:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &423175984
 GameObject:
   m_ObjectHideFlags: 0
@@ -9028,7 +9214,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.HasTargetCondition
   checkInterval: 0.2
-  debugLog: 0
   checkIfHaveTarget: 0
 --- !u!1 &542506312
 GameObject:
@@ -37894,7 +38079,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.HasTargetCondition
   checkInterval: 0.2
-  debugLog: 0
   checkIfHaveTarget: 1
 --- !u!1 &866478145
 GameObject:
@@ -38317,7 +38501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.SmartRangeCondition
   checkInterval: 0.2
-  debugLog: 0
   rangeType: 1
   range: 94
   tryFindTarget: 0
@@ -38869,7 +39052,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.GotHitCondition
   checkInterval: 0.2
-  debugLog: 0
   timerDuration: 0.02
 --- !u!1 &928374293
 GameObject:
@@ -39043,7 +39225,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Core.Conditions.SmartRangeCondition
   checkInterval: 0.2
-  debugLog: 0
   rangeType: 0
   range: 120
   tryFindTarget: 1
@@ -43368,6 +43549,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 372562866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1150035366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1150035367}
+  - component: {fileID: 1150035368}
+  m_Layer: 7
+  m_Name: StingRange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1150035367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150035366}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 120692339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1150035368
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150035366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1945f471deeff134eaaf9723cf40b21e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.RangeCondition
+  checkInterval: 0.2
+  rangeType: 0
+  range: 60
+  tryFindTarget: 0
+  visionAngle: 90
+  requireLineOfSight: 0
 --- !u!1 &1154818682
 GameObject:
   m_ObjectHideFlags: 0
@@ -44003,6 +44234,59 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!1 &1185598994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1185598995}
+  - component: {fileID: 1185598996}
+  m_Layer: 7
+  m_Name: Projectiletime
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1185598995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185598994}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 120692339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1185598996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185598994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a53945678956c8e40a95ba1b061410a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.TimerCondition
+  checkInterval: 0
+  maxDuration: 3
+  minDuration: 3
+  autoReset: 1
+  resetTime: 0.01
+  autoUpdateCondition: 1
+  OnReachTime:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1200073178
 GameObject:
   m_ObjectHideFlags: 0
@@ -47980,10 +48264,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a53945678956c8e40a95ba1b061410a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.TimerCondition
-  checkInterval: 0.2
-  debugLog: 0
-  duration: 3
+  checkInterval: 0
+  maxDuration: 3
+  minDuration: 3
   autoReset: 0
+  resetTime: 0.01
+  autoUpdateCondition: 1
+  OnReachTime:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1414874086
 GameObject:
   m_ObjectHideFlags: 0
@@ -48029,7 +48318,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.SmartRangeCondition
   checkInterval: 0.2
-  debugLog: 0
   rangeType: 0
   range: 60
   tryFindTarget: 1
@@ -50530,7 +50818,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.AndCondition
   checkInterval: 0.2
-  debugLog: 0
   conditions:
   - {fileID: 1402080196}
   - {fileID: 863145427}
@@ -83438,7 +83725,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions.AndCondition
   checkInterval: 0.2
-  debugLog: 0
   conditions:
   - {fileID: 1402080196}
   - {fileID: 528259117}
@@ -86438,25 +86724,8 @@ Transform:
   - {fileID: 352133970}
   - {fileID: 4902205626644918909}
   - {fileID: 125845667264898174}
-  - {fileID: 8558372006183942530}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &373003242210842828
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8558372006183942530}
-  m_Layer: 8
-  m_Name: LightBall
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
 --- !u!114 &502836435363825268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86487,42 +86756,9 @@ MonoBehaviour:
   <CoolDownTime>k__BackingField: 0.25
   projectilePrefab: {fileID: 2887405655751014425, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
   projectileSpawnPoint: {fileID: 249726819996902898}
-  projectileDamage: 35
-  stingAttackRange: 64
-  stingAttackRadius: 64
-  stingDamage: 25
-  attackCooldown: 3
   playerDamageMask:
     serializedVersion: 2
     m_Bits: 8
-  <RockThrowSoundEvent>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <GatherRockSoundEvent>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <StingSoundEvent>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
-  <StingHitSoundEvent>k__BackingField:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
 --- !u!1 &655625549174955893
 GameObject:
   m_ObjectHideFlags: 0
@@ -86536,12 +86772,14 @@ GameObject:
   - component: {fileID: 2704856906254978379}
   - component: {fileID: 6219993990657668023}
   - component: {fileID: 2111403387832136755}
-  - component: {fileID: 6314623409621411914}
+  - component: {fileID: 6314623409621411917}
   - component: {fileID: 6314623409621411913}
   - component: {fileID: 6314623409621411911}
   - component: {fileID: 6314623409621411910}
   - component: {fileID: 6314623409621411915}
   - component: {fileID: 6314623409621411916}
+  - component: {fileID: 6314623409621411919}
+  - component: {fileID: 6314623409621411920}
   m_Layer: 7
   m_Name: StoneScorpion
   m_TagString: Untagged
@@ -86590,64 +86828,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
   <MaxHealth>k__BackingField: 80
   <CurrentHealth>k__BackingField: 0
---- !u!212 &4012672053944237395
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4795952699298845583}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -2084250299, guid: 780fed32ab044404a9053f02966940e1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 16, y: 11}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!1 &4153204216419153874
 GameObject:
   m_ObjectHideFlags: 0
@@ -86660,81 +86840,6 @@ GameObject:
   - component: {fileID: 8026374454827628520}
   m_Layer: 7
   m_Name: Shadow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!212 &4452098021847314647
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094340393601121038}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: -1
-  m_Sprite: {fileID: -1171734590, guid: 264029a846f694743ad007bce083f6a0, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 15, y: 9}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!1 &4795952699298845583
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5642695709463145216}
-  - component: {fileID: 4012672053944237395}
-  m_Layer: 8
-  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86755,53 +86860,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 249726819996902898}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &5642695709463145216
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4795952699298845583}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 12.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8558372006183942530}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &5719667721287152092
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6094340393601121038}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.64, y: 0.64, z: 0.64}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 8558372006183942530}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6094340393601121038
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5719667721287152092}
-  - component: {fileID: 4452098021847314647}
-  m_Layer: 8
-  m_Name: Shadow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!114 &6219993990657668023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86835,6 +86893,11 @@ MonoBehaviour:
     targetState: {fileID: 6314623409621411915}
   - condition: {fileID: 897557169}
     targetState: {fileID: 6314623409621411916}
+  - condition: {fileID: 59089400}
+    targetState: {fileID: 6314623409621411919}
+  - condition: {fileID: 1185598996}
+    targetState: {fileID: 6314623409621411919}
+  canBeInterrupted: 1
   seekSpeed: 1
   predictionDistance: 20
 --- !u!114 &6314623409621411911
@@ -86856,6 +86919,11 @@ MonoBehaviour:
     targetState: {fileID: 6314623409621411910}
   - condition: {fileID: 897557169}
     targetState: {fileID: 6314623409621411916}
+  - condition: {fileID: 59089400}
+    targetState: {fileID: 6314623409621411916}
+  - condition: {fileID: 1185598996}
+    targetState: {fileID: 6314623409621411916}
+  canBeInterrupted: 1
   roamSpeed: 0.3
   minRoamTime: 2
   maxRoamTime: 5
@@ -86875,8 +86943,62 @@ MonoBehaviour:
   initialState: {fileID: 6314623409621411911}
   showDebugInfo: 1
   debugTextColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
---- !u!61 &6314623409621411914
-BoxCollider2D:
+--- !u!114 &6314623409621411915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655625549174955893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a999e404999f09149b2eb437e6c9bf88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.States.OrbitState
+  transitions:
+  - condition: {fileID: 877903656}
+    targetState: {fileID: 6314623409621411910}
+  - condition: {fileID: 897557169}
+    targetState: {fileID: 6314623409621411916}
+  - condition: {fileID: 59089400}
+    targetState: {fileID: 6314623409621411919}
+  - condition: {fileID: 1185598996}
+    targetState: {fileID: 6314623409621411920}
+  canBeInterrupted: 1
+  orbitDistance: 90
+  offset: 20
+  orbitStrength: 1
+  tolerance: 8
+  minChangeDirectionTime: 2
+  maxChangeDirectionTime: 5
+  maxDistanceMultiplier: 1.5
+  angleThreshold: 90
+  raycastRange: 150
+  InRange: {fileID: 10971220}
+  OutOfRange: {fileID: 877903656}
+--- !u!114 &6314623409621411916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655625549174955893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0099d06816bd2334aa0f6d87b2e34244, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.StoneScorpion.States.StunnedState
+  transitions:
+  - condition: {fileID: 1586917734}
+    targetState: {fileID: 6314623409621411910}
+  - condition: {fileID: 1944374382}
+    targetState: {fileID: 6314623409621411911}
+  - condition: {fileID: 897557169}
+    targetState: {fileID: 6314623409621411916}
+  canBeInterrupted: 1
+  timer: {fileID: 1402080196}
+--- !u!70 &6314623409621411917
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -86909,19 +87031,10 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.9650879, y: 2.3590698}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 35.528442, y: 19.87268}
-  m_EdgeRadius: 0
---- !u!114 &6314623409621411915
+  m_Offset: {x: 0.000046181984, y: 3.4025083}
+  m_Size: {x: 35.88649, y: 23.009676}
+  m_Direction: 1
+--- !u!114 &6314623409621411919
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86930,36 +87043,74 @@ MonoBehaviour:
   m_GameObject: {fileID: 655625549174955893}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a999e404999f09149b2eb437e6c9bf88, type: 3}
+  m_Script: {fileID: 11500000, guid: d1b3e61f3ff7c6f49ad3dd63617f175d, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.States.OrbitState
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.StoneScorpion.States.StingAttackState
   transitions:
-  - condition: {fileID: 877903656}
+  - condition: {fileID: 863145427}
     targetState: {fileID: 6314623409621411910}
-  - condition: {fileID: 897557169}
-    targetState: {fileID: 6314623409621411916}
-  orbitDistance: 90
-  orbitSpeed: 0.8
---- !u!114 &6314623409621411916
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 655625549174955893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0099d06816bd2334aa0f6d87b2e34244, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.StoneScorpion.States.StunnedState
-  transitions:
-  - condition: {fileID: 1586917734}
-    targetState: {fileID: 6314623409621411910}
-  - condition: {fileID: 1944374382}
+  - condition: {fileID: 528259117}
     targetState: {fileID: 6314623409621411911}
-  - condition: {fileID: 897557169}
-    targetState: {fileID: 6314623409621411916}
-  timer: {fileID: 1402080196}
+  canBeInterrupted: 0
+  stingSpeed: 120
+  stingDamage: 25
+  stingRange: 60
+  minStingCooldown: 3
+  maxStingCooldown: 5
+  stingHitSoundEvent:
+    Guid:
+      Data1: 748838389
+      Data2: 1105729360
+      Data3: -1904679026
+      Data4: -1607484751
+    Path: event:/SFX/Hit
+  stingAttackSoundEvent:
+    Guid:
+      Data1: -398309523
+      Data2: 1331307521
+      Data3: -1651927879
+      Data4: -2141196110
+    Path: event:/SFX/StoneScorpion/Sting
+  timer: {fileID: 421462902}
+  stingRangeCondition: {fileID: 1150035368}
+--- !u!114 &6314623409621411920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655625549174955893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92d39297d3b07f746b6cd6b4f92d19c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.StoneScorpion.States.ProjectileAttackState
+  transitions:
+  - condition: {fileID: 863145427}
+    targetState: {fileID: 6314623409621411910}
+  - condition: {fileID: 528259117}
+    targetState: {fileID: 6314623409621411911}
+  canBeInterrupted: 0
+  stoneBolderPrefab: {fileID: 9125123678000685726, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
+  damage: 30
+  attackDelay: 0.5
+  minCooldown: 2
+  maxCooldown: 5
+  gatherRockSoundEvent:
+    Guid:
+      Data1: 1964275713
+      Data2: 1129916938
+      Data3: 110812808
+      Data4: 1593658661
+    Path: event:/SFX/StoneScorpion/RockGather
+  rockThrowSoundEvent:
+    Guid:
+      Data1: -2052295168
+      Data2: 1101659198
+      Data3: 106831012
+      Data4: 238667438
+    Path: event:/SFX/StoneScorpion/RockThrow
+  cooldown: {fileID: 1185598996}
 --- !u!1 &7656209872120710140
 GameObject:
   m_ObjectHideFlags: 0
@@ -87093,23 +87244,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!4 &8558372006183942530
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 373003242210842828}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 86.2, y: -52.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5642695709463145216}
-  - {fileID: 5719667721287152092}
-  m_Father: {fileID: 249726819996902898}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

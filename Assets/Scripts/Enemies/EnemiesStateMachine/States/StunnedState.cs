@@ -11,9 +11,16 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
     {
         [SerializeField] private TimerCondition timer;
 
+        protected override void OnInitialize()
+        {
+
+        }
+
         public override void OnEnter()
         {
-            timer.SetDuration(agent.StunTime);
+            base.OnEnter();
+
+            timer.SetDuration(agent.StunTime, agent.StunTime);
             timer.StartTimer();
         }
 

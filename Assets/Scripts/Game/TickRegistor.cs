@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace EchoesOfEtherion.Game
 {
@@ -9,7 +10,7 @@ namespace EchoesOfEtherion.Game
         {
             TickController.Instance.Register(this);
         }
-
+        
         public virtual void Tick()
         {
 

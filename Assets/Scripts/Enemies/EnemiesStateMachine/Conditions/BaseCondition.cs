@@ -6,8 +6,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
     public abstract class BaseCondition : MonoBehaviour
     {
         [Header("Condition Settings")]
-        [SerializeField] protected float checkInterval = 0.2f;
-        [SerializeField] protected bool debugLog = false;
+        [SerializeField] protected float checkInterval = 0f;
 
         protected Agent agent;
         private float lastCheckTime;
@@ -20,7 +19,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 
         protected abstract void OnInitialize();
 
-        private void Update()
+        public void OnUpdate()
         {
             if (Time.time - lastCheckTime < checkInterval) return;
 

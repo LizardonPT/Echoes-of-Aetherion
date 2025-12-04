@@ -7,20 +7,14 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
         [Header("Seek Settings")]
         [SerializeField] private float seekSpeed = 1f;
         [SerializeField] private float predictionDistance = 20f;
-
-        public override void OnEnter()
+        
+        protected override void OnInitialize()
         {
-            
+
         }
 
         public override void OnUpdate()
         {
-            if (agent.Target == null)
-            {
-                ChangeState<RoamingState>();
-                return;
-            }
-
             Vector2 direction = (agent.TargetPos - (Vector2)transform.position).normalized;
             agent.LookDirection = direction;
         }
@@ -29,7 +23,6 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
         {
             if (agent.Target == null) return;
 
-            // Simple prediction: aim slightly ahead of target
             Vector2 targetVelocity = agent.Target.GetComponent<Rigidbody2D>()?.linearVelocity ?? Vector2.zero;
             Vector2 predictedPosition = agent.TargetPos + targetVelocity.normalized * predictionDistance;
 
@@ -37,8 +30,10 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
         }
 
 #if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        protected override void OnDrawGizmosSelected()
         {
+            base.OnDrawGizmosSelected();
+
             if (!Application.isPlaying || !enabled || agent.Target == null) return;
 
             // Draw seek path

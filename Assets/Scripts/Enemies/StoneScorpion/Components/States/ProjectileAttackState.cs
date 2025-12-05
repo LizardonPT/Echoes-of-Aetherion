@@ -27,7 +27,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
             scorpion = agent as StoneScorpionController;
 
             cooldown.SetDuration(minCooldown, maxCooldown);
-            cooldown.StartTimer();
         }
 
         public override void OnEnter()

@@ -14,6 +14,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
         [SerializeField] private bool autoReset = true;
         [ShowIf(nameof(autoReset)), SerializeField] private float resetTime = 0.01f;
         [SerializeField] private bool autoUpdateCondition = true;
+        [SerializeField] private bool autoStartWhenTarget;
         [SerializeField] private UnityEvent OnReachTime;
         public event Action ReachTime;
 
@@ -24,6 +25,8 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
         public bool TimerEnded => conditionMet;
         public bool TimerActive => timerActive;
 
+        private bool hadTarget;
+
         private void OnEnable()
         {
             checkInterval = 0;
@@ -31,7 +34,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 
         protected override void OnInitialize()
         {
-
+            hadTarget = false;
         }
 
         public void SetDuration(float min, float max)
@@ -60,6 +63,20 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
 
         protected override void Evaluate()
         {
+            if (autoStartWhenTarget)
+            {
+                if (agent.Target != null && !hadTarget)
+                {
+                    hadTarget = true;
+                    StartTimer();
+                }
+                else if (agent.Target == null && hadTarget)
+                {
+                    hadTarget = false;
+                    StopTimer();
+                }
+            }
+
             if (!timerActive) return;
 
             timer -= Time.deltaTime;

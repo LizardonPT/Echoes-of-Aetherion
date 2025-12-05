@@ -57,6 +57,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.States
         {
             isActive = false;
             enabled = false;
+            finished = false;
         }
 
 #if UNITY_EDITOR

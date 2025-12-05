@@ -9,7 +9,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 {
     public class StunnedState : BaseState
     {
-        [SerializeField] private TimerCondition timer;
+        private float timer;
 
         protected override void OnInitialize()
         {
@@ -20,24 +20,18 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         {
             base.OnEnter();
 
-            timer.SetDuration(agent.StunTime, agent.StunTime);
-            timer.StartTimer();
+            timer = agent.StunTime;
         }
 
-        public override void OnFixedUpdate()
+        public override void OnUpdate()
         {
-            Vector2 velocity = agent.RB.linearVelocity;
-            float speed = velocity.magnitude;
-
-            if (speed < 0.01f)
+            if (finished) return;
+            timer -= Time.deltaTime;
+            if (timer < 0)
             {
-                agent.RB.linearVelocity = Vector2.zero;
+                finished = true;
                 return;
             }
-
-            float drop = speed * 15f * Time.fixedDeltaTime;
-            float newSpeed = Mathf.Max(speed - drop, 0);
-            agent.RB.linearVelocity = velocity * (newSpeed / speed);
         }
     }
 }

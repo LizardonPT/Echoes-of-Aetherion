@@ -17,6 +17,8 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         [SerializeField] private float stingRange = 60;
         [SerializeField] private float minStingCooldown = 3;
         [SerializeField] private float maxStingCooldown = 5;
+        [SerializeField] private float windUpDuration = .15f;
+        [SerializeField] private float endDuration = .15f;
         [SerializeField] private EventReference stingHitSoundEvent;
         [SerializeField] private EventReference stingAttackSoundEvent;
 
@@ -25,14 +27,14 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
         private bool hasAttacked;
         private float windUpTimer;
-        private Vector2 stingDirection;
         private StoneScorpionController scorpion;
+
+        private float attackResetTimer;
 
         protected override void OnInitialize()
         {
             scorpion = agent as StoneScorpionController;
             timer.SetDuration(minStingCooldown, maxStingCooldown);
-            timer.StartTimer();
 
             stingRangeCondition.SetRange(stingRange);
         }
@@ -41,12 +43,9 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         {
             base.OnEnter();
             timer.StopTimer();
-
+            windUpTimer = windUpDuration;
             hasAttacked = false;
             finished = false;
-
-            // Set sting direction
-            stingDirection = agent.LookDirection;
 
             // Play sting sound
             RuntimeManager.PlayOneShot(stingAttackSoundEvent, agent.transform.position);
@@ -71,12 +70,20 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
                     PerformStingAttack();
                 }
             }
+            else
+            {
+                attackResetTimer -= Time.deltaTime;
+                if (attackResetTimer < 0)
+                {
+                    finished = true;
+                }
+            }
         }
 
         private void PerformStingAttack()
         {
             hasAttacked = true;
-            finished = true;
+            attackResetTimer = endDuration;
 
             if (scorpion == null) return;
 
@@ -87,15 +94,11 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
             agent.RB.AddForce(agent.LookDirection * stingSpeed, ForceMode2D.Impulse);
 
-            if (Vector2.Distance(agent.transform.position, player.transform.position) <= stingRange)
+            if (player.TryGetComponent<HealthModule>(out var playerHealth))
             {
-                if (player.TryGetComponent<HealthModule>(out var playerHealth))
-                {
-                    playerHealth.Damage(gameObject, stingDamage, 150);
-                    RuntimeManager.PlayOneShot(stingHitSoundEvent, playerHealth.transform.position);
-                }
+                playerHealth.Damage(gameObject, stingDamage, 150);
+                RuntimeManager.PlayOneShot(stingHitSoundEvent, playerHealth.transform.position);
             }
-
         }
     }
 }

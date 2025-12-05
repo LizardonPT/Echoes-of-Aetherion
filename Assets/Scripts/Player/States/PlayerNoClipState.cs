@@ -17,12 +17,16 @@ namespace EchoesOfEtherion.Player.States
             collider.enabled = false;
 
             controller.Movement.RB.linearVelocity = Vector2.zero;
+            controller.Movement.RB.Sleep();
 
             cameraFollow = CameraController.Instance.GetComponent<CameraFollow>();
             cameraFollow.SetHasLimits(false);
         }
 
-        public void Update(PlayerController controller) { }
+        public void Update(PlayerController controller)
+        {
+            controller.Animator.UpdateWalkAnimation(controller.PlayerInput.MovementInput, controller.LookDirection);
+        }
 
         public void FixedUpdate(PlayerController controller)
         {
@@ -44,6 +48,7 @@ namespace EchoesOfEtherion.Player.States
         public void Exit(PlayerController controller)
         {
             collider.enabled = true;
+            controller.Movement.RB.WakeUp();
             cameraFollow.SetHasLimits(true);
         }
     }

@@ -87,8 +87,20 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
             if (scorpion == null) return;
 
+            Vector2 pos = (Vector2)agent.transform.position + agent.LookDirection * stingRange * .5f;
 
-            PlayerController player = FindAnyObjectByType<PlayerController>();
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, stingRange * .5f, agent.PlayerMask);
+
+            PlayerController player = null;
+
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.TryGetComponent(out PlayerController playerC))
+                {
+                    player = playerC;
+                    break;
+                }
+            }
 
             if (player == null) return;
 

@@ -25,7 +25,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         private float startTime;
         private float randomChangeTime;
         private float actualOrbitDistance;
-        private StoneScorpionController scorpion;
 
         public int OrbitDirection
         {
@@ -35,8 +34,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
         protected override void OnInitialize()
         {
-            scorpion = agent as StoneScorpionController;
-
             actualOrbitDistance = orbitDistance + Random.Range(-offset, offset);
 
             InRange.SetRange(actualOrbitDistance);
@@ -60,11 +57,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
         public override void OnUpdate()
         {
-            if (!ValidateTarget())
-            {
-                return;
-            }
-
             if (Time.time - startTime >= randomChangeTime)
             {
                 orbitDirection *= -1;
@@ -76,11 +68,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
             {
                 Vector2 dirToTarget = (agent.TargetPos - (Vector2)agent.transform.position).normalized;
                 agent.LookDirection = dirToTarget;
-
-                if (scorpion != null)
-                {
-                    scorpion.Animator.UpdateAnimation(agent.RB.linearVelocity, dirToTarget);
-                }
             }
         }
 
@@ -115,42 +102,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
             }
 
             // Combine tangent and radial forces
-            return (tangent + radialCorrection).normalized * agent.RB.linearVelocity.magnitude;
-        }
-
-        private bool ValidateTarget()
-        {
-            if (agent.Target == null)
-            {
-                return false;
-            }
-
-            float distance = Vector2.Distance(agent.transform.position, agent.Target.transform.position);
-
-            if (distance > actualOrbitDistance * maxDistanceMultiplier)
-            {
-                return false;
-            }
-
-            Vector2 origin = agent.transform.position;
-            Vector2 dirToTarget = (agent.TargetPos - origin).normalized;
-
-            if (Vector2.Angle(agent.LookDirection, dirToTarget) > angleThreshold)
-            {
-                return false;
-            }
-
-            LayerMask rayMask = (agent.PlayerMask | agent.EnvironmentMask) & ~agent.EnemyMask;
-            RaycastHit2D rayHit = Physics2D.Raycast(origin, dirToTarget, raycastRange, rayMask);
-
-            if (rayHit.collider == null ||
-                !rayHit.collider.TryGetComponent(out PlayerController player) ||
-                player != agent.Target)
-            {
-                return false;
-            }
-
-            return true;
+            return (tangent + radialCorrection).normalized;
         }
 
 #if UNITY_EDITOR

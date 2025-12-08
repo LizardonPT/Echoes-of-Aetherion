@@ -14,10 +14,6 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
         [Header("State Configuration")]
         [SerializeField] private BaseState initialState;
 
-        [Header("Debug")]
-        [SerializeField] private bool showDebugInfo = true;
-        [SerializeField] private Color debugTextColor = Color.yellow;
-
         private Agent agent;
         private BaseState currentState;
         private readonly Dictionary<Type, BaseState> stateCache = new();
@@ -104,7 +100,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if (!showDebugInfo || !Application.isPlaying) return;
+            if (!Application.isPlaying) return;
 
             // Draw current state name above enemy
             string stateName = currentState?.GetType().Name ?? "No State";
@@ -113,7 +109,7 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine
                 $"State: {stateName}",
                 new GUIStyle()
                 {
-                    normal = new GUIStyleState() { textColor = debugTextColor },
+                    normal = new GUIStyleState() { textColor = Color.yellow },
                     fontSize = 12,
                     fontStyle = FontStyle.Bold
                 }

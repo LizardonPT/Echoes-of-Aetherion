@@ -136,26 +136,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be816db2180a8e4ab3d02759efd8be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.StoneScorpion.StoneBolder
-  rockHit:
-    Guid:
-      Data1: 854713036
-      Data2: 1247890154
-      Data3: 1995290518
-      Data4: 1950352750
-    Path: event:/SFX/StoneScorpion/RockHit
-  playerMask:
+  targetMask:
     serializedVersion: 2
     m_Bits: 8
   environmentMask:
     serializedVersion: 2
     m_Bits: 64
   radius: 10
-  damage: 30
   collisionCheckThreshold: 8
-  knockback: 150
-  bolder: {fileID: 6837867283763105024}
+  hitSound:
+    Guid:
+      Data1: 854713036
+      Data2: 1247890154
+      Data3: 1995290518
+      Data4: 1950352750
+    Path: event:/SFX/StoneScorpion/RockHit
+  visual: {fileID: 6837867283763105024}
   maxHeight: 54
   duration: 1
+  damage: 30
+  knockback: 150
 --- !u!1 &4015305683325042366
 GameObject:
   m_ObjectHideFlags: 0

@@ -456,9 +456,6 @@ MonoBehaviour:
   tolerance: 8
   minChangeDirectionTime: 2
   maxChangeDirectionTime: 5
-  maxDistanceMultiplier: 1.5
-  angleThreshold: 90
-  raycastRange: 150
   InRange: {fileID: 7020785207547954008}
   OutOfRange: {fileID: 794674248576255811}
 --- !u!114 &562020163534156449
@@ -540,19 +537,18 @@ MonoBehaviour:
   - condition: {fileID: 7847423523736135456}
     targetState: {fileID: 5140517352668363653}
   canBeInterrupted: 0
-  stoneBolderPrefab: {fileID: 9125123678000685726, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
-  damage: 30
-  attackDelay: 0.5
+  projectilePrefab: {fileID: 9125123678000685726, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
+  chargeTime: 0.5
   minCooldown: 3
   maxCooldown: 5
-  gatherRockSoundEvent:
+  chargeSoundEvent:
     Guid:
       Data1: 1964275713
       Data2: 1129916938
       Data3: 110812808
       Data4: 1593658661
     Path: event:/SFX/StoneScorpion/RockGather
-  rockThrowSoundEvent:
+  throwSoundEvent:
     Guid:
       Data1: -2052295168
       Data2: 1101659198

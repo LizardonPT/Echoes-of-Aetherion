@@ -13,7 +13,6 @@ namespace EchoesOfEtherion.Enemies.Core
     public class Agent : TickRegistor
     {
         public virtual string EnemyType { get; }
-        [SerializeField] private bool showMovementGizmos = true;
 
         [Header("Movement Settings")]
         [SerializeField] protected float accel = 15f;
@@ -151,8 +150,6 @@ namespace EchoesOfEtherion.Enemies.Core
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if (!showMovementGizmos || !Application.isPlaying) return;
-
             // Draw movement direction
             Gizmos.color = Color.blue;
             Gizmos.DrawRay(transform.position, RB.linearVelocity.normalized * 50);

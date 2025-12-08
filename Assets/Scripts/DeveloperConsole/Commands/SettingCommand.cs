@@ -9,6 +9,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
         public string Category { get; private set; } = "General";
         public Func<string> Getter { get; private set; }
         private readonly Action<Argument> setter;
+
         public SettingCommand(string key, string description, string usage,
                              Action<Argument> setter, Func<string> getter,
                              bool isPersistent = false, string category = "General")
@@ -20,6 +21,8 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
             Category = category;
             Getter = getter;
             this.setter = setter;
+            
+            expectedArguments = new() { new() };
         }
 
         public override bool Execute(List<Argument> arguments)

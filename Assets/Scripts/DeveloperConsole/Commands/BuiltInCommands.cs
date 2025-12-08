@@ -8,6 +8,7 @@ using EchoesOfEtherion.DeveloperConsole.CFG;
 using EchoesOfEtherion.DeveloperConsole.Inputs;
 using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.HealthSystem;
+using EchoesOfEtherion.ManaSystem;
 using EchoesOfEtherion.Player.Components;
 using EchoesOfEtherion.Player.States;
 using UnityEngine;
@@ -94,7 +95,21 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
             key: "echo",
             description: "Prints text to the console",
             usage: "echo <text>",
-            action: (args) => ConsoleLogger.Log(args[0].GetString()),
+            action: (args) =>
+            {
+                if (args.Count < 1)
+                {
+                    ConsoleLogger.Log("Invalid Argument");
+                    return;
+                }
+
+                string s = "";
+                for (int i = 0; i < args.Count; i++)
+                {
+                    s += args[i].GetString() + " ";
+                }
+                ConsoleLogger.Log(s.Trim('"'));
+            },
             expectedArgs: new()
             {
                 new()
@@ -356,7 +371,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                         ConsoleLogger.Log($"Argument not valid");
                         return;
                     }
-                    
+
                     var player = FindAnyObjectByType<PlayerController>();
 
                     if (player != null)
@@ -369,9 +384,45 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                         ConsoleLogger.Log("Error: PlayerController not found in scene");
                     }
                 },
+                    expectedArgs: new()
+                    {
+                        new()
+                    }
+                    ), "Player");
+
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "heal_mana",
+                description: "Heals mana",
+                usage: "heal_mana <amount>",
+                action: (args) =>
+                {
+                    if (args.Count < 0)
+                    {
+                        ConsoleLogger.Log($"Argument not valid.");
+                        return;
+                    }
+
+                    if (!args[0].TryGetNumber(out float numberValue))
+                    {
+                        ConsoleLogger.Log($"Argument not valid");
+                        return;
+                    }
+
+                    var player = FindAnyObjectByType<PlayerController>();
+
+                    if (player != null)
+                    {
+                        var healthM = player.GetComponent<ManaModule>();
+                        healthM?.RestoreMana(numberValue);
+                    }
+                    else
+                    {
+                        ConsoleLogger.Log("Error: PlayerController not found in scene");
+                    }
+                },
                 expectedArgs: new()
                 {
-                    new()
+                        new()
                 }
                 ), "Player");
         }

@@ -36,11 +36,12 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
 
         private void Start()
         {
-            if (executeAutoExecOnStart)
-                ExecuteAutoExec();
-
             if (autoLoadSettingsOnStart)
                 LoadSettings();
+
+
+            if (executeAutoExecOnStart)
+                ExecuteAutoExec();
 
             RegisterPersistentSettings();
         }
@@ -194,7 +195,7 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
                 ConsoleLogger.Log($"Error saving settings: {e.Message}");
             }
         }
-        
+
         public void LoadSettings(string customFileName = null)
         {
             string fileName = customFileName ?? settingsFileName;

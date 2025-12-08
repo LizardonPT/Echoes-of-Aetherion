@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using EchoesOfEtherion.DeveloperConsole.CFG;
 using EchoesOfEtherion.DeveloperConsole.Commands;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Utilities;
 
 namespace EchoesOfEtherion.DeveloperConsole.Inputs
 {
@@ -172,29 +169,37 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             }
         }
 
+        private string CleanTarget(string target)
+        {
+            return target?.Trim('"') ?? string.Empty;
+        }
+
         public bool Bind(string target, string keyAlias)
         {
             if (string.IsNullOrEmpty(target) || string.IsNullOrEmpty(keyAlias))
                 return false;
 
-            if (!keyAliases.ContainsKey(keyAlias.ToLower()))
+            string cleanTarget = CleanTarget(target);
+            string cleanKeyAlias = keyAlias.ToLower();
+
+            if (!keyAliases.ContainsKey(cleanKeyAlias))
             {
-                ConsoleLogger.Log($"Key alias '{keyAlias}' is not recognized.");
+                ConsoleLogger.Log($"Key alias '{cleanKeyAlias}' is not recognized.");
                 ConsoleLogger.Log($"Use command 'key_list' to see all available key aliases.");
                 return false;
             }
 
             // Check if target is an input action first
-            var action = FindInputAction(target);
+            var action = FindInputAction(cleanTarget);
             if (action != null)
             {
                 // Bind to input action
-                return BindInputAction(target, keyAlias);
+                return BindInputAction(cleanTarget, cleanKeyAlias);
             }
             else
             {
                 // Bind to command
-                return BindCommand(target, keyAlias);
+                return BindCommand(cleanTarget, cleanKeyAlias);
             }
         }
 
@@ -227,7 +232,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             action.AddBinding(newBinding);
 
             // Update cache
-            keyToActionCache[(mapName, keyAlias.ToLower())] = actionName;
+            keyToActionCache[(mapName, keyAlias)] = actionName;
             BindingChanged?.Invoke(actionName, bindingPath);
             UpdateCacheForAction(actionName);
             ConsoleLogger.Log($"Bound {keyAlias} to input action '{actionName}' in map {mapName}");
@@ -236,12 +241,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
 
         private bool BindCommand(string command, string keyAlias)
         {
-            keyAlias = keyAlias.ToLower();
-
-            // Strip quotes from the command if present
-            string cleanCommand = command.Trim('"');
-
-            if (string.IsNullOrEmpty(cleanCommand))
+            if (string.IsNullOrEmpty(command))
             {
                 ConsoleLogger.Log($"Command cannot be empty");
                 return false;
@@ -255,13 +255,13 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             }
 
             // Check if this command is already bound to this key
-            if (commandBindings[keyAlias].Contains(cleanCommand))
+            if (commandBindings[keyAlias].Contains(command))
             {
-                ConsoleLogger.Log($"Command '{cleanCommand}' is already bound to key '{keyAlias}'");
+                ConsoleLogger.Log($"Command '{command}' is already bound to key '{keyAlias}'");
                 return false;
             }
 
-            commandBindings[keyAlias].Add(cleanCommand);
+            commandBindings[keyAlias].Add(command);
 
             // Cache the InputControl for this key
             var control = InputSystem.FindControl(bindingPath);
@@ -270,7 +270,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
                 commandKeyControls[keyAlias] = control;
             }
 
-            ConsoleLogger.Log($"Bound key '{keyAlias}' to command: {cleanCommand}");
+            ConsoleLogger.Log($"Bound key '{keyAlias}' to command: {command}");
             return true;
         }
 
@@ -279,26 +279,27 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             if (string.IsNullOrEmpty(keyAlias))
                 return false;
 
+            string cleanKeyAlias = keyAlias.ToLower();
+            string cleanTarget = CleanTarget(target);
+
             bool inputActionUnbound = false;
             bool commandUnbound = false;
 
             // Handle input action unbinding
-            if (string.IsNullOrEmpty(target))
+            if (string.IsNullOrEmpty(cleanTarget))
             {
-                inputActionUnbound = UnbindKeyFromAllActions(keyAlias);
-                commandUnbound = UnbindCommand(keyAlias);
+                inputActionUnbound = UnbindKeyFromAllActions(cleanKeyAlias);
+                commandUnbound = UnbindCommand(cleanKeyAlias);
             }
             else
             {
                 // Try to unbind from input actions first
-                inputActionUnbound = UnbindKeyFromAction(keyAlias, target);
+                inputActionUnbound = UnbindKeyFromAction(cleanKeyAlias, cleanTarget);
 
                 // If not an input action, try command unbinding
                 if (!inputActionUnbound)
                 {
-                    // Strip quotes from target if present for command comparison
-                    string cleanTarget = target.Trim('"');
-                    commandUnbound = UnbindCommand(keyAlias, cleanTarget);
+                    commandUnbound = UnbindCommand(cleanKeyAlias, cleanTarget);
                 }
             }
 
@@ -333,7 +334,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             if (removed)
             {
                 UpdateCacheForAction(actionName);
-                keyToActionCache.Remove((mapName, keyAlias.ToLower()));
+                keyToActionCache.Remove((mapName, keyAlias));
                 BindingRemoved?.Invoke(bindingPath);
                 ConsoleLogger.Log($"Unbound {keyAlias} from input action '{actionName}' in map {mapName}");
             }
@@ -345,7 +346,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
         {
             bool removed = false;
             var keysToRemove = keyToActionCache.Keys
-                .Where(k => k.Item2.Equals(keyAlias, StringComparison.OrdinalIgnoreCase))
+                .Where(k => k.key.Equals(keyAlias, StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
             foreach (var (mapName, key) in keysToRemove)
@@ -363,8 +364,6 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
 
         private bool UnbindCommand(string keyAlias, string command = null)
         {
-            keyAlias = keyAlias.ToLower();
-
             if (string.IsNullOrEmpty(command))
             {
                 // Remove all command bindings for this key
@@ -379,13 +378,10 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             }
             else
             {
-                // Strip quotes from command if present
-                string cleanCommand = command.Trim('"');
-
                 // Remove specific command binding
                 if (commandBindings.TryGetValue(keyAlias, out var commands))
                 {
-                    if (commands.Remove(cleanCommand))
+                    if (commands.Remove(command))
                     {
                         if (commands.Count == 0)
                         {
@@ -393,19 +389,21 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
                             commandKeyControls.Remove(keyAlias);
                             commandKeyPressedState.Remove(keyAlias);
                         }
-                        ConsoleLogger.Log($"Unbound key '{keyAlias}' from command '{cleanCommand}'");
+                        ConsoleLogger.Log($"Unbound key '{keyAlias}' from command '{command}'");
                         return true;
                     }
                 }
-                ConsoleLogger.Log($"Key '{keyAlias}' is not bound to command '{cleanCommand}'");
+                ConsoleLogger.Log($"Key '{keyAlias}' is not bound to command '{command}'");
                 return false;
             }
         }
 
         public void UnbindAllFromAction(string actionName)
         {
+            string cleanActionName = CleanTarget(actionName);
+
             // For input actions
-            var action = FindInputAction(actionName);
+            var action = FindInputAction(cleanActionName);
             if (action != null)
             {
                 string mapName = action.actionMap.name;
@@ -425,16 +423,16 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
                     }
                 }
 
-                UpdateCacheForAction(actionName);
-                ConsoleLogger.Log($"Removed all bindings from input action '{actionName}' in map {mapName}");
+                UpdateCacheForAction(cleanActionName);
+                ConsoleLogger.Log($"Removed all bindings from input action '{cleanActionName}' in map {mapName}");
             }
 
             // Also check if it's a command binding and remove all keys bound to it
             foreach (var kvp in commandBindings.ToList())
             {
-                if (kvp.Value.Contains(actionName))
+                if (kvp.Value.Contains(cleanActionName))
                 {
-                    UnbindCommand(kvp.Key, actionName);
+                    UnbindCommand(kvp.Key, cleanActionName);
                 }
             }
         }
@@ -462,8 +460,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             // Get command bindings
             if (commandBindings.TryGetValue(keyAlias, out var commands))
             {
-                // Format commands with quotes to distinguish them from input actions
-                actions.AddRange(commands.Select(c => $"\"{c}\""));
+                actions.AddRange(commands);
             }
 
             return actions;
@@ -471,10 +468,11 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
 
         public List<string> GetKeysForAction(string actionName)
         {
+            string cleanActionName = CleanTarget(actionName);
             var keys = new List<string>();
 
             // Get keys for input actions
-            if (actionBindings.TryGetValue(actionName, out var bindings))
+            if (actionBindings.TryGetValue(cleanActionName, out var bindings))
             {
                 foreach (var binding in bindings)
                 {
@@ -490,7 +488,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             // Get keys for command bindings
             foreach (var kvp in commandBindings)
             {
-                if (kvp.Value.Contains(actionName))
+                if (kvp.Value.Contains(cleanActionName))
                 {
                     keys.Add(kvp.Key);
                 }
@@ -581,8 +579,6 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
 
         private void Update()
         {
-            if (ConsoleController.Instance.IsOpen) return;
-
             // Check for pressed keys with command bindings
             foreach (var kvp in commandKeyControls.ToList())
             {
@@ -642,81 +638,40 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
             {
                 foreach (var command in commands)
                 {
-                    // The command should already be clean (no quotes)
-                    // But let's ensure it's clean before execution
-                    string cleanCommand = command.Trim('"');
-                    if (!string.IsNullOrEmpty(cleanCommand))
+                    if (!string.IsNullOrEmpty(command))
                     {
                         // Execute the command through the console system
-                        CommandDatabase.Instance.ExecuteCommand(cleanCommand);
+                        CommandDatabase.Instance.ExecuteCommand(command);
                     }
                 }
             }
         }
 
-        // Save/Load command bindings
-        public void SaveCommandBindings()
+        public Dictionary<string, List<string>> GetInputActionBindings()
         {
-            var lines = new List<string>
-            {
-                "// Auto-generated command bindings",
-                "// Generated by Echoes of Etherion",
-                ""
-            };
+            var inputActionBindings = new Dictionary<string, List<string>>();
 
-            foreach (var kvp in commandBindings)
+            foreach (var kvp in actionBindings)
             {
-                foreach (var command in kvp.Value)
+                string actionName = kvp.Key;
+                var bindings = kvp.Value;
+                var keys = new List<string>();
+
+                foreach (var binding in bindings)
                 {
-                    // Only add quotes if the command contains spaces
-                    string formattedCommand = command.Contains(' ') ? $"\"{command}\"" : command;
-                    lines.Add($"bind {kvp.Key} {formattedCommand}");
-                }
-            }
-
-            string filePath = Path.Combine(Application.persistentDataPath, "command_bindings.cfg");
-            try
-            {
-                File.WriteAllLines(filePath, lines);
-                ConsoleLogger.Log($"Command bindings saved to {filePath}");
-            }
-            catch (Exception e)
-            {
-                ConsoleLogger.Log($"Error saving command bindings: {e.Message}");
-            }
-        }
-
-        public void LoadCommandBindings()
-        {
-            string filePath = Path.Combine(Application.persistentDataPath, "command_bindings.cfg");
-            if (File.Exists(filePath))
-            {
-                try
-                {
-                    // Clear existing command bindings
-                    foreach (var key in commandBindings.Keys.ToList())
+                    if (!string.IsNullOrEmpty(binding.path))
                     {
-                        UnbindCommand(key);
+                        string alias = GetKeyAlias(binding.path, true);
+                        if (!string.IsNullOrEmpty(alias))
+                            keys.Add(alias);
                     }
-
-                    // Execute the bind commands from the file
-                    string[] lines = File.ReadAllLines(filePath);
-                    foreach (string line in lines)
-                    {
-                        string trimmedLine = line.Trim();
-                        if (!string.IsNullOrEmpty(trimmedLine) && !trimmedLine.StartsWith("//"))
-                        {
-                            CommandDatabase.Instance.ExecuteCommand(trimmedLine);
-                        }
-                    }
-
-                    ConsoleLogger.Log("Command bindings loaded");
                 }
-                catch (Exception e)
-                {
-                    ConsoleLogger.Log($"Error loading command bindings: {e.Message}");
-                }
+
+                if (keys.Count > 0)
+                    inputActionBindings[actionName] = keys;
             }
+
+            return inputActionBindings;
         }
     }
 }

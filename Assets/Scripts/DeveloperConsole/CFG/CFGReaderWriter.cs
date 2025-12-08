@@ -162,19 +162,20 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
                         writer.WriteLine();
                     }
 
+                    // Save only Unity InputAction bindings (not command bindings)
                     if (inputBindingManager != null)
                     {
                         writer.WriteLine();
-                        writer.WriteLine("// === INPUT BINDINGS ===");
+                        writer.WriteLine("// === INPUT ACTION BINDINGS ===");
 
-                        var allBindings = inputBindingManager.GetAllBindings();
-                        foreach (var kvp in allBindings)
+                        // Get only input action bindings (excludes command bindings)
+                        var inputActionBindings = inputBindingManager.GetInputActionBindings();
+                        foreach (var kvp in inputActionBindings)
                         {
                             string actionName = kvp.Key;
                             foreach (var key in kvp.Value)
                             {
-                                string keyAlias = GetKeyAlias(key);
-                                writer.WriteLine($"bind {keyAlias} {actionName.ToLower()}");
+                                writer.WriteLine($"bind {key} {actionName.ToLower()}");
                             }
                         }
 
@@ -193,8 +194,7 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
                 ConsoleLogger.Log($"Error saving settings: {e.Message}");
             }
         }
-
-
+        
         public void LoadSettings(string customFileName = null)
         {
             string fileName = customFileName ?? settingsFileName;
@@ -242,7 +242,6 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
 
             if (File.Exists(filePath))
             {
-
                 int lineNumber = 0;
                 int commandsExecuted = 0;
 
@@ -442,35 +441,6 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
             }
 
             return inputPath;
-        }
-
-        public void SaveCommandBindings()
-        {
-            var commandBindings = InputBindingManager.Instance.GetAllCommandBindings();
-            var lines = new List<string>();
-
-            lines.Add("// Auto-generated command bindings");
-            foreach (var kvp in commandBindings)
-            {
-                foreach (var command in kvp.Value)
-                {
-                    lines.Add($"bind \"{kvp.Key}\" \"{command}\"");
-                }
-            }
-
-            string filePath = Path.Combine(Application.persistentDataPath, "command_bindings.cfg");
-            File.WriteAllLines(filePath, lines);
-            ConsoleLogger.Log($"Command bindings saved to {filePath}");
-        }
-
-        public void LoadCommandBindings()
-        {
-            string filePath = Path.Combine(Application.persistentDataPath, "command_bindings.cfg");
-            if (File.Exists(filePath))
-            {
-                ExecuteConfigFileByName("command_bindings.cfg");
-                ConsoleLogger.Log("Command bindings loaded");
-            }
         }
     }
 }

@@ -1,5 +1,5 @@
 using EchoesOfEtherion.Extentions;
-using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Game.StateMachine;
 using UnityEngine;
 using EchoesOfEtherion.Player.Components;
 

@@ -8,7 +8,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
     {
         public string Value { get; private set; }
 
-        public Argument(string value)
+        public Argument(string value = "")
         {
             Value = value;
         }

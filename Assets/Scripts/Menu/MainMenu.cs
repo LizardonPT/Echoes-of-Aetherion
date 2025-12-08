@@ -19,7 +19,7 @@ namespace EchoesOfEtherion.Menu
 
         private void StartGame()
         {
-            SceneLoader.Instance.SwitchToScene("Prototype");
+            SceneLoader.Instance.LoadPrimaryScene("Prototype");
         }
 
         private void Quit()

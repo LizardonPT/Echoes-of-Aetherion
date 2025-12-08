@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using EchoesOfEtherion.DeveloperConsole.Commands;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,23 +17,20 @@ namespace EchoesOfEtherion.DeveloperConsole
 
         public event Action<string> SuggestionClicked;
 
-        private RectTransform suggestionContainerRectTransform;
-        private RectTransform prefabRectTransform;
+        private RectTransform containerRect;
+        private RectTransform prefabRect;
 
-        readonly List<Suggestion> suggestions = new();
-
-        private int currentIndex = -1;
-
+        private readonly List<Suggestion> suggestions = new();
         private IEnumerable<IConsoleCommand> availableCommands;
 
+        private int currentIndex = -1;
         public int SuggestionCount => suggestions.Count;
 
         private void Awake()
         {
-            suggestionContainerRectTransform = suggestionContainer.GetComponent<RectTransform>();
-            prefabRectTransform = suggestionPrefab.GetComponent<RectTransform>();
+            containerRect = suggestionContainer.GetComponent<RectTransform>();
+            prefabRect = suggestionPrefab.GetComponent<RectTransform>();
         }
-
 
         private void Start()
         {
@@ -42,101 +40,110 @@ namespace EchoesOfEtherion.DeveloperConsole
 
         public void UpdateSuggestions(string newText)
         {
-            bool hadNoSuggestions = false;
-
-            if (SuggestionCount == 0)
-                hadNoSuggestions = true;
-
             ClearSuggestions();
-
 
             if (string.IsNullOrWhiteSpace(newText))
                 return;
 
             newText = newText.Split(' ')[0];
 
+            List<IConsoleCommand> perfectMatches = new();
+            List<IConsoleCommand> partialMatches = new();
+
             foreach (IConsoleCommand command in availableCommands)
             {
-                if (command.Key.StartsWith(newText, System.StringComparison.OrdinalIgnoreCase))
+                if (command.Key.StartsWith(newText, StringComparison.OrdinalIgnoreCase))
                 {
-                    InstantiateSuggestion(command);
+                    perfectMatches.Add(command);
+                }
+                else if (command.Key.IndexOf(newText, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    partialMatches.Add(command);
                 }
             }
+
+            foreach (var command in perfectMatches.Concat(partialMatches))
+            {
+                CreateSuggestion(command);
+            }
+
             if (suggestions.Count > 0)
                 suggestionScrollRect.gameObject.SetActive(true);
 
-            if (hadNoSuggestions && SuggestionCount > 0)
-            {
-                currentIndex = 0;
-                UpdateHighLight();
-            }
+            currentIndex = 0;
+            UpdateHighlight();
         }
+
 
         public void UpdateArrowDown()
-        {
-            currentIndex++;
-            if (currentIndex >= suggestions.Count)
-                currentIndex = suggestions.Count - 1;
-
-            UpdateHighLight();
-        }
-
-        public void UpdateArrowUp()
-        {
-            currentIndex--;
-            if (currentIndex < 0)
-                currentIndex = 0;
-
-            UpdateHighLight();
-        }
-
-        private void UpdateHighLight()
         {
             if (suggestions.Count == 0)
                 return;
 
-            foreach (var suggestion in suggestions)
-            {
-                suggestion.UnhighlightButton();
-            }
-
-            if (currentIndex < suggestions.Count)
-            {
-                Suggestion suggestion = suggestions[currentIndex];
-                suggestion.HighlightButton();
-            }
+            EnsureIndexWithinRange(currentIndex + 1);
+            UpdateHighlight();
         }
 
-        public bool TryGetCurrentSuggestion(out string suggestion)
+        public void UpdateArrowUp()
         {
             if (suggestions.Count == 0)
-            {
-                suggestion = string.Empty;
-                return false;
-            }
+                return;
 
+            EnsureIndexWithinRange(currentIndex - 1);
+            UpdateHighlight();
+        }
+
+        public bool TryGetCurrentSuggestion(out IConsoleCommand command)
+        {
             if (currentIndex >= 0 && currentIndex < suggestions.Count)
             {
-                suggestion = suggestions[currentIndex].GetCommand();
+                command = suggestions[currentIndex].GetCommand();
                 return true;
             }
 
-            suggestion = string.Empty;
+            command = null;
             return false;
         }
 
-        private void InstantiateSuggestion(IConsoleCommand consoleCommand)
+        private void CreateSuggestion(IConsoleCommand command)
         {
-            Suggestion newSuggestion = Instantiate(suggestionPrefab, suggestionContainer.transform);
-            newSuggestion.Initialize(consoleCommand);
-            newSuggestion.OnClick += OnSuggestionClicked;
+            var newSuggestion = Instantiate(suggestionPrefab, suggestionContainer.transform);
+            newSuggestion.Initialize(command);
+            newSuggestion.OnClick += OnSuggestionInternalClick;
 
             suggestions.Add(newSuggestion);
         }
 
-        private void OnSuggestionClicked(Suggestion suggestion)
+        private void OnSuggestionInternalClick(Suggestion suggestion)
         {
-            SuggestionClicked?.Invoke(suggestion.GetCommand());
+            SuggestionClicked?.Invoke(suggestion.GetCommand().Key);
+        }
+
+        private void EnsureIndexWithinRange(int index)
+        {
+            if (suggestions.Count == 0)
+            {
+                currentIndex = -1;
+                return;
+            }
+
+            currentIndex = Mathf.Clamp(index, 0, suggestions.Count - 1);
+        }
+
+        private void UpdateHighlight()
+        {
+            if (suggestions.Count == 0)
+                return;
+
+            for (int i = 0; i < suggestions.Count; i++)
+            {
+                if (i == currentIndex)
+                    suggestions[i].HighlightButton();
+                else
+                    suggestions[i].UnhighlightButton();
+            }
+
+            ScrollToIndex(currentIndex);
         }
 
         private void LateUpdate()
@@ -144,31 +151,36 @@ namespace EchoesOfEtherion.DeveloperConsole
             if (suggestions.Count == 0)
                 return;
 
-            Vector2 size = GetSuggestionWishSize();
+            Vector2 largestTextSize = GetLargestSuggestionTextSize();
 
-            size.x += widthPadding;
+            float preferredWidth = largestTextSize.x + widthPadding;
+            float preferredHeight =
+                (prefabRect.sizeDelta.y * suggestions.Count) +
+                (suggestionContainer.spacing * (suggestions.Count - 1)) +
+                heightPadding;
 
-            float height = 0;
-            height += prefabRectTransform.sizeDelta.y * suggestions.Count + suggestionContainer.spacing * (suggestions.Count - 1);
+            float finalWidth = Mathf.Max(preferredWidth, suggestionScrollRect.viewport.rect.width);
 
-            size.y = height + heightPadding;
-
-            float x = size.x > suggestionScrollRect.viewport.rect.width ?
-                size.x : suggestionScrollRect.viewport.rect.width;
-
-            suggestionContainerRectTransform.sizeDelta = new Vector2(x, size.y);
+            containerRect.sizeDelta = new Vector2(finalWidth, preferredHeight);
         }
 
-        private Vector2 GetSuggestionWishSize()
+        private void ScrollToIndex(int index)
         {
-            if (suggestions.Count == 0)
-                return Vector2.zero;
+            if (suggestions.Count <= 1)
+                return;
 
+            float t = (float)index / (suggestions.Count - 1);
+            suggestionScrollRect.verticalNormalizedPosition = 1f - t;
+        }
+
+        private Vector2 GetLargestSuggestionTextSize()
+        {
             Vector2 biggest = Vector2.zero;
 
-            foreach (var suggestion in suggestions)
+            for (int i = 0; i < suggestions.Count; i++)
             {
-                Vector2 size = suggestion.SuggestionTMP.GetPreferredValues();
+                Vector2 size = suggestions[i].SuggestionTMP.GetPreferredValues();
+
                 if (size.x > biggest.x)
                     biggest.x = size.x;
                 if (size.y > biggest.y)
@@ -180,9 +192,10 @@ namespace EchoesOfEtherion.DeveloperConsole
 
         public void ClearSuggestions()
         {
-            foreach (var suggestion in suggestions)
+            for (int i = 0; i < suggestions.Count; i++)
             {
-                Destroy(suggestion.gameObject);
+                suggestions[i].OnClick -= OnSuggestionInternalClick;
+                Destroy(suggestions[i].gameObject);
             }
 
             suggestions.Clear();

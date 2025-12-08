@@ -1,13 +1,11 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using EchoesOfEtherion.StateMachine;
+using EchoesOfEtherion.Game.StateMachine;
 using EchoesOfEtherion.Player.States;
 using EchoesOfEtherion.CameraUtils;
 using EchoesOfEtherion.Game;
-using EchoesOfEtherion.Menu;
 using EchoesOfEtherion.Game.Utils;
 using System;
-using UnityEngine.PlayerLoop;
 using EchoesOfEtherion.HealthSystem;
 
 namespace EchoesOfEtherion.Player.Components

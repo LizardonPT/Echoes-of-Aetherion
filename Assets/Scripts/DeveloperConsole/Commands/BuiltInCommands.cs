@@ -139,6 +139,10 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     }
                     else
                         ConsoleLogger.Log("Error: Invalid number format");
+                },
+                expectedArgs:new()
+                {
+                    new(),
                 }
                 ), "System");
         }
@@ -166,13 +170,30 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     else
                     {
                         ConsoleLogger.Log($"Changing scene to '{sceneName}'...");
-                        SceneLoader.Instance.SwitchToScene(sceneName);
+                        SceneLoader.Instance.LoadPrimaryScene(sceneName);
                     }
                 },
                 expectedArgs: new List<Argument>
                 {
-                    new(SceneLoader.Instance.CurrentSceneName),
+                    new(""),
                 }
+                ), "Scene");
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "reload_scene",
+                description: "Reloads the current scene",
+                usage: "reload_scene",
+                action: (args) =>
+                {
+                    if (SceneLoader.Instance == null)
+                    {
+                        ConsoleLogger.Log("No instance of Scene Loader found");
+                        return;
+                    }
+
+                    string currentScene = SceneLoader.Instance.CurrentPrimaryScene;
+                    SceneLoader.Instance.LoadPrimaryScene(currentScene);
+                },
+                expectedArgs: new List<Argument>()
                 ), "Scene");
         }
 

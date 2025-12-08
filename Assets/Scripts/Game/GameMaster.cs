@@ -3,9 +3,9 @@ using EchoesOfEtherion.Game.Scenes;
 using EchoesOfEtherion.Game.States;
 using EchoesOfEtherion.Menu;
 using EchoesOfEtherion.Game.Utils;
-using EchoesOfEtherion.StateMachine;
 using UnityEngine;
 using EchoesOfEtherion.DeveloperConsole;
+using EchoesOfEtherion.Game.StateMachine;
 
 namespace EchoesOfEtherion.Game
 {

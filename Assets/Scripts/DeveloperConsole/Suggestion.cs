@@ -33,9 +33,9 @@ namespace EchoesOfEtherion.DeveloperConsole
             OnClick?.Invoke(this);
         }
 
-        public string GetCommand()
+        public IConsoleCommand GetCommand()
         {
-            return consoleCommand.Key;
+            return consoleCommand;
         }
 
         private void Awake()

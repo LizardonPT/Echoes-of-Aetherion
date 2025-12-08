@@ -63,7 +63,7 @@ namespace EchoesOfEtherion.Menu
 
         private void OnMainMenuButtonClicked()
         {
-            SceneLoader.Instance.SwitchToScene("MainMenu");
+            SceneLoader.Instance.LoadPrimaryScene("MainMenu");
         }
 
         private void OnQuitButtonClicked()

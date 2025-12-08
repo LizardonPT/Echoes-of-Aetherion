@@ -8,6 +8,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
         string Key { get; }
         string Description { get; }
         string Usage { get; }
+        public List<Argument> ExpectedArguments { get; }
         bool Execute(List<Argument> arguments);
     }
 }

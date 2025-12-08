@@ -37,10 +37,16 @@ namespace EchoesOfEtherion.CameraUtils
 
         private void UpdateCameraPosition()
         {
+            CleanupInvalidTargets();
+
             if (targets.Count == 0) return;
 
+            Transform primaryTarget = targets[0];
+            
+            if (primaryTarget == null) return;
+
             Vector3 targetPos = (targets.Count == 1)
-                ? targets[0].position
+                ? primaryTarget.position
                 : GetTargetsMidpoint();
 
             targetPos += positionOffset;
@@ -51,10 +57,20 @@ namespace EchoesOfEtherion.CameraUtils
         private Vector3 GetTargetsMidpoint()
         {
             Vector3 sum = Vector3.zero;
-            foreach (var t in targets) sum += t.position;
-            return sum / targets.Count;
-        }
+            int validCount = 0;
 
+            foreach (var t in targets)
+            {
+                if (t == null) continue;
+                sum += t.position;
+                validCount++;
+            }
+
+            if (validCount == 0)
+                return MoveTransform.position;
+
+            return sum / validCount;
+        }
         private void SmoothMove(Vector3 targetPos)
         {
             Vector3 smooth = Vector3.SmoothDamp(MoveTransform.position, targetPos, ref velocity, smoothTime);
@@ -77,6 +93,15 @@ namespace EchoesOfEtherion.CameraUtils
             return new Vector3(clampedX, clampedY, 0);
         }
 
+        private void CleanupInvalidTargets()
+        {
+            // Remove null or destroyed references
+            for (int i = targets.Count - 1; i >= 0; i--)
+            {
+                if (targets[i] == null)
+                    targets.RemoveAt(i);
+            }
+        }
 
         public void SetHasLimits(bool value) => hasLimits = value;
 

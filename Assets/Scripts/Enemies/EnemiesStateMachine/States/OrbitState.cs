@@ -15,9 +15,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         [SerializeField] private float tolerance = 2f;
         [SerializeField] private float minChangeDirectionTime = 2f;
         [SerializeField] private float maxChangeDirectionTime = 5f;
-        [SerializeField] private float maxDistanceMultiplier = 1.5f;
-        [SerializeField] private float angleThreshold = 90f;
-        [SerializeField] private float raycastRange = 150f;
         [SerializeField] private RangeCondition InRange;
         [SerializeField] private RangeCondition OutOfRange;
 

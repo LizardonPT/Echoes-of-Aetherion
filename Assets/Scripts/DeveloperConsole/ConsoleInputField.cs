@@ -11,43 +11,22 @@ namespace EchoesOfEtherion.DeveloperConsole
     [RequireComponent(typeof(ConsoleController), typeof(ConsoleSuggestion))]
     public class ConsoleInputField : MonoBehaviour
     {
-        [SerializeField]
-        private TMP_InputField inputField;
+        [SerializeField] private TMP_InputField inputField;
+        [SerializeField] private int maxHistory = 100;
 
-        [SerializeField]
-        private int maxHistory = 100;
+        private ConsoleController controller;
+        private ConsoleSuggestion suggestionUI;
 
-        private ConsoleController consoleController;
-        private ConsoleSuggestion consoleSuggestion;
-
-        private List<string> commandHistory = new();
-
+        private readonly List<string> commandHistory = new();
         private int historyIndex = 0;
 
-        private int HistoryIndex
-        {
-            get => historyIndex;
-            set
-            {
-                if (value > commandHistory.Count - 1)
-                {
-                    historyIndex = 0;
-                }
-                else if (value < 0)
-                {
-                    historyIndex = commandHistory.Count - 1;
-                }
-                else historyIndex = value;
-            }
-        }
-
-        private bool isOnHistory = false;
-        private bool hasSuggestions;
+        private bool onHistory = false;
+        private bool HasSuggestions => suggestionUI.SuggestionCount > 0;
 
         private void Awake()
         {
-            consoleController = GetComponent<ConsoleController>();
-            consoleSuggestion = GetComponent<ConsoleSuggestion>();
+            controller = GetComponent<ConsoleController>();
+            suggestionUI = GetComponent<ConsoleSuggestion>();
         }
 
         private void Start()
@@ -58,157 +37,191 @@ namespace EchoesOfEtherion.DeveloperConsole
 
         private void OnEnable()
         {
-            consoleController.ConsoleOpened += OnConsoleOpened;
-            consoleController.ConsoleClosed += OnConsoleClosed;
-            consoleSuggestion.SuggestionClicked += OnSuggestionClicked;
+            controller.ConsoleOpened += OnConsoleOpened;
+            controller.ConsoleClosed += OnConsoleClosed;
+            suggestionUI.SuggestionClicked += OnSuggestionClicked;
         }
 
         private void OnDisable()
         {
-            consoleController.ConsoleOpened -= OnConsoleOpened;
-            consoleController.ConsoleClosed -= OnConsoleClosed;
-            consoleSuggestion.SuggestionClicked -= OnSuggestionClicked;
+            controller.ConsoleOpened -= OnConsoleOpened;
+            controller.ConsoleClosed -= OnConsoleClosed;
+            suggestionUI.SuggestionClicked -= OnSuggestionClicked;
         }
 
         private void Update()
         {
-            if (!consoleController.IsOpen)
+            if (!controller.IsOpen)
                 return;
 
-            hasSuggestions = consoleSuggestion.SuggestionCount > 0;
+            HandleArrowNavigation();
+            HandleTab();
+        }
 
-            if (Keyboard.current.upArrowKey.wasPressedThisFrame)
+        private void HandleArrowNavigation()
+        {
+            Keyboard keyboard = Keyboard.current;
+            if (keyboard == null) return;
+
+            if (keyboard.upArrowKey.wasPressedThisFrame)
             {
-                if (hasSuggestions)
-                { // Prioritize suggestions over history navigation
-                    consoleSuggestion.UpdateArrowUp();
+                MoveCursorToEnd();
+
+                if (HasSuggestions)
+                {
+                    suggestionUI.UpdateArrowUp();
                     return;
                 }
 
-                if (!isOnHistory || inputField.text == "")
-                {
-                    isOnHistory = true;
-                    HistoryIndex = commandHistory.Count - 1;
-                }
-                else HistoryIndex -= 1;
-
-                if (commandHistory.Count > 0)
-                {
-                    inputField.text = commandHistory[HistoryIndex];
-                    inputField.caretPosition = inputField.text.Count();
-                }
+                NavigateHistory(-1);
             }
-            else if (Keyboard.current.downArrowKey.wasPressedThisFrame)
+            else if (keyboard.downArrowKey.wasPressedThisFrame)
             {
-                if (hasSuggestions)
-                { // Prioritize suggestions over history navigation
-                    consoleSuggestion.UpdateArrowDown();
+                MoveCursorToEnd();
+
+                if (HasSuggestions)
+                {
+                    suggestionUI.UpdateArrowDown();
                     return;
                 }
-                if (commandHistory.Count == 0) return;
-                if (!isOnHistory || inputField.text == "")
-                {
-                    isOnHistory = true;
-                    HistoryIndex = 0;
-                    inputField.text = commandHistory[HistoryIndex];
-                }
-                else
-                {
-                    HistoryIndex++;
-                    if (HistoryIndex == 0)
-                        inputField.text = "";
-                    else
-                        inputField.text = commandHistory[HistoryIndex];
-                }
 
-                inputField.caretPosition = inputField.text.Count();
-            }
-            else if (Keyboard.current.tabKey.wasPressedThisFrame)
-            {
-                if (hasSuggestions)
-                {
-                    if (consoleSuggestion.TryGetCurrentSuggestion(out string suggestion))
-                    {
-                        inputField.text = suggestion + " ";
-                        inputField.caretPosition = inputField.text.Count();
-                        inputField.ActivateInputField();
-                    }
-                }
+                NavigateHistory(1);
             }
         }
 
-        private void OnValueChanged(string newText)
+        private void HandleTab()
         {
-            if (isOnHistory)
+            if (!Keyboard.current.tabKey.wasPressedThisFrame)
                 return;
 
-            if (string.IsNullOrEmpty(newText))
+            if (HasSuggestions &&
+                suggestionUI.TryGetCurrentSuggestion(out IConsoleCommand suggestion))
             {
-                consoleSuggestion.ClearSuggestions();
+                inputField.text = suggestion.Key + " ";
+                MoveCursorToEnd();
+            }
+        }
+
+        private void NavigateHistory(int direction)
+        {
+            if (commandHistory.Count == 0)
+                return;
+
+            if (!onHistory || string.IsNullOrEmpty(inputField.text))
+            {
+                onHistory = true;
+                historyIndex = (direction < 0) ?
+                    commandHistory.Count - 1 :
+                    0;
+
+                inputField.text = commandHistory[historyIndex];
+                MoveCursorToEnd();
                 return;
             }
 
-            consoleSuggestion.UpdateSuggestions(newText);
+            historyIndex += direction;
+
+            if (historyIndex < 0)
+                historyIndex = commandHistory.Count - 1;
+            else if (historyIndex > commandHistory.Count - 1)
+                historyIndex = 0;
+
+            inputField.text = (historyIndex == 0 && direction > 0)
+                ? ""
+                : commandHistory[historyIndex];
+
+            MoveCursorToEnd();
+        }
+
+        private void OnValueChanged(string value)
+        {
+            if (onHistory)
+                return;
+
+            if (string.IsNullOrEmpty(value))
+            {
+                suggestionUI.ClearSuggestions();
+                return;
+            }
+
+            suggestionUI.UpdateSuggestions(value);
         }
 
         private void OnSubmit(string message)
         {
-            if (hasSuggestions)
+            if (HasSuggestions &&
+                suggestionUI.TryGetCurrentSuggestion(out IConsoleCommand suggestion))
             {
-                if (consoleSuggestion.TryGetCurrentSuggestion(out string suggestion))
+                bool hasArgs = suggestion.ExpectedArguments.Count > 0;
+                bool userProvidedArgs = UserHasEnteredArguments(suggestion, message);
+
+                if (!hasArgs)
                 {
-                    inputField.text = suggestion + " ";
-                    inputField.caretPosition = inputField.text.Count();
-                    inputField.ActivateInputField();
+                    message = suggestion.Key;
+                }
+                else if (!userProvidedArgs)
+                {
+                    inputField.text = suggestion.Key + " ";
+                    MoveCursorToEnd();
                     return;
                 }
             }
 
-            if (!string.IsNullOrEmpty(message))
+
+            if (string.IsNullOrEmpty(message))
             {
-                // Log the command that was entered
-                ConsoleLogger.Log($"");
-                ConsoleLogger.Log($"> {message}");
-
-                // Execute the command through the database
-                bool success = CommandDatabase.Instance.ExecuteCommand(message);
-
-                if (!success)
-                {
-                    ConsoleLogger.Log($"Command failed or not recognized");
-                }
-
-                // Add to history
-                if (commandHistory.Count == maxHistory)
-                {
-                    commandHistory.RemoveAt(0);
-                }
-                commandHistory.Add(message);
-                isOnHistory = false;
-                HistoryIndex = 0;
-
-                inputField.text = "";
                 inputField.ActivateInputField();
+                return;
             }
-            else
-                inputField.ActivateInputField();
+
+            ConsoleLogger.Log("");
+            ConsoleLogger.Log($"> {message}");
+
+            bool success = CommandDatabase.Instance.ExecuteCommand(message);
+
+            if (!success)
+                ConsoleLogger.Log("Command failed or not recognized");
+
+            AddToHistory(message);
+
+            inputField.text = "";
+            onHistory = false;
+            MoveCursorToEnd();
+        }
+
+        private void AddToHistory(string cmd)
+        {
+            if (commandHistory.Count >= maxHistory)
+                commandHistory.RemoveAt(0);
+
+            commandHistory.Add(cmd);
+            historyIndex = 0;
+        }
+
+        private void MoveCursorToEnd()
+        {
+            inputField.caretPosition = inputField.text.Length;
+            inputField.ActivateInputField();
         }
 
         private void OnSuggestionClicked(string suggestion)
         {
             inputField.text = suggestion;
-            inputField.caretPosition = inputField.text.Count();
-            inputField.ActivateInputField();
+            MoveCursorToEnd();
         }
 
-        private void OnConsoleOpened()
+        private void OnConsoleOpened() => inputField.ActivateInputField();
+        private void OnConsoleClosed() => inputField.DeactivateInputField();
+
+        private bool UserHasEnteredArguments(IConsoleCommand suggestion, string input)
         {
-            inputField.ActivateInputField();
+            if (!input.StartsWith(suggestion.Key, StringComparison.OrdinalIgnoreCase))
+                return false;
+
+            string[] parts = input.Trim().Split(' ');
+
+            return parts.Length > 1 && !string.IsNullOrWhiteSpace(parts[1]);
         }
 
-        private void OnConsoleClosed()
-        {
-            inputField.DeactivateInputField();
-        }
     }
 }

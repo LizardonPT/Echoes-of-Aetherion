@@ -1,11 +1,12 @@
 using EchoesOfEtherion.HealthSystem;
+using EchoesOfEtherion.Spells.Data;
 using FMODUnity;
 using UnityEngine;
 
-namespace EchoesOfEtherion.Spells
+namespace EchoesOfEtherion.Spells.Runtime
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class LightBallSpellRuntime : MonoBehaviour, IProjectileSpell
+    public class LightBallSpellRuntime : MonoBehaviour
     {
         [SerializeField] private EventReference hitEventReference;
         [SerializeField] private LightBallSpell spellData;

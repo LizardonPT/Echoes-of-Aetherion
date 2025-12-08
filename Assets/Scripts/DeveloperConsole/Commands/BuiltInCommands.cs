@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using EchoesOfEtherion.DeveloperConsole.CFG;
@@ -92,7 +93,11 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
             key: "echo",
             description: "Prints text to the console",
             usage: "echo <text>",
-            action: (args) => ConsoleLogger.Log(args[0].GetString())
+            action: (args) => ConsoleLogger.Log(args[0].GetString()),
+            expectedArgs: new()
+            {
+                new()
+            }
 
             ), "System");
 
@@ -140,7 +145,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     else
                         ConsoleLogger.Log("Error: Invalid number format");
                 },
-                expectedArgs:new()
+                expectedArgs: new()
                 {
                     new(),
                 }
@@ -297,6 +302,39 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     ConsoleLogger.Log($"Noclip speed set to {floatValue}");
                 },
                 getter: () => PlayerNoClipState.speed.ToString(),
+                isPersistent: true
+                ), "Player");
+
+            CommandDatabase.Instance.RegisterCommand(new SettingCommand(
+                key: "auto_cast",
+                description: "If true when you click to select a spell it will use the spell automaticly.",
+                usage: "auto_cast <bool>",
+                setter: (value) =>
+                {
+                    if (!value.TryGetBoolean(out bool boolValue))
+                    {
+                        ConsoleLogger.Log("Error: Invalid bool format");
+                        ConsoleLogger.Log("Use command 'help bool' for more info");
+                        return;
+                    }
+
+                    var player = FindAnyObjectByType<PlayerInventory>();
+                    if (player != null)
+                    {
+                        player.AutoCast = boolValue;
+                        ConsoleLogger.Log($"Auto cast now set to: {(boolValue ? "true" : "false")}");
+                    }
+                    else
+                        ConsoleLogger.Log("Cound't find a player instance.");
+                },
+                getter: () =>
+                {
+                    var player = FindAnyObjectByType<PlayerInventory>();
+                    if (player != null)
+                        return player.AutoCast ? "true" : "false";
+                    else
+                        return "false";
+                },
                 isPersistent: true
                 ), "Player");
         }
@@ -568,6 +606,39 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     }
                 },
                 expectedArgs: new List<Argument> { new("") }
+                ), "CFG");
+
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "cfg_open_folder",
+                description: "Opens the cfg folder.",
+                usage: "cfg_open_folder",
+                action: (args) =>
+                {
+                    string path = Path.Combine(Application.persistentDataPath, "cfg");
+
+                    ConsoleLogger.Log($"Opening folder at: {path}");
+
+                    if (!Directory.Exists(path))
+                    {
+                        ConsoleLogger.Log("Folder doesn't exitst yet.");
+                        return;
+                    }
+
+                    try
+                    {
+#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+                        Process.Start("explorer.exe", path.Replace("/", "\\"));
+#elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+                        Process.Start("open", path);
+#elif UNITY_STANDALONE_LINUX
+                        Process.Start("xdg-open", path);
+#endif
+                    }
+                    catch (Exception e)
+                    {
+                        ConsoleLogger.Log($"Failed to open folder: {e.Message}");
+                    }
+                }
                 ), "CFG");
         }
 

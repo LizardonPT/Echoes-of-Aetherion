@@ -1,8 +1,9 @@
 using EchoesOfEtherion.Player.Components;
 using EchoesOfEtherion.ManaSystem;
 using UnityEngine;
+using EchoesOfEtherion.Spells.Runtime;
 
-namespace EchoesOfEtherion.Spells
+namespace EchoesOfEtherion.Spells.Data
 {
     [CreateAssetMenu(fileName = "LightBallSpell", menuName = "Scriptable Objects/Spells/Light Ball Spell")]
     public class LightBallSpell : Spell
@@ -12,6 +13,7 @@ namespace EchoesOfEtherion.Spells
         [field: SerializeField] public float KnockbackAmount { get; private set; } = 80;
         [field: SerializeField] public float Speed { get; private set; } = 10f;
         [field: SerializeField] public int Range { get; private set; } = 50;
+
         public override bool ExecuteSpell(PlayerSpellCaster caster)
         {
             if (cdTimer > 0f || caster.TryGetComponent(out ManaModule manaModule) && manaModule.CurrentMana < ManaCost)

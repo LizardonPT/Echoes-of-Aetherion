@@ -3,10 +3,10 @@ using EchoesOfEtherion.ManaSystem;
 using EchoesOfEtherion.Player.Components;
 using UnityEngine;
 
-namespace EchoesOfEtherion.Spells
+namespace EchoesOfEtherion.Spells.Data
 {
     [CreateAssetMenu(fileName = "HealSpell", menuName = "Scriptable Objects/Spells/Heal Spell")]
-    public class HealSpell : Spell
+    public class PureLight : Spell
     {
         [SerializeField] private int healAmount = 30;
 

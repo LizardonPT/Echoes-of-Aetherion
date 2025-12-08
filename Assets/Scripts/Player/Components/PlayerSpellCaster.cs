@@ -18,6 +18,16 @@ namespace EchoesOfEtherion.Player.Components
             animator = GetComponent<PlayerAnimations>();
         }
 
+        private void OnEnable()
+        {
+            inventory.SlotPressed += CastSpellInSlot;
+        }
+
+        private void OnDisable()
+        {
+            inventory.SlotPressed -= CastSpellInSlot;
+        }
+
         public void CastSelectedSpell()
         {
             Spell spell = inventory.SelectedSpell;
@@ -26,7 +36,7 @@ namespace EchoesOfEtherion.Player.Components
 
             if (spell.ExecuteSpell(this))
                 animator.PlayAnimationByName(spell.AnimationName);
-                
+
             SpellCasted?.Invoke();
         }
 
@@ -37,6 +47,17 @@ namespace EchoesOfEtherion.Player.Components
                 if (spell != null)
                     spell.UpdateSpell(this);
             }
+        }
+
+        private void CastSpellInSlot(int slot)
+        {
+            Spell spell = inventory.GetSpellInSlot(slot);
+            if (spell == null) return;
+
+            if (spell.ExecuteSpell(this))
+                animator.PlayAnimationByName(spell.AnimationName);
+
+            SpellCasted?.Invoke();
         }
     }
 }

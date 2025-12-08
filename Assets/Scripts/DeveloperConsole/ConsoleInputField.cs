@@ -153,18 +153,16 @@ namespace EchoesOfEtherion.DeveloperConsole
                 suggestionUI.TryGetCurrentSuggestion(out IConsoleCommand suggestion))
             {
                 bool hasArgs = suggestion.ExpectedArguments.Count > 0;
-                bool userProvidedArgs = UserHasEnteredArguments(suggestion, message);
+                bool alreadyAccepted = message.Split(' ')[0] == suggestion.Key;
 
-                if (!hasArgs)
-                {
-                    message = suggestion.Key;
-                }
-                else if (!userProvidedArgs)
+                if (!alreadyAccepted && hasArgs)
                 {
                     inputField.text = suggestion.Key + " ";
                     MoveCursorToEnd();
                     return;
                 }
+                else if (!alreadyAccepted && !hasArgs)
+                    message = suggestion.Key;
             }
 
 
@@ -212,16 +210,5 @@ namespace EchoesOfEtherion.DeveloperConsole
 
         private void OnConsoleOpened() => inputField.ActivateInputField();
         private void OnConsoleClosed() => inputField.DeactivateInputField();
-
-        private bool UserHasEnteredArguments(IConsoleCommand suggestion, string input)
-        {
-            if (!input.StartsWith(suggestion.Key, StringComparison.OrdinalIgnoreCase))
-                return false;
-
-            string[] parts = input.Trim().Split(' ');
-
-            return parts.Length > 1 && !string.IsNullOrWhiteSpace(parts[1]);
-        }
-
     }
 }

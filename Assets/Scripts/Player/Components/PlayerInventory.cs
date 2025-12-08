@@ -11,6 +11,8 @@ namespace EchoesOfEtherion.Player.Components
     {
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
+        [field: Header("Settings")]
+        [field: SerializeField] public bool AutoCast { get; set; } = false;
         [SerializeField] private InputReader inputReader;
 
         public Dictionary<int, Spell> Slots { get; private set; }
@@ -20,6 +22,7 @@ namespace EchoesOfEtherion.Player.Components
         public event Action<Spell, int> SelectedSpellChanged;
 
         private List<Spell> spells;
+        public event Action<int> SlotPressed;
 
         private void Awake()
         {
@@ -40,16 +43,17 @@ namespace EchoesOfEtherion.Player.Components
             if (!spells.Contains(page))
             {
                 spells.Add(page);
-
                 for (int i = 1; i <= Slots.Count; i++)
                 {
                     if (Slots[i] == null)
                     {
                         Slots[i] = page;
+                        SelectedSpell = Slots[i];
                         SlotsUpdated?.Invoke(Slots);
                         break;
                     }
                 }
+
                 Log($"Page {page.SpellName} was added to the inventory.");
                 if (enableLogging)
                 {
@@ -90,38 +94,36 @@ namespace EchoesOfEtherion.Player.Components
 
         public void UpdateInput()
         {
-            if (inputReader.Slot1InputPressed)
+            for (int i = 1; i <= Slots.Count; i++)
             {
-                SelectedSpell = Slots[1];
-                SelectedSpellChanged?.Invoke(SelectedSpell, 1);
-            }
-            else if (inputReader.Slot2InputPressed)
-            {
-                SelectedSpell = Slots[2];
-                SelectedSpellChanged?.Invoke(SelectedSpell, 2);
-            }
-            else if (inputReader.Slot3InputPressed)
-            {
-                SelectedSpell = Slots[3];
-                SelectedSpellChanged?.Invoke(SelectedSpell, 3);
-            }
-            else if (inputReader.Slot4InputPressed)
-            {
-                SelectedSpell = Slots[4];
-                SelectedSpellChanged?.Invoke(SelectedSpell, 4);
-            }
-            else if (inputReader.Slot5InputPressed)
-            {
-                SelectedSpell = Slots[5];
-                SelectedSpellChanged?.Invoke(SelectedSpell, 5);
-            }
-            else if (inputReader.Slot6InputPressed)
-            {
-                SelectedSpell = Slots[6];
-                SelectedSpellChanged?.Invoke(SelectedSpell, 6);
+                if (Slots[i] == null)
+                    return;
+
+                bool slotPressed = i switch
+                {
+                    1 => inputReader.Slot1InputPressed,
+                    2 => inputReader.Slot2InputPressed,
+                    3 => inputReader.Slot3InputPressed,
+                    4 => inputReader.Slot4InputPressed,
+                    5 => inputReader.Slot5InputPressed,
+                    6 => inputReader.Slot6InputPressed,
+                    _ => false
+                };
+
+                if (slotPressed)
+                {
+                    SelectedSpell = Slots[i];
+                    SelectedSpellChanged?.Invoke(SelectedSpell, i);
+
+                    if (AutoCast)
+                    {
+                        SlotPressed?.Invoke(i);
+                    }
+
+                    break;
+                }
             }
         }
-
         private void Log(string message)
         {
             if (enableLogging)

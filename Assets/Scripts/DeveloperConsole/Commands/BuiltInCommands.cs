@@ -7,6 +7,7 @@ using System.Linq;
 using EchoesOfEtherion.DeveloperConsole.CFG;
 using EchoesOfEtherion.DeveloperConsole.Inputs;
 using EchoesOfEtherion.Game.Scenes;
+using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.Player.Components;
 using EchoesOfEtherion.Player.States;
 using UnityEngine;
@@ -337,6 +338,42 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                 },
                 isPersistent: true
                 ), "Player");
+
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "heal",
+                description: "Heal player",
+                usage: "heal <amount>",
+                action: (args) =>
+                {
+                    if (args.Count < 0)
+                    {
+                        ConsoleLogger.Log($"Argument not valid.");
+                        return;
+                    }
+
+                    if (!args[0].TryGetNumber(out float numberValue))
+                    {
+                        ConsoleLogger.Log($"Argument not valid");
+                        return;
+                    }
+                    
+                    var player = FindAnyObjectByType<PlayerController>();
+
+                    if (player != null)
+                    {
+                        var healthM = player.GetComponent<HealthModule>();
+                        healthM?.Heal(numberValue);
+                    }
+                    else
+                    {
+                        ConsoleLogger.Log("Error: PlayerController not found in scene");
+                    }
+                },
+                expectedArgs: new()
+                {
+                    new()
+                }
+                ), "Player");
         }
 
         private void RegisterDebugCommands()
@@ -646,13 +683,13 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
         {
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "bind",
-                description: "Bind a key to an action",
-                usage: "bind <key> [action]",
+                description: "Bind a key to an action or console command",
+                usage: "bind <key> \"<command>\"  or  bind <key> <action>",
                 action: (args) =>
                 {
                     if (args.Count < 2)
                     {
-                        ConsoleLogger.Log("Usage: bind <key> [action]");
+                        ConsoleLogger.Log("Usage: bind <key> \"<command>\"  or  bind <key> <action>");
                         return;
                     }
 
@@ -667,6 +704,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     new("")
                 }
                 ), "Input");
+
 
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "unbind",
@@ -770,6 +808,29 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     new( "")
                 }
                 ), "Input");
+
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "list_command_binds",
+                description: "List all key bindings to console commands",
+                usage: "list_command_binds",
+                action: (args) =>
+                {
+                    var commandBindings = InputBindingManager.Instance.GetAllCommandBindings();
+
+                    if (commandBindings.Count == 0)
+                    {
+                        ConsoleLogger.Log("No command bindings found");
+                        return;
+                    }
+
+                    ConsoleLogger.Log("=== COMMAND BINDINGS ===");
+                    foreach (var kvp in commandBindings)
+                    {
+                        string commands = string.Join("; ", kvp.Value);
+                        ConsoleLogger.Log($"{kvp.Key}: {commands}");
+                    }
+                }
+            ), "Input");
 
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "find_key",

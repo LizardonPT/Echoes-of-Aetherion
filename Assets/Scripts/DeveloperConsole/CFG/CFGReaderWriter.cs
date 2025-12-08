@@ -41,7 +41,7 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
 
             if (autoLoadSettingsOnStart)
                 LoadSettings();
-                
+
             RegisterPersistentSettings();
         }
 
@@ -442,6 +442,35 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
             }
 
             return inputPath;
+        }
+
+        public void SaveCommandBindings()
+        {
+            var commandBindings = InputBindingManager.Instance.GetAllCommandBindings();
+            var lines = new List<string>();
+
+            lines.Add("// Auto-generated command bindings");
+            foreach (var kvp in commandBindings)
+            {
+                foreach (var command in kvp.Value)
+                {
+                    lines.Add($"bind \"{kvp.Key}\" \"{command}\"");
+                }
+            }
+
+            string filePath = Path.Combine(Application.persistentDataPath, "command_bindings.cfg");
+            File.WriteAllLines(filePath, lines);
+            ConsoleLogger.Log($"Command bindings saved to {filePath}");
+        }
+
+        public void LoadCommandBindings()
+        {
+            string filePath = Path.Combine(Application.persistentDataPath, "command_bindings.cfg");
+            if (File.Exists(filePath))
+            {
+                ExecuteConfigFileByName("command_bindings.cfg");
+                ConsoleLogger.Log("Command bindings loaded");
+            }
         }
     }
 }

@@ -48,8 +48,13 @@ namespace EchoesOfEtherion.Player.Components
                     if (Slots[i] == null)
                     {
                         Slots[i] = page;
-                        SelectedSpell = Slots[i];
                         SlotsUpdated?.Invoke(Slots);
+                        
+                        if (i == 1)
+                        {
+                            SelectedSpell = Slots[i];
+                            SelectedSpellChanged?.Invoke(SelectedSpell, i);
+                        }
                         break;
                     }
                 }
@@ -67,6 +72,7 @@ namespace EchoesOfEtherion.Player.Components
                 }
             }
         }
+
         public void RemoveSpellPage(Spell page)
         {
             if (spells.Contains(page)) spells.Remove(page);

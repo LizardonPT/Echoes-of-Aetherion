@@ -579,6 +579,10 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
 
         private void Update()
         {
+            // Only check for inputs if the console isn't open.
+            if (ConsoleController.Instance.IsOpen)
+                return;
+
             // Check for pressed keys with command bindings
             foreach (var kvp in commandKeyControls.ToList())
             {

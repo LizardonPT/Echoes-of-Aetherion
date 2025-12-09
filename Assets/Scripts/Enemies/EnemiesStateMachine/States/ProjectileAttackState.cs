@@ -5,6 +5,7 @@ using EchoesOfEtherion.Enemies.EnemiesStateMachine.States;
 using FMODUnity;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace EchoesOfEtherion.Enemies.Core
 {
@@ -12,6 +13,7 @@ namespace EchoesOfEtherion.Enemies.Core
     {
         [Header("Attack Settings")]
         [SerializeField] private Projectile projectilePrefab;
+        [SerializeField] private bool velocityPerdiction = true;
         [SerializeField] private float chargeTime = 0.5f;
         [SerializeField] private float minCooldown = 1f;
         [SerializeField] private float maxCooldown = 2f;
@@ -24,10 +26,17 @@ namespace EchoesOfEtherion.Enemies.Core
 
 #if UNITY_EDITOR
         public bool HasChargeTime => chargeTime > 0;
+
 #endif
         [SerializeField] private EventReference throwSoundEvent;
 
         [SerializeField] private TimerCondition cooldown;
+
+#if UNITY_EDIT
+        [ShowIf(nameof(HasChargeTime))]
+#endif
+        [SerializeField] private UnityEvent OnCharge;
+        [SerializeField] private UnityEvent OnAttack;
 
         private float timer;
         private bool hasAttacked;
@@ -51,7 +60,10 @@ namespace EchoesOfEtherion.Enemies.Core
                 agent.LookDirection = dirToTarget;
             }
             if (chargeTime > 0)
+            {
                 RuntimeManager.PlayOneShot(chargeSoundEvent, agent.transform.position);
+                OnCharge?.Invoke();
+            }
         }
 
         public override void OnUpdate()
@@ -61,6 +73,7 @@ namespace EchoesOfEtherion.Enemies.Core
             if (!hasAttacked && timer >= chargeTime)
             {
                 PerformProjectileAttack();
+                OnAttack?.Invoke();
                 hasAttacked = true;
             }
         }
@@ -70,7 +83,15 @@ namespace EchoesOfEtherion.Enemies.Core
             if (projectilePrefab == null || agent.Target == null) return;
 
             Projectile proj = Instantiate(projectilePrefab, agent.transform.position, Quaternion.identity);
-            proj.Initialize(agent.transform.position, agent.TargetPos);
+            Vector2 destination = agent.TargetPos;
+
+            if (velocityPerdiction)
+            {
+                if (agent.Target.TryGetComponent(out Rigidbody2D targetBody))
+                    destination += targetBody.linearVelocity;
+            }
+
+            proj.Initialize(agent.transform.position, destination);
 
             RuntimeManager.PlayOneShot(throwSoundEvent, agent.transform.position);
             finished = true;

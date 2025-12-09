@@ -6,10 +6,11 @@ using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.Player.Components;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 {
-    public class StingAttackState : BaseState
+    public class ChargeAttackState : BaseState
     {
         [Header("Sting Attack Settings")]
         [SerializeField] private float stingSpeed = 120f;
@@ -24,16 +25,16 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
 
         [SerializeField] private TimerCondition timer;
         [SerializeField] private RangeCondition stingRangeCondition;
+        [SerializeField] private UnityEvent OnWindUp;
+        [SerializeField] private UnityEvent OnAttack;
 
         private bool hasAttacked;
         private float windUpTimer;
-        private StoneScorpionController scorpion;
 
         private float attackResetTimer;
 
         protected override void OnInitialize()
         {
-            scorpion = agent as StoneScorpionController;
             timer.SetDuration(minStingCooldown, maxStingCooldown);
 
             stingRangeCondition.SetRange(stingRange);
@@ -47,8 +48,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
             hasAttacked = false;
             finished = false;
 
-            // Play sting sound
-            RuntimeManager.PlayOneShot(stingAttackSoundEvent, agent.transform.position);
+            OnWindUp?.Invoke();
         }
 
         public override void OnExit()
@@ -68,6 +68,7 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
                 if (windUpTimer < 0)
                 {
                     PerformStingAttack();
+                    OnAttack?.Invoke();
                 }
             }
             else
@@ -84,8 +85,6 @@ namespace EchoesOfEtherion.Enemies.StoneScorpion.States
         {
             hasAttacked = true;
             attackResetTimer = endDuration;
-
-            if (scorpion == null) return;
 
             Vector2 pos = (Vector2)agent.transform.position + agent.LookDirection * stingRange * .5f;
 

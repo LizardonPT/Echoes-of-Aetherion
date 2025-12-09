@@ -197,9 +197,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4206445235870947404}
-  - component: {fileID: 4887513558699448883}
+  - component: {fileID: 7334562057821001011}
+  - component: {fileID: 6271901307394342966}
   - component: {fileID: 1764794039422586671}
-  - component: {fileID: 2715135103496009915}
   - component: {fileID: 4030656946676551430}
   - component: {fileID: 7719541156792691575}
   - component: {fileID: 8515734589465453377}
@@ -209,9 +209,9 @@ GameObject:
   - component: {fileID: 562020163534156449}
   - component: {fileID: 1891960602088727498}
   - component: {fileID: 2464726653691597640}
-  - component: {fileID: 6779778793453753747}
+  - component: {fileID: 1882150996915184586}
   m_Layer: 7
-  m_Name: StoneScorpion
+  m_Name: Spider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +235,7 @@ Transform:
   - {fileID: 5760429880858963853}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4887513558699448883
+--- !u!114 &7334562057821001011
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49a310ef1be7f34d9bd358660e94a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Core.Agent
-  <EnemyType>k__BackingField: 
+  <EnemyType>k__BackingField: Spider
   accel: 15
   maxSpeed: 65
   friction: 8
@@ -262,6 +262,19 @@ MonoBehaviour:
     m_Bits: 64
   <SignalRange>k__BackingField: 120
   LookDirection: {x: 1, y: 0}
+--- !u!114 &6271901307394342966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616286856940875536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 371763e3793acf54bb59b748a9d06a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Spider.SpiderAnimations
+  anim: {fileID: 1882150996915184586}
 --- !u!114 &1764794039422586671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,20 +289,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
   <MaxHealth>k__BackingField: 80
   <CurrentHealth>k__BackingField: 0
---- !u!114 &2715135103496009915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1616286856940875536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 745dc5b0ef2e36948aa9a4f9b3e31624, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.StoneScorpion.StoneScorpionAnimations
-  animator: {fileID: 0}
-  spriteRenderer: {fileID: 6752673671812820513}
 --- !u!50 &4030656946676551430
 Rigidbody2D:
   serializedVersion: 5
@@ -351,8 +350,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.000046181984, y: 3.4025083}
-  m_Size: {x: 35.88649, y: 23.009676}
+  m_Offset: {x: 1.8031119, y: 0}
+  m_Size: {x: 28.674393, y: 24.13678}
   m_Direction: 1
 --- !u!114 &8515734589465453377
 MonoBehaviour:
@@ -512,6 +511,25 @@ MonoBehaviour:
     Path: event:/SFX/StoneScorpion/Sting
   timer: {fileID: 3263317490468334906}
   stingRangeCondition: {fileID: 5728041055477079842}
+  OnWindUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6271901307394342966}
+        m_TargetAssemblyTypeName: EchoesOfEtherion.Enemies.Spider.SpiderAnimations,
+          Assembly-CSharp
+        m_MethodName: Bite
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2464726653691597640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +549,7 @@ MonoBehaviour:
     targetState: {fileID: 5140517352668363653}
   canBeInterrupted: 0
   projectilePrefab: {fileID: 9125123678000685726, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
+  velocityPerdiction: 1
   chargeTime: 0.5
   minCooldown: 3
   maxCooldown: 5
@@ -549,33 +568,47 @@ MonoBehaviour:
       Data4: 238667438
     Path: event:/SFX/StoneScorpion/RockThrow
   cooldown: {fileID: 4532198864028178949}
---- !u!114 &6779778793453753747
-MonoBehaviour:
+  OnCharge:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6271901307394342966}
+        m_TargetAssemblyTypeName: EchoesOfEtherion.Enemies.Spider.SpiderAnimations,
+          Assembly-CSharp
+        m_MethodName: WebShoot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!95 &1882150996915184586
+Animator:
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1616286856940875536}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b49a310ef1be7f34d9bd358660e94a94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Core.Agent
-  <EnemyType>k__BackingField: 
-  accel: 15
-  maxSpeed: 65
-  friction: 8
-  <PlayerMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 0
-  <EnemyMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 0
-  <EnvironmentMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 0
-  <SignalRange>k__BackingField: 120
-  LookDirection: {x: 1, y: 0}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8b58c6f790bb9ee4790429153e560a87, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1819077403265770102
 GameObject:
   m_ObjectHideFlags: 0
@@ -832,8 +865,8 @@ Transform:
   m_GameObject: {fileID: 4938982562944984484}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.74, y: 2.74, z: 2.74}
+  m_LocalPosition: {x: 0.6485, y: 0, z: 0}
+  m_LocalScale: {x: 1.9042139, y: 2.74, z: 2.74}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4206445235870947404}
@@ -1126,7 +1159,7 @@ Transform:
   m_GameObject: {fileID: 6825924383679068937}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -11.278473, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1179,9 +1212,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1918404553, guid: 138e93a1d9d565a4a9d883847e69b437, type: 3}
+  m_Sprite: {fileID: 1740030256, guid: 5285f9c3431dfd74d887a9aa62d52e59, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 36, y: 38}

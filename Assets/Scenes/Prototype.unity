@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Spawner.Spawner2D
   <SpawnPrefabs>k__BackingField:
-  - {fileID: 2635609507823649807, guid: f43f239507c045441baef61eefd6962f, type: 3}
+  - {fileID: 7334562057821001011, guid: 8e431ae681cafd140814e5aaf9493dc6, type: 3}
   <MaxCount>k__BackingField: 5
   playerLayer:
     serializedVersion: 2
@@ -5805,6 +5805,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Player.Components.PlayerInventory
   enableLogging: 0
+  <AutoCast>k__BackingField: 0
   inputReader: {fileID: 11400000, guid: 42a46087dfdfae545ad8f83655ec8af2, type: 2}
 --- !u!114 &387109741
 MonoBehaviour:
@@ -42485,6 +42486,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Meny.GameOverMenu
   restartButton: {fileID: 1232708510}
+  panel: {fileID: 363467853}
+  playerHealth: {fileID: 387109742}
 --- !u!1 &1132636633
 GameObject:
   m_ObjectHideFlags: 0

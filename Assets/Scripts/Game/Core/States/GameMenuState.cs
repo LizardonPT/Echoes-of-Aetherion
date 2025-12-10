@@ -1,7 +1,7 @@
 using EchoesOfEtherion.Game.StateMachine;
 using UnityEngine;
 
-namespace EchoesOfEtherion.Game.States
+namespace EchoesOfEtherion.Game.Core.States
 {
     public class GameMenuState : IState<GameMaster>
     {

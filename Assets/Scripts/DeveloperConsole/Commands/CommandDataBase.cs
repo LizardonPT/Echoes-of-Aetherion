@@ -1,13 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EchoesOfEtherion.Game.Helpers;
+using UnityEngine;
 
 namespace EchoesOfEtherion.DeveloperConsole.Commands
 {
-    public class CommandDatabase : Singleton<CommandDatabase>
+    public class CommandDatabase : MonoBehaviour
     {
         private readonly Dictionary<string, IConsoleCommand> commands = new();
         private readonly Dictionary<string, List<string>> commandCategories = new();
+
+        public static CommandDatabase Instance
+        {
+            get
+            {
+                return ConsoleController.Instance != null
+                ? ConsoleController.Instance.CommandDatabase
+                : null;
+           }
+        } 
 
         public void RegisterCommand(IConsoleCommand command, string category = "General")
         {

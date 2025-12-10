@@ -4,6 +4,7 @@ using EchoesOfEtherion.Enemies.Core;
 using EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions;
 using EchoesOfEtherion.Enemies.EnemiesStateMachine.States;
 using EchoesOfEtherion.Game;
+using EchoesOfEtherion.Game.Core;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Enemies.EnemiesStateMachine

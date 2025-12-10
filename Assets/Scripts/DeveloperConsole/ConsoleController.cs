@@ -1,5 +1,9 @@
 using System;
 using System.Linq;
+using EchoesOfEtherion.DeveloperConsole.CFG;
+using EchoesOfEtherion.DeveloperConsole.Commands;
+using EchoesOfEtherion.DeveloperConsole.Inputs;
+using EchoesOfEtherion.Game.Helpers;
 using EchoesOfEtherion.Game.Utils;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +12,9 @@ using UnityEngine.UI;
 namespace EchoesOfEtherion.DeveloperConsole
 {
     [RequireComponent(typeof(ConsoleLogger))]
+    [RequireComponent(typeof(CommandDatabase))]
+    [RequireComponent(typeof(CFGReaderWriter))]
+    [RequireComponent(typeof(InputBindingManager))]
     public class ConsoleController : Singleton<ConsoleController>
     {
         [Header("References")]
@@ -32,6 +39,38 @@ namespace EchoesOfEtherion.DeveloperConsole
         }
 
         [SerializeField] private ConsoleLogger logger;
+        
+        private CFGReaderWriter cFGReaderWriter;
+        private CommandDatabase commandDB;
+        private InputBindingManager inputBindingManager;
+
+        public CommandDatabase CommandDatabase
+        {
+            get
+            {
+                commandDB ??= GetComponent<CommandDatabase>();
+                return commandDB ?? null;
+            }
+        }
+
+        public CFGReaderWriter CFGReaderWriter
+        {
+            get
+            {
+                cFGReaderWriter ??= GetComponent<CFGReaderWriter>();
+                return cFGReaderWriter ?? null;
+            }
+        }
+
+        public InputBindingManager InputBindingManager
+        {
+            get
+            {
+                inputBindingManager ??= GetComponent<InputBindingManager>();
+                return inputBindingManager;
+            }
+        }
+        
 
         private void Start()
         {

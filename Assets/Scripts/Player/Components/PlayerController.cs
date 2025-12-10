@@ -7,6 +7,7 @@ using EchoesOfEtherion.Game;
 using EchoesOfEtherion.Game.Utils;
 using System;
 using EchoesOfEtherion.HealthSystem;
+using EchoesOfEtherion.Game.Core;
 
 namespace EchoesOfEtherion.Player.Components
 {

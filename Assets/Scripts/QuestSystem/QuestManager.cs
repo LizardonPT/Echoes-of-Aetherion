@@ -5,6 +5,7 @@ using EchoesOfEtherion.QuestSystem.QuestSteps;
 using EchoesOfEtherion.QuestSystem.UI;
 using EchoesOfEtherion.CurrencySystem;
 using UnityEngine;
+using EchoesOfEtherion.Game.Helpers;
 
 namespace EchoesOfEtherion.QuestSystem
 {

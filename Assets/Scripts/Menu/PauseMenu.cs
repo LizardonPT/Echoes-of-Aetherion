@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using EchoesOfEtherion.Game;
 using EchoesOfEtherion.Game.Scenes;
+using EchoesOfEtherion.Game.Core;
 
 namespace EchoesOfEtherion.Menu
 {

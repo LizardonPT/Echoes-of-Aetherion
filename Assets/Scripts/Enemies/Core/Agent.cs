@@ -1,6 +1,7 @@
 using EchoesOfEtherion.Enemies.EnemiesStateMachine;
 using EchoesOfEtherion.Enemies.EnemiesStateMachine.States;
 using EchoesOfEtherion.Game;
+using EchoesOfEtherion.Game.Core;
 using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.Player.Components;
 using UnityEngine;

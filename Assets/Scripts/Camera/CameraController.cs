@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
+using EchoesOfEtherion.Game.Helpers;
 using UnityEngine;
 
 namespace EchoesOfEtherion.CameraUtils

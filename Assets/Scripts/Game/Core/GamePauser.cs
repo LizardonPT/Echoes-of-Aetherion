@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace EchoesOfEtherion.Game
+namespace EchoesOfEtherion.Game.Core
 {
     public class GamePauser : MonoBehaviour
     {

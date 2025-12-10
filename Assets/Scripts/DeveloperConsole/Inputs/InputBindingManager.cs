@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EchoesOfEtherion.DeveloperConsole.Commands;
+using EchoesOfEtherion.Game.Helpers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace EchoesOfEtherion.DeveloperConsole.Inputs
 {
-    public class InputBindingManager : Singleton<InputBindingManager>
+    public class InputBindingManager : MonoBehaviour
     {
         [Header("Input Settings")]
         [SerializeField] private InputActionAsset inputActions;
@@ -25,9 +26,18 @@ namespace EchoesOfEtherion.DeveloperConsole.Inputs
         public event Action<string, string> BindingChanged; // actionName, bindingPath
         public event Action<string> BindingRemoved; // bindingPath
 
-        protected override void Awake()
+        public static InputBindingManager Instance
         {
-            base.Awake();
+            get
+            {
+                return ConsoleController.Instance != null
+                ? ConsoleController.Instance.InputBindingManager
+                : null;
+            }
+        }
+
+        private void Awake()
+        {
             InitializeKeyAliases();
             CacheExistingBindings();
         }

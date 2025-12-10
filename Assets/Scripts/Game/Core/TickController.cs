@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EchoesOfEtherion.Game
+namespace EchoesOfEtherion.Game.Core
 {
     public class TickController : MonoBehaviour
     {

@@ -1,5 +1,6 @@
 using EchoesOfEtherion.Enemies.Core;
 using EchoesOfEtherion.Game;
+using EchoesOfEtherion.Game.Core;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Enemies.Spider

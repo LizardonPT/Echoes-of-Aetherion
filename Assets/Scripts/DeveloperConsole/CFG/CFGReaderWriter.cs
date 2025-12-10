@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using EchoesOfEtherion.DeveloperConsole.Commands;
 using EchoesOfEtherion.DeveloperConsole.Inputs;
+using EchoesOfEtherion.Game.Helpers;
 using UnityEngine;
 
 namespace EchoesOfEtherion.DeveloperConsole.CFG
 {
     [RequireComponent(typeof(InputBindingManager))]
-    public class CFGReaderWriter : Singleton<CFGReaderWriter>
+    public class CFGReaderWriter : MonoBehaviour
     {
         private const string settingsFileName = "settings.cfg";
         private const string autoExecFileName = "autoexec.cfg";
@@ -25,10 +26,18 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
         private string configsPath;
         private InputBindingManager inputBindingManager;
 
-        protected override void Awake()
+        public static CFGReaderWriter Instance
         {
-            base.Awake();
+            get
+            {
+                return ConsoleController.Instance != null
+                ? ConsoleController.Instance.CFGReaderWriter
+                : null;
+            }
+        }
 
+        private void Awake()
+        {
             configsPath = Path.Combine(Application.persistentDataPath, configsFolder);
             inputBindingManager = GetComponent<InputBindingManager>();
             InitializePaths();
@@ -46,10 +55,8 @@ namespace EchoesOfEtherion.DeveloperConsole.CFG
             RegisterPersistentSettings();
         }
 
-        protected override void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
-            base.OnApplicationQuit();
-
             if (autoSaveSettingsOnQuit)
                 SaveSettings();
         }

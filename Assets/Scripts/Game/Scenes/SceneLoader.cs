@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using EchoesOfEtherion.Game.Helpers;
 
 namespace EchoesOfEtherion.Game.Scenes
 {

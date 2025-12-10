@@ -5,6 +5,7 @@ using EchoesOfEtherion.CurrencySystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using EchoesOfEtherion.Game.Core;
 
 namespace EchoesOfEtherion.Menu
 {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace EchoesOfEtherion.Game
+namespace EchoesOfEtherion.Game.Core
 {
     public class TickRegistor : MonoBehaviour, ITickable
     {

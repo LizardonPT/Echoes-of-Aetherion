@@ -1,13 +1,14 @@
 using System;
 using EchoesOfEtherion.Game.Scenes;
-using EchoesOfEtherion.Game.States;
 using EchoesOfEtherion.Menu;
 using EchoesOfEtherion.Game.Utils;
 using UnityEngine;
 using EchoesOfEtherion.DeveloperConsole;
 using EchoesOfEtherion.Game.StateMachine;
+using EchoesOfEtherion.Game.Helpers;
+using EchoesOfEtherion.Game.Core.States;
 
-namespace EchoesOfEtherion.Game
+namespace EchoesOfEtherion.Game.Core
 {
     [RequireComponent(typeof(TickController))]
     [RequireComponent(typeof(GamePauser))]

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using EchoesOfEtherion.DeveloperConsole;
+using EchoesOfEtherion.Game.Helpers;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Game.Locations

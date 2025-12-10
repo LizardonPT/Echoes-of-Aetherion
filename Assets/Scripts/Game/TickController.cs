@@ -3,10 +3,20 @@ using UnityEngine;
 
 namespace EchoesOfEtherion.Game
 {
-    public class TickController : Singleton<TickController>
+    public class TickController : MonoBehaviour
     {
         public bool Paused { get; private set; } = false;
         private IList<ITickable> tickables;
+
+        public static TickController Instance
+        {
+            get
+            {
+                return GameMaster.Instance != null
+                    ? GameMaster.Instance.TickController
+                    : null;
+            }
+        }
 
         public void Register(ITickable tickable)
         {
@@ -24,6 +34,7 @@ namespace EchoesOfEtherion.Game
             if (tickables.Contains(tickable))
                 tickables.Remove(tickable);
         }
+
         private void Update()
         {
             if (Paused) return;

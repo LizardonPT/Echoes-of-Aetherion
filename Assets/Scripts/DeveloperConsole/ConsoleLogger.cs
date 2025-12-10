@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace EchoesOfEtherion.DeveloperConsole
 {
     [RequireComponent(typeof(ConsoleController))]
-    public class ConsoleLogger : Singleton<ConsoleLogger>
+    public class ConsoleLogger : MonoBehaviour
     {
         [Header("References")]
         [SerializeField] private TMP_InputField logTMP;
@@ -21,9 +21,18 @@ namespace EchoesOfEtherion.DeveloperConsole
         private bool userScrolled = false;
         private RectTransform logTMPRectTransform;
 
-        protected override void Awake()
+        public static ConsoleLogger Instance
         {
-            base.Awake();
+            get
+            {
+                return ConsoleController.Instance != null
+                    ? ConsoleController.Instance.Logger
+                    : null;
+            }
+        }
+
+        private void Awake()
+        {
             logTMPRectTransform = logTMP.GetComponent<RectTransform>();
 
             Log("Developer consoler initiated.");

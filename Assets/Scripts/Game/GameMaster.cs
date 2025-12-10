@@ -23,6 +23,15 @@ namespace EchoesOfEtherion.Game
         private GamePauser gamePauser;
         private TickController tickController;
 
+        public TickController TickController
+        {
+            get
+            {
+                tickController ??= GetComponent<TickController>();
+                return tickController ?? null;
+            }
+        }
+
         public event Action GamePaused;
         public event Action GameResumed;
         public event Action GameplayStarted;

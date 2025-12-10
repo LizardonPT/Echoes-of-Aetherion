@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 namespace EchoesOfEtherion.DeveloperConsole
 {
+    [RequireComponent(typeof(ConsoleLogger))]
     public class ConsoleController : Singleton<ConsoleController>
     {
         [Header("References")]
@@ -18,6 +19,19 @@ namespace EchoesOfEtherion.DeveloperConsole
         public event Action ConsoleClosed;
 
         public bool IsOpen { get; private set; }
+
+        public ConsoleLogger Logger
+        {
+            get
+            {
+                if (logger == null)
+                    logger = GetComponent<ConsoleLogger>();
+
+                return logger ?? null;
+            }
+        }
+
+        [SerializeField] private ConsoleLogger logger;
 
         private void Start()
         {
@@ -63,6 +77,8 @@ namespace EchoesOfEtherion.DeveloperConsole
         {
             if (openCloseActionReference == null)
                 Debug.LogError("[ConsoleController] openCloseActionReference is null.");
+
+            logger ??= GetComponent<ConsoleLogger>();
 
             if (panel == null)
             {

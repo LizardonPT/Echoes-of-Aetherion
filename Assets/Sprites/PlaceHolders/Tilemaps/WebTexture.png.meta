@@ -1,12 +1,10 @@
 fileFormatVersion: 2
-guid: b35551e0bf05f9d44bb8d782c2d0250a
-labels:
-- Placeholder
+guid: 055789271fbea9646ab926c67e83394c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6518738046781593072
-    second: GrassTexture_0
+      213: 9078681696848042243
+    second: WebTexture_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -48,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -100,7 +98,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: WebGL
-    maxTextureSize: 2048
+    maxTextureSize: 256
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -2934,7 +2932,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 

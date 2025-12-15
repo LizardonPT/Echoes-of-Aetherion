@@ -12,7 +12,7 @@ namespace EchoesOfEtherion.Enemies.Core
     public class ProjectileAttackState : BaseState
     {
         [Header("Attack Settings")]
-        [SerializeField] private Projectile projectilePrefab;
+        [SerializeField] private EnemyProjectile projectilePrefab;
         [SerializeField] private bool velocityPerdiction = true;
         [SerializeField] private float chargeTime = 0.5f;
         [SerializeField] private float minCooldown = 1f;
@@ -82,7 +82,7 @@ namespace EchoesOfEtherion.Enemies.Core
         {
             if (projectilePrefab == null || agent.Target == null) return;
 
-            Projectile proj = Instantiate(projectilePrefab, agent.transform.position, Quaternion.identity);
+            EnemyProjectile proj = Instantiate(projectilePrefab, agent.transform.position, Quaternion.identity);
             Vector2 destination = agent.TargetPos;
 
             if (velocityPerdiction)

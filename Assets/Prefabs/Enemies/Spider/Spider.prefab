@@ -548,7 +548,7 @@ MonoBehaviour:
   - condition: {fileID: 7847423523736135456}
     targetState: {fileID: 5140517352668363653}
   canBeInterrupted: 0
-  projectilePrefab: {fileID: 9125123678000685726, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
+  projectilePrefab: {fileID: 5727840466231162385, guid: 0adfd203996d2d64bb78f7d6a5269f8a, type: 3}
   velocityPerdiction: 1
   chargeTime: 0.5
   minCooldown: 3

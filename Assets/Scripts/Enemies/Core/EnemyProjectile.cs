@@ -1,9 +1,10 @@
+using EchoesOfEtherion.HealthSystem;
 using FMODUnity;
 using UnityEngine;
 
 namespace EchoesOfEtherion.Core
 {
-    public abstract class Projectile : MonoBehaviour
+    public class EnemyProjectile : MonoBehaviour
     {
         [Header("Projectile Settings")]
         [SerializeField] protected LayerMask targetMask;
@@ -15,7 +16,8 @@ namespace EchoesOfEtherion.Core
         [SerializeField] protected Transform visual;
         [SerializeField] protected float maxHeight = 3f;
         [SerializeField] protected float duration = 1f;
-
+        [SerializeField] private float damage = 20f;
+        [SerializeField] private float knockback = 150f;
         protected Vector3 startPos;
         protected Vector3 targetPos;
         protected float timer = 0f;
@@ -90,7 +92,14 @@ namespace EchoesOfEtherion.Core
 
         protected virtual void OnHitTarget(Collider2D hit)
         {
-            RuntimeManager.PlayOneShot(hitSound, transform.position);
+            if (!string.IsNullOrEmpty(hitSound.Path))
+                RuntimeManager.PlayOneShot(hitSound, transform.position);
+
+            if (hit.TryGetComponent(out HealthModule health))
+            {
+                health.Damage(gameObject, damage, knockback);
+            }
+
             Destroy(gameObject);
         }
 

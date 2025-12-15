@@ -6,40 +6,44 @@ using UnityEngine;
 namespace EchoesOfEtherion.Spells.Runtime
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class LightBallSpellRuntime : MonoBehaviour
+    public class ProjectileSpellRuntime : MonoBehaviour
     {
-        [SerializeField] private EventReference hitEventReference;
-        [SerializeField] private LightBallSpell spellData;
+        [SerializeField] private EventReference hitEnemyEventReference;
+        [SerializeField] private EventReference hitEnvironmentEventReference;
 
         [SerializeField] private float radius = 16;
 
         [SerializeField] private LayerMask enemyMask;
         [SerializeField] private LayerMask environmentMask;
+
+        public ProjectileSpell SpellInfo { get; private set; }
+
         private Rigidbody2D rb;
         private Vector2 originalPos;
 
         public bool IsActive { get; private set; } = false;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             rb.Sleep();
         }
 
-        public void ExecuteSpell(Vector2 position, Vector2 direction)
+        public virtual void ExecuteSpell(ProjectileSpell spellInfo, Vector2 position, Vector2 direction)
         {
+            this.SpellInfo = spellInfo;
             transform.position = position;
             originalPos = position;
 
             rb.WakeUp();
             rb.linearVelocity = Vector3.zero;
-            rb.AddForce(direction * spellData.Speed, ForceMode2D.Impulse);
+            rb.AddForce(direction * spellInfo.Speed, ForceMode2D.Impulse);
             IsActive = true;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
-            if (IsActive && Vector2.Distance(originalPos, transform.position) >= spellData.Range)
+            if (IsActive && Vector2.Distance(originalPos, transform.position) >= SpellInfo.Range)
             {
                 Destroy(gameObject);
             }
@@ -64,15 +68,12 @@ namespace EchoesOfEtherion.Spells.Runtime
                     {
                         if (hit2D.collider.TryGetComponent(out HealthModule health))
                         {
-                            health.Damage(gameObject, spellData.Damage, spellData.KnockbackAmount, 0.25f);
+                            health.Damage(gameObject, SpellInfo.Damage, SpellInfo.KnockbackAmount, 0.25f);
                             hit = true;
                         }
                     }
                     if (hit)
-                        RuntimeManager.PlayOneShot(hitEventReference, transform.position);
-                    IsActive = false;
-
-                    Destroy(gameObject);
+                        OnHitEnemy();
                 }
 
                 RaycastHit2D environmentCollision = Physics2D.CircleCast(
@@ -84,8 +85,27 @@ namespace EchoesOfEtherion.Spells.Runtime
                 );
 
                 if (environmentCollision.collider != null)
-                    Destroy(gameObject);
+                    OnHitEnvironment();
+
             }
+        }
+
+        protected virtual void OnHitEnvironment()
+        {
+            if (!string.IsNullOrEmpty(hitEnvironmentEventReference.Path))
+                RuntimeManager.PlayOneShot(hitEnvironmentEventReference, transform.position);
+
+            IsActive = false;
+            Destroy(gameObject);
+        }
+
+        protected virtual void OnHitEnemy()
+        {
+            if (!string.IsNullOrEmpty(hitEnemyEventReference.Path))
+                RuntimeManager.PlayOneShot(hitEnemyEventReference, transform.position);
+                
+            IsActive = false;
+            Destroy(gameObject);
         }
 
 #if UNITY_EDITOR

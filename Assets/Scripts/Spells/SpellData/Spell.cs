@@ -15,6 +15,8 @@ namespace EchoesOfEtherion.Spells
 
         [field: SerializeField] public string AnimationName { get; protected set; } = "Attack";
 
+        [field: SerializeField] public SpellElement SpellElement { get; private set; }
+
         protected float cdTimer = 0f;
 
         public abstract bool ExecuteSpell(PlayerSpellCaster caster);

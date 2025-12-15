@@ -1,4 +1,6 @@
 using EchoesOfEtherion.Player.Components;
+using EchoesOfEtherion.Spells;
+using EchoesOfEtherion.Spells.Runtime;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -23,15 +25,18 @@ public class Torch : MonoBehaviour
         OnOut?.Invoke();
     }
 
-    //todo: Make it ignite when it touches a Fire Spell instead of the player.
+    //todo: Make it more generic.
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.TryGetComponent<PlayerController>(out _))
+        if (other.transform.TryGetComponent(out ProjectileSpellRuntime spell))
         {
-            if (isLitten)
-                Out();
-            else
-                Ignite();
+            if (spell.SpellInfo.SpellElement == SpellElement.Fire)
+            {
+                if (isLitten)
+                    Out();
+                else
+                    Ignite();
+            }
         }
     }
 }

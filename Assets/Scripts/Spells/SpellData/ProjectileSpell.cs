@@ -5,10 +5,10 @@ using EchoesOfEtherion.Spells.Runtime;
 
 namespace EchoesOfEtherion.Spells.Data
 {
-    [CreateAssetMenu(fileName = "LightBallSpell", menuName = "Scriptable Objects/Spells/Light Ball Spell")]
-    public class LightBallSpell : Spell
+    [CreateAssetMenu(fileName = "ProjectileSpell", menuName = "Scriptable Objects/Spells/Projectile Spell")]
+    public class ProjectileSpell : Spell
     {
-        [SerializeField] private LightBallSpellRuntime spellRuntimePrefab;
+        [SerializeField] private ProjectileSpellRuntime spellRuntimePrefab;
         [field: SerializeField] public float Damage { get; private set; } = 20f;
         [field: SerializeField] public float KnockbackAmount { get; private set; } = 80;
         [field: SerializeField] public float Speed { get; private set; } = 10f;
@@ -21,10 +21,10 @@ namespace EchoesOfEtherion.Spells.Data
             manaModule.ConsumeMana(ManaCost);
             cdTimer = Cooldown;
             Vector2 direction = caster.GetComponent<PlayerController>().LookDirection;
-            LightBallSpellRuntime spellInstance = Instantiate(spellRuntimePrefab, caster.CasterPos.position, Quaternion.identity, caster.transform)
-                                            .GetComponent<LightBallSpellRuntime>();
+            ProjectileSpellRuntime spellInstance =
+                Instantiate(spellRuntimePrefab, caster.CasterPos.position, Quaternion.identity, caster.transform);
 
-            spellInstance.ExecuteSpell(caster.CasterPos.position, direction);
+            spellInstance.ExecuteSpell(this, caster.CasterPos.position, direction);
 
             return true;
         }

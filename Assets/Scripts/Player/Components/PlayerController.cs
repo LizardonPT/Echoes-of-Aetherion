@@ -15,7 +15,7 @@ namespace EchoesOfEtherion.Player.Components
     [RequireComponent(typeof(PlayerInteractor))]
     [RequireComponent(typeof(PlayerSpellCaster))]
     [RequireComponent(typeof(HealthModule))]
-    [RequireComponent(typeof(PlayerInventory))]
+    [RequireComponent(typeof(PlayerSpellInventory))]
     public class PlayerController : TickRegistor
     {
         [field: SerializeField]
@@ -27,7 +27,7 @@ namespace EchoesOfEtherion.Player.Components
         public PlayerInteractor Interactor { get; private set; }
 
         public PlayerSpellCaster SpellCaster { get; private set; }
-        public PlayerInventory Inventory { get; private set; }
+        public PlayerSpellInventory SpellInventory { get; private set; }
 
         public FiniteStateMachine<PlayerController> StateMachine { get; private set; }
 
@@ -56,7 +56,7 @@ namespace EchoesOfEtherion.Player.Components
             Movement ??= GetComponent<PlayerMovement>();
             Interactor ??= GetComponent<PlayerInteractor>();
             SpellCaster ??= GetComponent<PlayerSpellCaster>();
-            Inventory ??= GetComponent<PlayerInventory>();
+            SpellInventory ??= GetComponent<PlayerSpellInventory>();
             healthSystem ??= GetComponent<HealthModule>();
 
             SetupStateMachine();
@@ -102,7 +102,6 @@ namespace EchoesOfEtherion.Player.Components
             // Cheat states
             StateMachine.AddState<PlayerNoClipState>(new PlayerNoClipState());
 
-
             // Start with Roaming.
             StateMachine.ChangeState<PlayerRoamingState>();
         }
@@ -139,6 +138,7 @@ namespace EchoesOfEtherion.Player.Components
             Movement ??= GetComponent<PlayerMovement>();
             Interactor ??= GetComponent<PlayerInteractor>();
             SpellCaster ??= GetComponent<PlayerSpellCaster>();
+            SpellInventory ??= GetComponent<PlayerSpellInventory>();
             healthSystem ??= GetComponent<HealthModule>();
         }
 #endif

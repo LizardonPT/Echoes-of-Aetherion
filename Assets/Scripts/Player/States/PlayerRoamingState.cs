@@ -1,3 +1,4 @@
+// PlayerRoamingState.cs (updated)
 using EchoesOfEtherion.Extentions;
 using EchoesOfEtherion.Game.StateMachine;
 using UnityEngine;
@@ -5,6 +6,7 @@ using EchoesOfEtherion.Player.Components;
 using UnityEngine.EventSystems;
 using EchoesOfEtherion.Game.Utils;
 using EchoesOfEtherion.DeveloperConsole;
+using EchoesOfEtherion.Spells;
 
 namespace EchoesOfEtherion.Player.States
 {
@@ -27,14 +29,49 @@ namespace EchoesOfEtherion.Player.States
                     controller.Interactor.InteractInput();
                 }
 
-                controller.Inventory.UpdateInput();
-
-                if (controller.PlayerInput.AttackInputPressed)
+                if (controller.PlayerInput.HealInputPressed)
                 {
-                    if (!UIHelpers.IsPointerOverInteractableUI())
-                    {
-                        controller.SpellCaster.CastSelectedSpell();
-                    }
+                    controller.SpellCaster.CastSpell(controller.SpellInventory.HealSpell);
+                }
+
+                if (controller.PlayerInput.BasicProjectileInputPressed)
+                {
+                    controller.SpellCaster.CastSpell(controller.SpellInventory.BasicProjectileSpell);
+                }
+
+                if (controller.PlayerInput.BlinkInputPressed)
+                {
+                    controller.SpellCaster.CastSpell(controller.SpellInventory.BlinkSpell);
+                }
+
+                if (controller.PlayerInput.SpellSlot1InputPressed)
+                {
+                    controller.SpellCaster.CastSlotSpell(0);
+                }
+
+                if (controller.PlayerInput.SpellSlot2InputPressed)
+                {
+                    controller.SpellCaster.CastSlotSpell(1);
+                }
+
+                if (controller.PlayerInput.SpellSlot3InputPressed)
+                {
+                    controller.SpellCaster.CastSlotSpell(2);
+                }
+
+                if (controller.PlayerInput.SpellSlot4InputPressed)
+                {
+                    controller.SpellCaster.CastSlotSpell(3);
+                }
+
+                if (controller.PlayerInput.NextSpellSetInputPressed)
+                {
+                    controller.SpellInventory.NextSpellSet();
+                }
+
+                if (controller.PlayerInput.PreviousSpellSetInputPressed)
+                {
+                    controller.SpellInventory.PreviousSpellSet();
                 }
             }
         }

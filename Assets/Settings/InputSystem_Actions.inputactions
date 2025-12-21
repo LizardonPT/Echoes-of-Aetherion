@@ -43,7 +43,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
+                    "name": "BasicSpell",
                     "type": "Button",
                     "id": "6c2ab1b8-8984-453a-af3d-a3c78ae1679a",
                     "expectedControlType": "",
@@ -106,27 +106,45 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Spell5",
-                    "type": "Button",
-                    "id": "6a320984-4d4e-4450-aeb8-c1d4c3630045",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Spell6",
-                    "type": "Button",
-                    "id": "6da2c9c5-2c6b-4b39-b94d-9f885de7f9d6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "DeveloperConsole",
                     "type": "Button",
                     "id": "938e2916-55ab-4f6f-9ee6-6a0ed5d77f6d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Blink",
+                    "type": "Button",
+                    "id": "f9f6e1cc-3292-4020-ab20-2f2a27fe6ffd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Heal",
+                    "type": "Button",
+                    "id": "905d747f-5860-441b-96e1-11a2763d7de3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextSpellSet",
+                    "type": "Button",
+                    "id": "b551701b-bed5-4e1e-8620-6826890b721e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviusSpellSet",
+                    "type": "Button",
+                    "id": "23292279-2049-4150-8858-462017ebf904",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -141,7 +159,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Attack",
+                    "action": "BasicSpell",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -213,28 +231,6 @@
                 },
                 {
                     "name": "",
-                    "id": "199054f6-91a2-4191-8527-76a49736c73d",
-                    "path": "<Keyboard>/5",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Spell5",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1c1c3914-d902-4de9-bfd7-fb9ed93cdc89",
-                    "path": "<Keyboard>/6",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Spell6",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "99534022-28ec-42fa-aa66-1998ae2665de",
                     "path": "<Keyboard>/backquote",
                     "interactions": "",
@@ -285,6 +281,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "MoveRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd875948-00a1-424a-9672-449095f1c640",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Blink",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00044707-3481-4fde-8dc7-2741ddc00ee4",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Heal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4822ccf8-910b-4a1e-984c-d200ef8cc2ee",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextSpellSet",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "95994b16-b24e-414e-bcda-6b2565fc7cb5",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviusSpellSet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

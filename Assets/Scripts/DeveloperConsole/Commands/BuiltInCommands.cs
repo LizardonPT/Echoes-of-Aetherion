@@ -321,39 +321,6 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                 isPersistent: true
                 ), "Player");
 
-            CommandDatabase.Instance.RegisterCommand(new SettingCommand(
-                key: "auto_cast",
-                description: "If true when you click to select a spell it will use the spell automaticly.",
-                usage: "auto_cast <bool>",
-                setter: (value) =>
-                {
-                    if (!value.TryGetBoolean(out bool boolValue))
-                    {
-                        ConsoleLogger.Log("Error: Invalid bool format");
-                        ConsoleLogger.Log("Use command 'help bool' for more info");
-                        return;
-                    }
-
-                    var player = FindAnyObjectByType<PlayerInventory>();
-                    if (player != null)
-                    {
-                        player.AutoCast = boolValue;
-                        ConsoleLogger.Log($"Auto cast now set to: {(boolValue ? "true" : "false")}");
-                    }
-                    else
-                        ConsoleLogger.Log("Cound't find a player instance.");
-                },
-                getter: () =>
-                {
-                    var player = FindAnyObjectByType<PlayerInventory>();
-                    if (player != null)
-                        return player.AutoCast ? "true" : "false";
-                    else
-                        return "false";
-                },
-                isPersistent: true
-                ), "Player");
-
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "heal",
                 description: "Heal player",

@@ -3,57 +3,62 @@ using UnityEngine;
 using UnityEngine.UI;
 using EchoesOfEtherion.Player.Components;
 using EchoesOfEtherion.Spells;
-using Unity.VisualScripting;
 
 namespace EchoesOfEtherion.Menu
 {
     public class HotbarUI : MonoBehaviour
     {
         [SerializeField] private List<Image> hotbarSlots;
-        [SerializeField] private List<Image> hotbarSlotHighlights;
+        [SerializeField] private PlayerSpellInventory playerInventory;
 
-        [SerializeField] private PlayerInventory playerInventory;
-        
         private void Awake()
         {
             if (playerInventory == null)
             {
-                playerInventory = GetComponentInParent<PlayerInventory>();
+                playerInventory = GetComponentInParent<PlayerSpellInventory>();
+            }
+r
+            if (hotbarSlots.Count < 4)
+            {
+                Debug.LogWarning($"HotbarUI: Need at least 4 slots, but only found {hotbarSlots.Count}. Adding placeholder.");
+                while (hotbarSlots.Count < 4)
+                {
+                    var newSlot = new GameObject("HotbarSlot").AddComponent<Image>();
+                    newSlot.transform.SetParent(transform);
+                    hotbarSlots.Add(newSlot);
+                }
             }
 
+            // Initialize all slots as inactive
             foreach (Image slot in hotbarSlots)
             {
                 slot.gameObject.SetActive(false);
             }
-
-            foreach (Image highlight in hotbarSlotHighlights)
-            {
-                highlight.gameObject.SetActive(false);
-            }
         }
-        
-        private void OnSlotsUpdated(Dictionary<int, Spell> slots)
+
+        private void OnSpellSetChanged(SpellSet spellSet)
         {
-            for (int i = 0; i < hotbarSlots.Count; i++)
+            if (spellSet == null)
             {
-                if (slots.TryGetValue(i + 1, out Spell spell) && spell != null)
+                Debug.LogWarning("HotbarUI: Received null spell set");
+                return;
+            }
+
+            for (int i = 0; i < Mathf.Min(4, hotbarSlots.Count); i++)
+            {
+                Image slotImage = hotbarSlots[i];
+                
+                if (i < spellSet.Slots.Length && spellSet.Slots[i] != null)
                 {
-                    hotbarSlots[i].sprite = spell.SpellIcon;
-                    hotbarSlots[i].gameObject.SetActive(true);
+                    slotImage.sprite = spellSet.Slots[i].SpellIcon;
+                    slotImage.gameObject.SetActive(true);
+                    slotImage.color = Color.white;
                 }
                 else
                 {
-                    hotbarSlots[i].sprite = null;
-                    hotbarSlots[i].gameObject.SetActive(false);
+                    slotImage.sprite = null;
+                    slotImage.gameObject.SetActive(false);
                 }
-            }
-        }
-
-        private void OnSelectedSpellChanged(Spell selectedSpell, int selectedIndex)
-        {
-            for (int i = 0; i < hotbarSlotHighlights.Count; i++)
-            {
-                hotbarSlotHighlights[i].gameObject.SetActive(i == selectedIndex - 1 && selectedSpell != null);
             }
         }
 
@@ -61,24 +66,58 @@ namespace EchoesOfEtherion.Menu
         {
             if (playerInventory != null)
             {
-                playerInventory.SlotsUpdated += OnSlotsUpdated;
-                playerInventory.SelectedSpellChanged += OnSelectedSpellChanged;
-            }
+                playerInventory.OnCurrentSetChanged += OnSpellSetChanged;
                 
+                if (playerInventory.CurrentSpellSet != null)
+                {
+                    OnSpellSetChanged(playerInventory.CurrentSpellSet);
+                }
+            }
         }
 
         private void OnDisable()
         {
             if (playerInventory != null)
             {
-                playerInventory.SlotsUpdated -= OnSlotsUpdated;
-                playerInventory.SelectedSpellChanged -= OnSelectedSpellChanged;
+                playerInventory.OnCurrentSetChanged -= OnSpellSetChanged;
             }
         }
+        private void Start()
+        {
+            if (playerInventory != null)
+            {
+                playerInventory.OnSpellSetsUpdated += OnSpellSetsUpdated;
+            }
+        }
+
+        private void OnSpellSetsUpdated(List<SpellSet> allSets)
+        {
+            if (playerInventory != null && playerInventory.CurrentSpellSet != null)
+            {
+                OnSpellSetChanged(playerInventory.CurrentSpellSet);
+            }
+        }
+
+
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            playerInventory = GetComponentInParent<PlayerInventory>();
+            playerInventory = GetComponentInParent<PlayerSpellInventory>();
+            
+            if (hotbarSlots == null || hotbarSlots.Count == 0)
+            {
+                hotbarSlots = new List<Image>();
+                var childImages = GetComponentsInChildren<Image>(true);
+                foreach (var image in childImages)
+                {
+                    if (image.gameObject != gameObject) // Don't include self
+                    {
+                        hotbarSlots.Add(image);
+                    }
+                }
+                
+                hotbarSlots.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
+            }
         }
 #endif
     }

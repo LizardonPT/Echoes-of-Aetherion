@@ -17,7 +17,7 @@ namespace EchoesOfEtherion.Menu
             {
                 playerInventory = GetComponentInParent<PlayerSpellInventory>();
             }
-r
+
             if (hotbarSlots.Count < 4)
             {
                 Debug.LogWarning($"HotbarUI: Need at least 4 slots, but only found {hotbarSlots.Count}. Adding placeholder.");

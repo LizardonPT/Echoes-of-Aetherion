@@ -97,6 +97,9 @@ namespace EchoesOfEtherion.Enemies.EnemiesStateMachine.Conditions
             if (foundPlayer)
                 return false;
 
+            if (playerInstance == null)
+                return false;
+
             Vector2 origin = agent.transform.position;
             Vector2 dirToTarget = ((Vector2)playerInstance.transform.position - origin).normalized;
 

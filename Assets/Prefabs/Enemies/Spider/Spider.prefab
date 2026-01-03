@@ -289,6 +289,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
   <MaxHealth>k__BackingField: 80
   <CurrentHealth>k__BackingField: 0
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  onHealed:
+    m_PersistentCalls:
+      m_Calls: []
+  onDied:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!50 &4030656946676551430
 Rigidbody2D:
   serializedVersion: 5
@@ -555,11 +564,11 @@ MonoBehaviour:
   maxCooldown: 5
   chargeSoundEvent:
     Guid:
-      Data1: 1964275713
-      Data2: 1129916938
-      Data3: 110812808
-      Data4: 1593658661
-    Path: event:/SFX/StoneScorpion/RockGather
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   throwSoundEvent:
     Guid:
       Data1: -2052295168

@@ -1,6 +1,7 @@
 using System;
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace EchoesOfEtherion.HealthSystem
 {
@@ -8,6 +9,10 @@ namespace EchoesOfEtherion.HealthSystem
     {
         [field: SerializeField] public float MaxHealth { get; private set; }
         [field: SerializeField] public float CurrentHealth { get; private set; }
+
+        [SerializeField] private UnityEvent onDamaged;
+        [SerializeField] private UnityEvent onHealed;
+        [SerializeField] private UnityEvent onDied;
 
         public event Action<DamageInfo> Damaged;
         public event Action<float> Healed;
@@ -33,9 +38,11 @@ namespace EchoesOfEtherion.HealthSystem
                 Damaged?.Invoke(
                     new DamageInfo(damager, this, damageAmount, damager.transform.position, knockback, stunTime)
                     );
+                onDamaged?.Invoke();
 
                 HealthChanged?.Invoke(CurrentHealth);
                 Died?.Invoke(this);
+                onDied?.Invoke();
                 IsDead = true;
                 return;
             }
@@ -43,6 +50,7 @@ namespace EchoesOfEtherion.HealthSystem
             Damaged?.Invoke(
                 new DamageInfo(damager, this, damageAmount, damager.transform.position, knockback, stunTime)
                 );
+            onDamaged?.Invoke();
             HealthChanged?.Invoke(CurrentHealth);
         }
 
@@ -57,6 +65,7 @@ namespace EchoesOfEtherion.HealthSystem
             }
 
             Healed?.Invoke(healAmount);
+            onHealed?.Invoke();
             HealthChanged?.Invoke(CurrentHealth);
         }
 

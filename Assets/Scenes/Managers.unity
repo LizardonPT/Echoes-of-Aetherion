@@ -2209,7 +2209,7 @@ MonoBehaviour:
   positionOffset: {x: 0, y: 8, z: 0}
   smoothTime: 0.05
   targets: []
-  hasLimits: 1
+  hasLimits: 0
   xLimit: {x: -1490, y: 850}
   yLimit: {x: -750, y: 300}
 --- !u!114 &715546171

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adbfc54c4a3beec428b6f016e3bf3988, type: 3}
   m_Name: FireballSpell
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Spells.Data.ProjectileSpell
-  <SpellIcon>k__BackingField: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  <SpellIcon>k__BackingField: {fileID: 21300000, guid: 486bb03cf9ffa044297805a1803fab1c, type: 3}
   <ManaCost>k__BackingField: 10
   <Cooldown>k__BackingField: 1
   <SpellName>k__BackingField: Fireball

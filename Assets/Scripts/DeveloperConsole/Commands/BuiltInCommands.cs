@@ -700,6 +700,42 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
         public void RegisterBindingCommands()
         {
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "cheat_binds",
+                description: "Enable cheat key bindings",
+                usage: "cheat_binds <bool>",
+                action: (args) =>
+                {
+                    if (args.Count < 1)
+                    {
+                        ConsoleLogger.Log("Usage: cheat_binds <bool>");
+                        return;
+                    }
+
+                    if (!args[0].TryGetBoolean(out bool boolValue))
+                    {
+                        ConsoleLogger.Log("Error: Invalid boolean format");
+                        return;
+                    }
+                    if (boolValue)
+                    {
+                        CommandDatabase.Instance.ExecuteCommand(
+                            "bind n noclip_toggle; bind h \"heal 20\"; bind m \"heal_mana 50\";"
+                        );
+                    }
+                    else
+                        CommandDatabase.Instance.ExecuteCommand(
+                            "unbind n noclip_toggle; unbind h \"heal 20\"; unbind m \"heal_mana 50\";"
+                        );
+
+                    ConsoleLogger.Log($"Cheat binds {(boolValue ? "enabled" : "disabled")}");
+                },
+                expectedArgs: new List<Argument>
+                {
+                    new("")
+                }
+            ), "Input");
+
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "bind",
                 description: "Bind a key to an action or console command",
                 usage: "bind <key> \"<command>\"  or  bind <key> <action>",

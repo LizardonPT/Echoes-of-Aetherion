@@ -291,7 +291,20 @@ MonoBehaviour:
   <CurrentHealth>k__BackingField: 0
   onDamaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6271901307394342966}
+        m_TargetAssemblyTypeName: EchoesOfEtherion.Enemies.Spider.SpiderAnimations,
+          Assembly-CSharp
+        m_MethodName: Hurt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onHealed:
     m_PersistentCalls:
       m_Calls: []
@@ -606,7 +619,7 @@ Animator:
   m_GameObject: {fileID: 1616286856940875536}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8b58c6f790bb9ee4790429153e560a87, type: 2}
+  m_Controller: {fileID: 9100000, guid: 85b82672d4a275f4d8dbf018a8a98951, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

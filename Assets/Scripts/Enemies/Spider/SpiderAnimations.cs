@@ -15,6 +15,7 @@ namespace EchoesOfEtherion.Enemies.Spider
         private static readonly int yHash = Animator.StringToHash("y");
         private static readonly int biteHash = Animator.StringToHash("Bite");
         private static readonly int webShootHash = Animator.StringToHash("WebShoot");
+        private static readonly int hurtHash = Animator.StringToHash("Hurt");
 
         private void Awake()
         {
@@ -53,6 +54,11 @@ namespace EchoesOfEtherion.Enemies.Spider
         public void WebShoot()
         {
             anim.SetTrigger(webShootHash);
+        }
+
+        public void Hurt()
+        {
+            anim.SetTrigger(hurtHash);
         }
     }
 }

@@ -32,9 +32,7 @@ public class Torch : MonoBehaviour
         {
             if (spell.SpellInfo.SpellElement == SpellElement.Fire)
             {
-                if (isLitten)
-                    Out();
-                else
+                if (!isLitten)
                     Ignite();
             }
         }

@@ -247,9 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b49a310ef1be7f34d9bd358660e94a94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Core.Agent
-  <EnemyType>k__BackingField: 
+  <EnemyType>k__BackingField: StoneScorpion
   accel: 15
-  maxSpeed: 65
+  maxSpeed: 70
   friction: 8
   <PlayerMask>k__BackingField:
     serializedVersion: 2
@@ -276,6 +276,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthSystem
   <MaxHealth>k__BackingField: 80
   <CurrentHealth>k__BackingField: 0
+  onDamaged:
+    m_PersistentCalls:
+      m_Calls: []
+  onHealed:
+    m_PersistentCalls:
+      m_Calls: []
+  onDied:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2715135103496009915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +521,12 @@ MonoBehaviour:
     Path: event:/SFX/StoneScorpion/Sting
   timer: {fileID: 3263317490468334906}
   stingRangeCondition: {fileID: 5728041055477079842}
+  OnWindUp:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2464726653691597640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,7 +545,8 @@ MonoBehaviour:
   - condition: {fileID: 7847423523736135456}
     targetState: {fileID: 5140517352668363653}
   canBeInterrupted: 0
-  projectilePrefab: {fileID: 9125123678000685726, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
+  projectilePrefab: {fileID: 3940758035097617227, guid: 1df115fb164028c4aa64fa1cda0bbecc, type: 3}
+  velocityPerdiction: 1
   chargeTime: 0.5
   minCooldown: 3
   maxCooldown: 5
@@ -549,6 +565,12 @@ MonoBehaviour:
       Data4: 238667438
     Path: event:/SFX/StoneScorpion/RockThrow
   cooldown: {fileID: 4532198864028178949}
+  OnCharge:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6779778793453753747
 MonoBehaviour:
   m_ObjectHideFlags: 0

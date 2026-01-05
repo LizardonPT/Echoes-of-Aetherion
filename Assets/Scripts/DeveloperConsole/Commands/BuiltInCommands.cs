@@ -11,6 +11,7 @@ using EchoesOfEtherion.HealthSystem;
 using EchoesOfEtherion.ManaSystem;
 using EchoesOfEtherion.Player.Components;
 using EchoesOfEtherion.Player.States;
+using EchoesOfEtherion.QuestSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -38,6 +39,30 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
             RegisterCFGCommands();
 
             RegisterBindingCommands();
+
+            RegisterQuestCommands();
+        }
+
+        private void RegisterQuestCommands()
+        {
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "start_quest",
+                description: "Starts a quest by ID",
+                usage: "start_quest [quet_id]",
+                action: (args) =>
+                {
+                    if (args.Count < 1)
+                    {
+                        ConsoleLogger.Log("Usage: start_quest [quest_id]");
+                        return;
+                    }
+
+                    string questID = args[0].GetString();
+
+                    QuestManager.Instance.QuestEvents.OnStartQuest(questID);
+                },
+                expectedArgs: new List<Argument> { new("") }
+                ), "Quests");
         }
 
         private void RegisterHelpCommands()

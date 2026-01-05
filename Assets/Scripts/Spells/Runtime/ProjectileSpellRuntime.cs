@@ -92,7 +92,7 @@ namespace EchoesOfEtherion.Spells.Runtime
 
         protected virtual void OnHitEnvironment()
         {
-            if (!string.IsNullOrEmpty(hitEnvironmentEventReference.Path))
+            if (!hitEnvironmentEventReference.IsNull)
                 RuntimeManager.PlayOneShot(hitEnvironmentEventReference, transform.position);
 
             IsActive = false;
@@ -101,9 +101,9 @@ namespace EchoesOfEtherion.Spells.Runtime
 
         protected virtual void OnHitEnemy()
         {
-            if (!string.IsNullOrEmpty(hitEnemyEventReference.Path))
+            if (!hitEnemyEventReference.IsNull)
                 RuntimeManager.PlayOneShot(hitEnemyEventReference, transform.position);
-                
+
             IsActive = false;
             Destroy(gameObject);
         }

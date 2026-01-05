@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37c38fc632b30b545b4927f4f0f5831d, type: 3}
-  m_Name: KillStoneScorpions
+  m_Name: InvestigateCave
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.QuestSystem.QuestInfoSO
-  <ID>k__BackingField: kill_stone_scorpions
-  <DisplayName>k__BackingField: Kill Stone Scorpions
-  <Description>k__BackingField: These scorpions are annoying, kill them for me
+  <ID>k__BackingField: investigate_cave
+  <DisplayName>k__BackingField: Investigate Cave
+  <Description>k__BackingField: Spiders robbed the earth core, go to their cave and
+    get it back.
   <CompleteText>k__BackingField: Return to the Witch.
   <RequiredLevel>k__BackingField: 1
   questPrerequisites: []
   <QuestStepPrefabs>k__BackingField:
+  - {fileID: 106724561496885649, guid: c76e128e43a7fa344bcf6fbff9c6a56c, type: 3}
   - {fileID: 9204074146079148867, guid: 60cd2ba41c9b8394897af7ce9c9c0dd6, type: 3}
+  - {fileID: 4893157021860066302, guid: 5e37aae46f685114ab0c9d02a84b92db, type: 3}
   <ExperienceReward>k__BackingField: 0
   <GoldReward>k__BackingField: 0

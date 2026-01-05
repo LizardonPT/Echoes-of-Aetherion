@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using EchoesOfEtherion.Enemies.Core;
-using EchoesOfEtherion.Game.Locations;
 using EchoesOfEtherion.Enemies.Spawner;
+using EchoesOfEtherion.HealthSystem;
 using UnityEngine;
 
 namespace EchoesOfEtherion.QuestSystem.QuestSteps
@@ -12,89 +12,143 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
     {
         [SerializeField] private string enemyType;
         [SerializeField] private int killCountNeeded = 1;
+
         [field: SerializeField] public override string StepDescription { get; protected set; }
         [field: SerializeField] public override int GoldReward { get; protected set; } = 200;
+
         public override event Action<int, int> ProgressChanged;
 
-        private List<Spawner2D> thisEnemySpawner = new();
+        private readonly List<Spawner2D> enemySpawners = new();
+        private readonly List<HealthModule> subscribedNonSpawnerEnemies = new();
 
-        private int currentKillCount = 0;
-        private bool hasRegisteredEnemyDied = false;
+        private int currentKillCount;
+        private bool hasRegisteredSpawnerEvents;
 
         private void Start()
         {
-            var spawners = FindObjectsByType<Spawner2D>(FindObjectsSortMode.None);
-
-            thisEnemySpawner = new();
-
-            foreach (Spawner2D spawner in spawners)
-            {
-                if (spawner.SpawnPrefabs.Any(a => a.EnemyType == enemyType))
-                {
-                    thisEnemySpawner.Add(spawner);
-                }
-            }
+            CacheRelevantSpawners();
+            RegisterSpawnerEvents();
+            RegisterNonSpawnerEnemies();
 
             ProgressChanged?.Invoke(currentKillCount, killCountNeeded);
-
-            RegisterEnemyDied();
         }
 
         private void OnEnable()
         {
-            RegisterEnemyDied();
+            RegisterSpawnerEvents();
         }
 
         private void OnDisable()
         {
-            UnRegisterEnemyDied();
+            UnregisterSpawnerEvents();
         }
 
-        private void RegisterEnemyDied()
+        private void OnDestroy()
         {
-            if (thisEnemySpawner.Count > 0 && !hasRegisteredEnemyDied)
-            {
-                foreach (Spawner2D spawner in thisEnemySpawner)
-                {
-                    spawner.EnemyDied += OnEnemyDied;
-                }
-
-                hasRegisteredEnemyDied = true;
-            }
+            CleanupAllSubscriptions();
         }
 
-        private void UnRegisterEnemyDied()
+        private void CacheRelevantSpawners()
         {
-            if (thisEnemySpawner.Count > 0 && hasRegisteredEnemyDied)
-            {
-                foreach (Spawner2D spawner in thisEnemySpawner)
-                {
-                    spawner.EnemyDied -= OnEnemyDied;
-                }
+            enemySpawners.Clear();
 
-                hasRegisteredEnemyDied = false;
+            var spawners = FindObjectsByType<Spawner2D>(FindObjectsSortMode.None);
+            foreach (var spawner in spawners)
+            {
+                if (spawner.SpawnPrefabs.Any(p => p.EnemyType == enemyType))
+                {
+                    enemySpawners.Add(spawner);
+                }
             }
         }
 
-        private void OnEnemyDied(Agent agent)
+        private void RegisterNonSpawnerEnemies()
         {
-            if (agent.EnemyType == enemyType)
+            var allEnemies = FindObjectsByType<Agent>(FindObjectsSortMode.None);
+
+            foreach (var agent in allEnemies.Where(a => a.EnemyType == enemyType))
             {
-                currentKillCount++;
+                var health = agent.GetComponent<HealthModule>();
+                if (health == null)
+                    continue;
 
-                ProgressChanged?.Invoke(currentKillCount, killCountNeeded);
-
-                if (currentKillCount >= killCountNeeded)
-                {
-                    UnRegisterEnemyDied();
-                    FinishQuestStep();
-                }
+                health.Died += OnNonSpawnerEnemyDied;
+                subscribedNonSpawnerEnemies.Add(health);
             }
+        }
+
+        private void RegisterSpawnerEvents()
+        {
+            if (hasRegisteredSpawnerEvents || enemySpawners.Count == 0)
+                return;
+
+            foreach (var spawner in enemySpawners)
+            {
+                spawner.EnemyDied += OnSpawnerEnemyDied;
+            }
+
+            hasRegisteredSpawnerEvents = true;
+        }
+
+        private void UnregisterSpawnerEvents()
+        {
+            if (!hasRegisteredSpawnerEvents)
+                return;
+
+            foreach (var spawner in enemySpawners)
+            {
+                spawner.EnemyDied -= OnSpawnerEnemyDied;
+            }
+
+            hasRegisteredSpawnerEvents = false;
+        }
+
+        private void OnSpawnerEnemyDied(Agent agent)
+        {
+            if (agent.EnemyType != enemyType)
+                return;
+
+            HandleEnemyKilled();
+        }
+
+        private void OnNonSpawnerEnemyDied(HealthModule module)
+        {
+            module.Died -= OnNonSpawnerEnemyDied;
+            subscribedNonSpawnerEnemies.Remove(module);
+
+            HandleEnemyKilled();
+        }
+
+        private void HandleEnemyKilled()
+        {
+            currentKillCount++;
+            ProgressChanged?.Invoke(currentKillCount, killCountNeeded);
+
+            if (currentKillCount >= killCountNeeded)
+            {
+                CleanupAllSubscriptions();
+                FinishQuestStep();
+            }
+        }
+
+        private void CleanupAllSubscriptions()
+        {
+            UnregisterSpawnerEvents();
+
+            foreach (var health in subscribedNonSpawnerEnemies)
+            {
+                if (health != null)
+                    health.Died -= OnNonSpawnerEnemyDied;
+            }
+
+            subscribedNonSpawnerEnemies.Clear();
         }
 
         public override (int, int) GetProgress()
         {
-            return isFinished ? (1, 1) : (currentKillCount, killCountNeeded);
+            return isFinished
+                ? (1, 1)
+                : (currentKillCount, killCountNeeded);
         }
 
 #if UNITY_EDITOR
@@ -103,7 +157,7 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
             if (killCountNeeded <= 0)
             {
                 killCountNeeded = 1;
-                Debug.LogWarning($"[KillEnemiesQuestStep] Kill count needed must be at least 1!");
+                Debug.LogWarning("[KillEnemiesQuestStep] Kill count needed must be at least 1.");
             }
         }
 #endif

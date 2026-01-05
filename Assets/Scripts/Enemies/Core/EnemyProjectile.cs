@@ -92,7 +92,7 @@ namespace EchoesOfEtherion.Core
 
         protected virtual void OnHitTarget(Collider2D hit)
         {
-            if (!string.IsNullOrEmpty(hitSound.Path))
+            if (!hitSound.IsNull)
                 RuntimeManager.PlayOneShot(hitSound, transform.position);
 
             if (hit.TryGetComponent(out HealthModule health))
@@ -105,7 +105,8 @@ namespace EchoesOfEtherion.Core
 
         protected virtual void OnHitEnvironment()
         {
-            RuntimeManager.PlayOneShot(hitSound, transform.position);
+            if (!hitSound.IsNull)
+                RuntimeManager.PlayOneShot(hitSound, transform.position);
             Destroy(gameObject);
         }
 

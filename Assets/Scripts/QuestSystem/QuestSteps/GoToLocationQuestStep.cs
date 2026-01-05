@@ -11,8 +11,17 @@ namespace EchoesOfEtherion.QuestSystem.QuestSteps
         [field: SerializeField] public override string StepDescription { get; protected set; } = "Go to the designated location.";
         [field: SerializeField] public override int GoldReward { get; protected set; } = 100;
         public override event Action<int, int> ProgressChanged;
+
         private void Start()
         {
+            if (LocationController.Instance.GetCurrentLocation().Name == targetLocationName &&
+                LocationController.Instance.GetCurrentLocation().Type == targetLocationType)
+            {
+                ProgressChanged?.Invoke(1, 1);
+                FinishQuestStep();
+                return;
+            }
+
             LocationController.Instance.LocationEntered += LocationEntered;
             ProgressChanged?.Invoke(0, 1);
         }

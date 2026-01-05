@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Spawner.Spawner2D
   <SpawnPrefabs>k__BackingField:
-  - {fileID: 7334562057821001011, guid: 8e431ae681cafd140814e5aaf9493dc6, type: 3}
+  - {fileID: 4887513558699448883, guid: f43f239507c045441baef61eefd6962f, type: 3}
   <MaxCount>k__BackingField: 5
   playerLayer:
     serializedVersion: 2

@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 4030656946676551430}
   - component: {fileID: 7719541156792691575}
   - component: {fileID: 8515734589465453377}
-  - component: {fileID: 5140517352668363653}
+  - component: {fileID: -1007929231331285542}
   - component: {fileID: 8505310780834388220}
   - component: {fileID: 7098384788507956189}
   - component: {fileID: 562020163534156449}
@@ -400,8 +400,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89fb6b481eccb6647baf8dd6766110e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Core.StateMachine
-  initialState: {fileID: 5140517352668363653}
---- !u!114 &5140517352668363653
+  initialState: {fileID: -1007929231331285542}
+--- !u!114 &-1007929231331285542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -410,9 +410,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1616286856940875536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7606c0c048fa3bf419272c09ca3cde65, type: 3}
+  m_Script: {fileID: 11500000, guid: bfd729c8120658b46bc2a1fc793daee0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Core.States.RoamingState
+  m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.EnemiesStateMachine.States.IdleState
   transitions:
   - condition: {fileID: 4736757426520657627}
     targetState: {fileID: 8505310780834388220}
@@ -425,10 +425,6 @@ MonoBehaviour:
   - condition: {fileID: 4532198864028178949}
     targetState: {fileID: 2464726653691597640}
   canBeInterrupted: 1
-  roamSpeed: 0.3
-  minRoamTime: 2
-  maxRoamTime: 5
-  roamRadius: 100
 --- !u!114 &8505310780834388220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,7 +439,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EchoesOfEtherion.Enemies.Core.States.SeekState
   transitions:
   - condition: {fileID: 3605064032083228597}
-    targetState: {fileID: 5140517352668363653}
+    targetState: {fileID: -1007929231331285542}
   - condition: {fileID: 7020785207547954008}
     targetState: {fileID: 7098384788507956189}
   - condition: {fileID: 5830078942588136390}
@@ -501,7 +497,7 @@ MonoBehaviour:
   - condition: {fileID: 6521986153657458865}
     targetState: {fileID: 8505310780834388220}
   - condition: {fileID: 7847423523736135456}
-    targetState: {fileID: 5140517352668363653}
+    targetState: {fileID: -1007929231331285542}
   - condition: {fileID: 5830078942588136390}
     targetState: {fileID: 562020163534156449}
   canBeInterrupted: 0
@@ -521,7 +517,7 @@ MonoBehaviour:
   - condition: {fileID: 6521986153657458865}
     targetState: {fileID: 8505310780834388220}
   - condition: {fileID: 7847423523736135456}
-    targetState: {fileID: 5140517352668363653}
+    targetState: {fileID: 0}
   canBeInterrupted: 0
   stingSpeed: 120
   stingDamage: 25
@@ -581,7 +577,7 @@ MonoBehaviour:
   - condition: {fileID: 6521986153657458865}
     targetState: {fileID: 8505310780834388220}
   - condition: {fileID: 7847423523736135456}
-    targetState: {fileID: 5140517352668363653}
+    targetState: {fileID: 0}
   canBeInterrupted: 0
   projectilePrefab: {fileID: 5727840466231162385, guid: fdcdb6c034945234283c40c2bbebdfcb, type: 3}
   velocityPerdiction: 1
@@ -590,11 +586,11 @@ MonoBehaviour:
   maxCooldown: 5
   chargeSoundEvent:
     Guid:
-      Data1: 1964275713
-      Data2: 1129916938
-      Data3: 110812808
-      Data4: 1593658661
-    Path: event:/SFX/StoneScorpion/RockGather
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   throwSoundEvent:
     Guid:
       Data1: -2052295168

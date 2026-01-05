@@ -6,6 +6,8 @@ using EchoesOfEtherion.QuestSystem.UI;
 using EchoesOfEtherion.CurrencySystem;
 using UnityEngine;
 using EchoesOfEtherion.Game.Helpers;
+using System;
+using EchoesOfEtherion.DeveloperConsole;
 
 namespace EchoesOfEtherion.QuestSystem
 {
@@ -55,6 +57,8 @@ namespace EchoesOfEtherion.QuestSystem
         //todo: save progression when quit game or go to main menu.
         private void OnSceneLoaded(string sceneName)
         {
+            if (sceneName != "MainMenu")
+                return;
             questTrackerUI.StopTrackingQuest();
             foreach (Quest quest in questMap.Values)
             {
@@ -112,6 +116,11 @@ namespace EchoesOfEtherion.QuestSystem
         {
             Log($"Starting quest with ID: {id}");
             Quest quest = GetQuestById(id);
+            if (quest == null)
+            {
+                Log($"Quest with ID: {id} not found.");
+                return;
+            }
             QuestStep questStep = quest.InstantiateCurrentQuestStepPrefab(transform);
             questTrackerUI.StartTrackingQuest(quest.QuestInfo, questStep, quest.CurrentQuestStepIndex);
             ChangeQuestState(id, QuestState.InProgress);
@@ -202,6 +211,7 @@ namespace EchoesOfEtherion.QuestSystem
             if (enableLogging)
             {
                 Debug.Log($"[QuestManager] {message}");
+                ConsoleLogger.Log($"[QuestManager] {message}");
             }
         }
     }

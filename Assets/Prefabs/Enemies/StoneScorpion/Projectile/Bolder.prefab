@@ -152,8 +152,8 @@ MonoBehaviour:
       Data3: 1995290518
       Data4: 1950352750
     Path: event:/SFX/StoneScorpion/RockHit
-  visual: {fileID: 5974476748495611452, guid: 0adfd203996d2d64bb78f7d6a5269f8a, type: 3}
-  maxHeight: 54
+  visual: {fileID: 6837867283763105024}
+  maxHeight: 60
   duration: 1
   damage: 20
   knockback: 150

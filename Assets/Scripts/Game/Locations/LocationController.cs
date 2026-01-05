@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using EchoesOfEtherion.DeveloperConsole;
 using EchoesOfEtherion.Game.Helpers;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace EchoesOfEtherion.Game.Locations
 {
     public class LocationController : Singleton<LocationController>
     {
+        [SerializeField] private Light2D globalLight;
+
         [Header("Debug")]
         [SerializeField] private bool enableLogging = false;
 
@@ -19,7 +22,7 @@ namespace EchoesOfEtherion.Game.Locations
         private LocationData currentLocation;
         private string currentRegion;
         private readonly Stack<LocationData> locationHistory = new();
-        
+
         public void EnterLocation(Location location)
         {
             var locationData = location.GetLocationData();
@@ -47,6 +50,8 @@ namespace EchoesOfEtherion.Game.Locations
                 AreaEntered?.Invoke(locationData.Name);
             }
 
+            globalLight.intensity = currentLocation.GlobalLightIntensity;
+            
             // Notify listeners
             LocationEntered?.Invoke(locationData);
         }

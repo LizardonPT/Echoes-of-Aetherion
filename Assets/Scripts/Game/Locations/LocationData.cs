@@ -10,11 +10,12 @@ namespace EchoesOfEtherion.Game.Locations
         public LocationType Type;
         public EventReference MusicTrack;
         public EventReference AmbienceTrack;
-
-        public LocationData(string name, LocationType type, EventReference musicTrack, EventReference ambienceTrack)
+        public float GlobalLightIntensity;
+        public LocationData(string name, LocationType type, float globalLightIntensity, EventReference musicTrack, EventReference ambienceTrack)
         {
             Name = name;
             Type = type;
+            GlobalLightIntensity = globalLightIntensity;
             MusicTrack = musicTrack;
             AmbienceTrack = ambienceTrack;
         }

@@ -199,6 +199,7 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     new(""),
                 }
                 ), "Scene");
+
             CommandDatabase.Instance.RegisterCommand(new ActionCommand(
                 key: "reload_scene",
                 description: "Reloads the current scene",
@@ -215,6 +216,23 @@ namespace EchoesOfEtherion.DeveloperConsole.Commands
                     SceneLoader.Instance.LoadPrimaryScene(currentScene);
                 },
                 expectedArgs: new List<Argument>()
+                ), "Scene");
+
+            CommandDatabase.Instance.RegisterCommand(new ActionCommand(
+                key: "light_all_torches",
+                description: "Lights all torches",
+                usage: "light_all_torches",
+                action: (args) =>
+                {
+                    var torches = FindObjectsByType<Torch>(FindObjectsSortMode.None);
+
+                    foreach (var torch in torches)
+                    {
+                        torch.Ignite();
+                    }
+
+                    ConsoleLogger.Log($"Lit {torches.Length} torches.");
+                }
                 ), "Scene");
         }
 

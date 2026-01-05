@@ -13,6 +13,7 @@ namespace EchoesOfEtherion.Game.Locations
         [SerializeField] private LocationActivationMethod activationMethod = LocationActivationMethod.Trigger;
 
         [Header("Location Properties")]
+        [field: SerializeField] public float GlobalLightIntensity { get; private set; } = 1f;
         [SerializeField] private EventReference musicTrack;
         [SerializeField] private EventReference ambienceTrack;
 
@@ -39,7 +40,7 @@ namespace EchoesOfEtherion.Game.Locations
 
         public LocationData GetLocationData()
         {
-            return new LocationData(LocationName, Type, musicTrack, ambienceTrack);
+            return new LocationData(LocationName, Type, GlobalLightIntensity, musicTrack, ambienceTrack);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

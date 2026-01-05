@@ -6,6 +6,7 @@ namespace EchoesOfEtherion.Player.Components
 {
     public class PlayerSounds : MonoBehaviour
     {
+        [SerializeField] private Grid grid;
         [SerializeField] private Tilemap grassTilemap;
         [SerializeField] private Tilemap earthTilemap;
         [SerializeField] private EventReference grassFootstepSound;
@@ -15,10 +16,17 @@ namespace EchoesOfEtherion.Player.Components
         {
             Vector3 worldPos = transform.position;
 
-            Vector3Int cellPos = grassTilemap.WorldToCell(worldPos);
+            Vector3Int cellPos = grid.WorldToCell(worldPos);
 
-            bool onGrass = grassTilemap.GetTile(cellPos) != null;
-            bool onEarth = earthTilemap.GetTile(cellPos) != null;
+            bool onGrass = false;
+            
+            if (grassTilemap != null)
+                onGrass = grassTilemap.GetTile(cellPos) != null;
+
+            bool onEarth = false;
+
+            if (earthTilemap != null)
+                onEarth = earthTilemap.GetTile(cellPos) != null;
 
             if (onGrass)
             {
